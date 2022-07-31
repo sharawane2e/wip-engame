@@ -1,25 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect } from 'react';
 import './App.css';
+import CardsContainer from './Components/CardsContainer';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import CartPage from './Pages/CartPage';
+import LoginPage from './Pages/LoginPage';
+import Layout from './Pages/Layout';
+import MyWidgetsPage from './Pages/MyWidgetsPage';
 
 function App() {
+
+  const auth:any = (localStorage.getItem("auth"));
+
+  function PrivateRoute({ children }:any) {
+    let isLogin = JSON.parse(auth).isLoggedIn;
+    return isLogin == "true" ? children : <Navigate to="/login" />;
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Routes>
+        <Route path="/login" element={<LoginPage/>} />
+
+        <Route path="/" element={<PrivateRoute><Layout/></PrivateRoute>}>
+          <Route index element={<CardsContainer/>} />
+          <Route path="cart" element={<CartPage/>} />
+          <Route path="mywidgets" element={<MyWidgetsPage/>} />
+        </Route>
+
+      </Routes>
+    </>
   );
 }
 
