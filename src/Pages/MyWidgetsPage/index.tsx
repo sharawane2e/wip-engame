@@ -4,6 +4,7 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { subsStatement } from '../../Utils/cartFunctions';
+import { FormControl, Radio, RadioGroup } from '@mui/material';
 
 function MyWidgetsPage() {
 
@@ -19,15 +20,20 @@ function MyWidgetsPage() {
             <div className='CartPage_container'>
                 <div className='amount_box'>
                     <div className='cart_heading'>Filters</div>
-                    <FormGroup>
-                        <FormControlLabel control={<Checkbox />} label="Heatmaps & Highlighters" />
-                        <FormControlLabel control={<Checkbox />} label="Rating" />
-                        <FormControlLabel control={<Checkbox />} label="Single & Multi Selects" />
-                        <FormControlLabel control={<Checkbox />} label="Maps" />
-                        <FormControlLabel control={<Checkbox />} label="Ranking" />
-                        <FormControlLabel control={<Checkbox />} label="Collection" />
-                        <FormControlLabel control={<Checkbox />} label="Numeric" />
-                    </FormGroup>
+                    <FormControl>
+                        <RadioGroup
+                            aria-labelledby="demo-radio-buttons-group-label"
+                            name="radio-buttons-group"
+                        >
+                            <FormControlLabel value={1} control={<Radio />} label="Heatmaps & Highlighters" />
+                            <FormControlLabel value={2} control={<Radio />} label="Rating" />
+                            <FormControlLabel value={3} control={<Radio />} label="Single & Multi Selects" />
+                            <FormControlLabel value={4} control={<Radio />} label="Maps" />
+                            <FormControlLabel value={5} control={<Radio />} label="Ranking" />
+                            <FormControlLabel value={6} control={<Radio />} label="Collection" />
+                            <FormControlLabel value={7} control={<Radio />} label="Numeric" />
+                        </RadioGroup>
+                    </FormControl>
                 </div>
                 <div className='selected_widgets'>
                 {/* <button onClick={() => {setReduxUser(storeData.user.userDetails.username)}}>Console Redux</button> */}

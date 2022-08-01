@@ -46,9 +46,9 @@ function WdetailsPopup({page, widgetObj, setShowATCPopup}: CustomPopupProps) {
     const { enqueueSnackbar } = useSnackbar();
     const dispatch = useDispatch();
   
-    useEffect(() => {
-      CalcPrice()
-    }, [wtCount, subsType])
+    // useEffect(() => {
+    //   CalcPrice()
+    // }, [wtCount, subsType])
   
     const cartObj = {
       "details" : {

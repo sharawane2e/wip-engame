@@ -47,9 +47,12 @@ function LoginPage() {
       }
       else{
         setReduxUser(username)
-        .then(data => dispatch(setUserDetails(data)));
+        .then(data => {
+          dispatch(setUserDetails(data))
+          navigate("/");
+        });
         localStorage.setItem("auth", '{"isLoggedIn" : "true", "username" : "' + username +' "}');
-        navigate("/")
+        
       }
     })
   }
@@ -61,7 +64,7 @@ function LoginPage() {
         <img src={logoimg}/>
       </div>
       <div className='lb_body'>
-        <div className='lb_error_msg'>{storeData.user.userDetails.loginErrMsg}</div>
+        <div className='lb_error_msg'>{storeData?.user?.userDetails?.loginErrMsg}</div>
         <input className='lb_inputclass' type="text" placeholder='Username' onChange={(e) => setUsername(e.target.value)}/>
         <input className='lb_inputclass' type="text" placeholder='Password' onChange={(e) => setPassword(e.target.value)}/>
         <button className='login_btn' onClick={() => ValidateUser(username,password)}>Login</button>

@@ -6,13 +6,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SnackbarProvider, VariantType, useSnackbar } from 'notistack';
 import { AddtoCartHelper } from '../../Utils/cartFunctions';
 import { setisLoggedIn, setLoginErrMsg, setUserDetails } from '../../redux/UserRedux/userAction';
-import { setReduxUser } from '../../Utils/userFunctions';
+import { getUserDetails, setReduxUser } from '../../Utils/userFunctions';
 import CustomPopup from '../CustomPopup';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DoneIcon from '@mui/icons-material/Done';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import CodePopup from '../CodePopup';
 import { crypt, decrypt } from '../../Utils/EncryptFunctions';
+import PreviewPopup from '../PreviewPopup';
 
 function CardsContainer() {
 
@@ -23,14 +24,22 @@ function CardsContainer() {
     const dispatch = useDispatch();
     const [showATCPopup, setShowATCPopup] = useState(false);
     const [showCodePopup, setShowCodePopup] = useState(false);
+    const [showPreviewPopup, setShowPreviewPopup] = useState(false);
+    const [searchbarText, setSearchbarText] = useState("");
 
     useEffect(() => {
         getAllProducts();
-    }, [storeData]);
+    }, []);
+
+    // useEffect(() => {
+    //     getUserDetails(storeData?.user?.userDetails?.username)
+    //     .then((data:any) => dispatch(setUserDetails(data)))
+    // },[]);
     
     const getAllProducts = () => { 
         axios.get("http://localhost:5000/products")
         .then(x => setCardsArr(x.data));
+        console.log("CardsContainer Refreshed!")
     }
 
     // const addToCart = (id:any) => {
@@ -101,8 +110,8 @@ function CardsContainer() {
     function genSubscriptionKey(widObj:any){
         let key = ""
         key = storeData?.user?.userDetails?.accessToken + "*" + widObj.id + "*" + "hits" + "*" + "true";
-        console.log("Subscription Key",key);
         let encrypt = crypt("saltise2eresearch", key)
+        // console.log("Subscription Key",key);
         // console.log(decrypt("saltise2eresearch", encrypt));
         return encrypt;
     }
@@ -129,11 +138,14 @@ function CardsContainer() {
 
     return (
         <>
-            <button onClick={() => {console.log(storeData.user.userDetails)}}>Console Redux</button>
+            {/* <button onClick={() => {console.log(storeData.user.userDetails)}}>Console Redux</button> */}
+            <div className='searchbar_box'>
+                <input type="text" className='searchbar' placeholder='Search Widgets' onChange={(e) => setSearchbarText(e.target.value)}></input>
+            </div>
             <div className='card_container'>
-                {cardsArr.map((card:any) => (
+                {cardsArr.filter((x:any) => searchbarText.length > 0 ? x.title.toLowerCase().includes(searchbarText.toLowerCase()) : x).map((card:any) => (
                     <div className='card'>
-                        <div className='card_img'></div>
+                        <div className='card_img' onClick={() => {setCPWidgetObj(card); setShowPreviewPopup(true)}}></div>
                         <div className='card_title'>{card.title}</div>
                         <div className='card_footer'>
                             <button className='viewcode_button' onClick={() => handleCodePreview(card)}>{"</>"}</button>
@@ -159,6 +171,14 @@ function CardsContainer() {
                 <CodePopup 
                     widgetObj={CPWidgetObj} 
                     setShowCodePopup={setShowCodePopup}
+                />
+            }
+
+            {showPreviewPopup &&
+                <PreviewPopup
+                    widgetObj={CPWidgetObj} 
+                    clientkey={genSubscriptionKey(CPWidgetObj)}
+                    setShowPreviewPopup={setShowPreviewPopup}
                 />
             }
         </>

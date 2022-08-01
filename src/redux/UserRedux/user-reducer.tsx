@@ -1,4 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
+import { getUserDetails } from "../../Utils/userFunctions";
 import { setCartWidgets, setisLoggedIn, setLoginErrMsg, setPurchasedWidgets, setUserDetails } from "./userAction";
 
 // const initialState = {
@@ -15,12 +16,32 @@ import { setCartWidgets, setisLoggedIn, setLoginErrMsg, setPurchasedWidgets, set
 
 let LSAuth:any = localStorage.getItem("auth");
 
+let userObj = {
+    isLoggedIn: LoginStatus(),
+    loginErrMsg: "",
+    username: "",
+    firstname: "",
+    lastname: "",
+    accessToken: "",
+    purchasedWidgets: [],
+    cartWidgets: []
+}
+
+function LoginStatus(){
+    if(LSAuth != undefined && LSAuth != null && JSON.parse(LSAuth).isLoggedIn == "true"){
+        return true
+    }
+    else{
+        return false
+    }
+}
+
 
 const initialState = {
     userDetails : {
-        isLoggedIn: false,
+        isLoggedIn: LoginStatus(),
         loginErrMsg: "",
-        username: JSON.parse(LSAuth).username,
+        username: "",
         firstname: "",
         lastname: "",
         accessToken: "",

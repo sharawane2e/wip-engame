@@ -8,6 +8,7 @@ import { setReduxUser } from '../../Utils/userFunctions';
 import { setUserDetails } from '../../redux/UserRedux/userAction';
 import { subsStatement } from '../../Utils/cartFunctions';
 import CustomPopup from '../../Components/CustomPopup';
+import { getUserDetails } from '../../Utils/userFunctions';
 
 function CartPage() {
     const [allWidgets, setAllWidgets] = useState([]);
@@ -23,13 +24,26 @@ function CartPage() {
     const [itemsPrice, setItemsPrice] = useState(0);
     const [totaPrice, setTotaPrice] = useState(0);
 
+    const username = storeData?.user?.userDetails?.username;
+
     useEffect(() => {
-        setShowLoader(true);
-        setReduxUser(storeData?.user?.userDetails?.username).then(data => {
+        // setShowLoader(true);
+        // getUserDetails(username).then(data => {
+        //     dispatch(setUserDetails(data))
+        //     setShowLoader(false)
+        //     console.log("CartPage Refreshed!")
+        // });\
+        // refresh();
+        console.log("hi")
+    }, []);
+
+    function refresh(){
+        setReduxUser(username).then(data => {
             dispatch(setUserDetails(data))
             setShowLoader(false)
+            console.log("CartPage Refreshed!")
         });
-    }, []);
+    }
 
     useEffect(() => {
         CalculatePrices()
@@ -211,6 +225,7 @@ function CartPage() {
 
         let total = itemstotal + 0;
         setTotaPrice(Math.round(total * 100) / 100);
+        console.log("calculated")
     }
 
     return (
@@ -218,7 +233,10 @@ function CartPage() {
         <div className='CartPage_container'>
             <div className='selected_widgets'>
             {/* <button onClick={() => {setReduxUser(storeData.user.userDetails.username)}}>Console Redux</button> */}
-                <div className='cart_heading'>Cart</div>
+                <div className='cart_heading'>
+                    <span className='cart_heading_text'>Cart</span>
+                    <span className='refresh' onClick={() => refresh()}>Refresh</span> 
+                </div>
                 {showLoader && storeData?.user?.userDetails?.cartWidgets?.length == 0 ? 
                     (<>
                         <div className='cart_loader'>
@@ -252,7 +270,9 @@ function CartPage() {
                 }
             </div>
             <div className='amount_box'>
-                <div className='cart_heading'>Price</div>
+                <div className='cart_heading'>
+                    <span className='cart_heading_text'>Price</span>
+                    </div>
                 <div className='price_row'>
                     <span>Item Price</span>
                     <span>₹ {itemsPrice}</span>
