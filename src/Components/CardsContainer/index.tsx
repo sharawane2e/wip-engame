@@ -150,9 +150,13 @@ function CardsContainer() {
                         <div className='card_footer'>
                             <button className='viewcode_button' onClick={() => handleCodePreview(card)}>{"</>"}</button>
                             {isInCart(card.id) ?
-                                <button className='add_cart_button' onClick={() => {setShowATCPopup(true); setCPWidgetObj(card)}}>Add to Cart</button>
+                                <button className='add_cart_button' onClick={() => {setShowATCPopup(true); setCPWidgetObj(card)}}>
+                                    Add to Cart
+                                </button>
                             :
-                                <button className='added_to_cart_button' onClick={() => {setShowATCPopup(true); setCPWidgetObj(card)}}><DoneIcon sx={{ fontSize: 18 }}/> Added </button>
+                                <button className='added_to_cart_button' onClick={() => {setShowATCPopup(true); setCPWidgetObj(card)}}>
+                                    <DoneIcon sx={{ fontSize: 18 }}/> Added 
+                                </button>
                             }
                         </div>
                     </div>
