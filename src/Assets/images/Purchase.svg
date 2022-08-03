@@ -1,0 +1,7 @@
+<svg id="purchase" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+  <g id="Rectangle_28" data-name="Rectangle 28" fill="#fff" stroke="#d6d6d6" stroke-width="1">
+    <rect width="40" height="40" rx="6" stroke="none"/>
+    <rect x="0.5" y="0.5" width="39" height="39" rx="5.5" fill="none"/>
+  </g>
+  <path id="round" d="M7,18a2,2,0,1,0,2,2A2,2,0,0,0,7,18ZM1,3A1,1,0,0,0,2,4H3l3.6,7.59-1.35,2.44A2,2,0,0,0,7,17H18a1,1,0,0,0,0-2H7l1.1-2h7.448a1.99,1.99,0,0,0,1.75-1.03l3.579-6.49A1,1,0,0,0,20,4H5.209l-.67-1.43a.993.993,0,0,0-.9-.57H2A1,1,0,0,0,1,3ZM17,18a2,2,0,1,0,2,2A2,2,0,0,0,17,18Z" transform="translate(8.995 8)" fill="#d6d6d6"/>
+</svg>

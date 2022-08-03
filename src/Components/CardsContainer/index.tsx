@@ -14,6 +14,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import CodePopup from '../CodePopup';
 import { crypt, decrypt } from '../../Utils/EncryptFunctions';
 import PreviewPopup from '../PreviewPopup';
+import CircularProgress from '@mui/material/CircularProgress';
 
 function CardsContainer() {
 
@@ -26,8 +27,10 @@ function CardsContainer() {
     const [showCodePopup, setShowCodePopup] = useState(false);
     const [showPreviewPopup, setShowPreviewPopup] = useState(false);
     const [searchbarText, setSearchbarText] = useState("");
+    const [showLoader, setShowLoader] = useState(false);
 
     useEffect(() => {
+        setShowLoader(true)
         getAllProducts();
     }, []);
 
@@ -38,7 +41,10 @@ function CardsContainer() {
     
     const getAllProducts = () => { 
         axios.get("http://localhost:5000/products")
-        .then(x => setCardsArr(x.data));
+        .then(x => {
+            setCardsArr(x.data);
+            setShowLoader(false)
+        });
         console.log("CardsContainer Refreshed!")
     }
 
@@ -143,24 +149,32 @@ function CardsContainer() {
                 <input type="text" className='searchbar' placeholder='Search Widgets' onChange={(e) => setSearchbarText(e.target.value)}></input>
             </div>
             <div className='card_container'>
-                {cardsArr.filter((x:any) => searchbarText.length > 0 ? x.title.toLowerCase().includes(searchbarText.toLowerCase()) : x).map((card:any) => (
-                    <div className='card'>
-                        <div className='card_img' onClick={() => {setCPWidgetObj(card); setShowPreviewPopup(true)}}></div>
-                        <div className='card_title'>{card.title}</div>
-                        <div className='card_footer'>
-                            <button className='viewcode_button' onClick={() => handleCodePreview(card)}>{"</>"}</button>
-                            {isInCart(card.id) ?
-                                <button className='add_cart_button' onClick={() => {setShowATCPopup(true); setCPWidgetObj(card)}}>
-                                    Add to Cart
-                                </button>
-                            :
-                                <button className='added_to_cart_button' onClick={() => {setShowATCPopup(true); setCPWidgetObj(card)}}>
-                                    <DoneIcon sx={{ fontSize: 18 }}/> Added 
-                                </button>
-                            }
-                        </div>
+                {showLoader ? 
+                    <div className='loader_container'>
+                        <CircularProgress/>
                     </div>
-                ))}
+                    : 
+                    <>
+                        {cardsArr.filter((x:any) => searchbarText.length > 0 ? x.title.toLowerCase().includes(searchbarText.toLowerCase()) : x).map((card:any) => (
+                            <div className='card'>
+                                <div className='card_img' onClick={() => {setCPWidgetObj(card); setShowPreviewPopup(true)}}></div>
+                                <div className='card_title'>{card.title}</div>
+                                <div className='card_footer'>
+                                    {/* <button className='viewcode_button' onClick={() => handleCodePreview(card)}>{"</>"}</button> */}
+                                    {isInCart(card.id) ?
+                                        <button className='add_cart_button' onClick={() => {setShowATCPopup(true); setCPWidgetObj(card)}}>
+                                            Add to Cart
+                                        </button>
+                                    :
+                                        <button className='added_to_cart_button' onClick={() => {setShowATCPopup(true); setCPWidgetObj(card)}}>
+                                            <DoneIcon sx={{ fontSize: 18 }}/> Added 
+                                        </button>
+                                    }
+                                </div>
+                            </div>
+                        ))}
+                    </>
+                }
             </div>
 
             {showATCPopup && 
@@ -185,6 +199,7 @@ function CardsContainer() {
                     setShowPreviewPopup={setShowPreviewPopup}
                 />
             }
+
         </>
     )
 }

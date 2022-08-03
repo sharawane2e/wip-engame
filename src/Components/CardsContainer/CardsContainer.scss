@@ -48,7 +48,7 @@
 
 .card_footer{
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     padding: 10px 5px 3px 5px;
 }
 
@@ -92,4 +92,11 @@
     background: #fff;
     font-weight: 700;
     cursor: pointer;
+}
+
+.loader_container{
+    display: flex;
+    width: -webkit-fill-available;
+    justify-content: center;
+    padding: 80px 0px 0px 0px;
 }

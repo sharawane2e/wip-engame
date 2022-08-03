@@ -20,6 +20,8 @@ const TopNav = () => {
   const [isPayment, setIsPayment] = useState();
   const storeData = useSelector((data:any) => data);
 
+  const localUser:any = localStorage.getItem("auth");
+
   const menuId = "primary-search-account-menu";
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
 
@@ -53,7 +55,7 @@ const TopNav = () => {
             </NavLink>
           </div>
           <div className="user_avtar" onClick={(e:any) => handleClick(e)}>
-            <Avatar sx={{ bgcolor: "red" }}>{(storeData?.user?.userDetails?.username?.[0])?.toUpperCase()}</Avatar>
+            <Avatar sx={{ bgcolor: "red" }}>{(JSON.parse(localUser).username[0]).toUpperCase()}</Avatar>
           </div>
           <Popover 
             id={id}

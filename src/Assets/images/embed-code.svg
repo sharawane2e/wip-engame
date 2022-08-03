@@ -1,0 +1,7 @@
+<svg id="embed_code" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+  <g id="Rectangle_1998" data-name="Rectangle 1998" fill="#fff" stroke="#d6d6d6" stroke-width="1">
+    <rect width="40" height="40" rx="6" stroke="none"/>
+    <rect x="0.5" y="0.5" width="39" height="39" rx="5.5" fill="none"/>
+  </g>
+  <path id="round" d="M12.35,15.65l3.79-2.79a.5.5,0,0,0-.35-.85H14V4c0-.55-1.45-1-2-1s-2,.45-2,1v8H8.21a.5.5,0,0,0-.35.85l3.79,2.79a.492.492,0,0,0,.7.01ZM21,3H16.99c-.54,0-1.2.941-1.2,1.481s.66,1.5,1.2,1.5H20c.55,0,0-.55,0,0V18.01c0,.55.55,0,0,0H4c-.55,0,0,.55,0,0V5.99c0-.55-.55,0,0,0H7.01c.54,0,.85-.969.85-1.509S7.558,3.005,7.01,3H3A2.006,2.006,0,0,0,1,5V19a2.006,2.006,0,0,0,2,2H21a2.006,2.006,0,0,0,2-2V5A2.006,2.006,0,0,0,21,3Z" transform="translate(8 8)" fill="#d6d6d6"/>
+</svg>

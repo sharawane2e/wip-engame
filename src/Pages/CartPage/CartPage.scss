@@ -8,6 +8,7 @@
 .selected_widgets{
     width: 65%;
     padding: 20px 20px 0px 20px;
+    height: fit-content;
     border-radius: 7px; 
     margin-right: 20px;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
@@ -15,6 +16,8 @@
 
 .amount_box{
     width: 25%;
+    position: sticky;
+    top: 103px;
     padding: 20px; 
     border-radius: 7px;
     height: fit-content;

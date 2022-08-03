@@ -1,0 +1,10 @@
+<svg id="RE_purchase" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+  <g id="Rectangle_28" data-name="Rectangle 28" fill="#fff" stroke="#d6d6d6" stroke-width="1">
+    <rect width="40" height="40" rx="6" stroke="none"/>
+    <rect x="0.5" y="0.5" width="39" height="39" rx="5.5" fill="none"/>
+  </g>
+  <g id="re_purchase-2" data-name="re_purchase">
+    <path id="round" d="M5.2,13.2a1.4,1.4,0,1,0,1.4,1.4A1.4,1.4,0,0,0,5.2,13.2ZM1,2.7a.7.7,0,0,0,.7.7h.7L4.919,8.713l-.945,1.708A1.4,1.4,0,0,0,5.2,12.5h7.7a.7.7,0,0,0,0-1.4H5.2l.77-1.4h5.214a1.393,1.393,0,0,0,1.225-.721l2.505-4.543A.7.7,0,0,0,14.3,3.4H3.946l-.469-1a.7.7,0,0,0-.63-.4H1.7a.7.7,0,0,0-.7.7ZM12.2,13.2a1.4,1.4,0,1,0,1.4,1.4A1.4,1.4,0,0,0,12.2,13.2Z" transform="translate(12.648 15.151)" fill="#d6d6d6"/>
+    <path id="Icon_material-replay" data-name="Icon material-replay" d="M18,5.938,18.124,2.8,25.5,9l-7.541,5.587L18,11.738c-3.808.7-8.508,2.8-8.508,7.762S17.858,31.463,18,31.5s.058.05,0,0S7.942,26.188,6.492,19.5,12.042,8.088,18,5.938Z" transform="translate(9.42 -2.875) rotate(21)" fill="#d6d6d6"/>
+  </g>
+</svg>

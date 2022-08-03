@@ -93,6 +93,8 @@ export default function CustomPopup({page, widgetObj, setShowATCPopup}: CustomPo
 
   const ManualATC = () => {
 
+    enqueueSnackbar(`Item added to cart.`, { variant: "success" });
+
     let storeObj = storeData?.user?.userDetails;
     let userObj = JSON.parse(JSON.stringify(storeObj));
 
@@ -100,7 +102,6 @@ export default function CustomPopup({page, widgetObj, setShowATCPopup}: CustomPo
     dispatch(setUserDetails(userObj));
     AddtoCartHelper(cartObj, storeData)
     .then(x => {
-      enqueueSnackbar(`Item added to cart.`, { variant: "success" });
       setShowATCPopup(false);
     });
   }
