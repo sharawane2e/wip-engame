@@ -1,10 +1,12 @@
 import React from 'react';
-import './App.css';
+import './styles/App.scss';
 import RouteHandler from './Components/RouteHandler';
 
 function App() {
   return (
-    <RouteHandler/>
+    <div className="App">
+      <RouteHandler/>
+    </div>
   );
 }
 

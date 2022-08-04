@@ -1,0 +1,154 @@
+@mixin border-radius($r) {
+  border-radius: $r;
+}
+
+@mixin box-shadow($x-axis: 0, $y-axis: 1px, $blur: 2px, $color: $primary) {
+  box-shadow: $x-axis $y-axis $blur $color;
+}
+@mixin card-box-shadow($x-axis: 0, $y-axis: 1px, $blur: 2px, $color: $primary) {
+  box-shadow: $x-axis $y-axis $blur $color !important;
+}
+
+@mixin breakpoint($point) {
+  @if $point == desktop {
+    @media (max-width: 1366px) {
+      @content;
+    }
+  } @else if $point == laptop {
+    @media (min-width: 1400px) {
+      @content;
+    }
+  } @else if $point == lg-desktop {
+    @media (min-width: 1920px) {
+      @content;
+    }
+  } @else if $point == Ipad {
+    @media (min-width: 768px) and (max-width: 1023px) {
+      @content;
+    }
+  } @else if $point == Ipad-pro {
+    @media (max-width: 1024px) {
+      @content;
+    }
+  } @else if $point == mobileonly {
+    @media (max-width: 640px) {
+      @content;
+    }
+  } @else if $point == desktop150 {
+    @media (min-width: 1280px) and (max-width: 1365px) {
+      @content;
+    }
+  } @else if $point == largeDesktop {
+    @media (min-width: 2000px) and (max-width: 3000px) {
+      @content;
+    }
+  } @else if $point == sm-mobileonly {
+    @media (min-width: 320px) and (max-width: 480px) {
+      @content;
+    }
+  }
+}
+
+@mixin space($type, $direction, $first, $second) {
+  @if $type == padding {
+    @if $direction == all {
+      padding: $first;
+    } @else if $direction == top-bottom {
+      padding-top: $first;
+      padding-bottom: $second;
+    } @else if $direction == left-right {
+      padding-left: $first;
+      padding-right: $second;
+    } @else if $direction == top {
+      padding-top: $first;
+    } @else if $direction == bottom {
+      padding-bottom: $first;
+    } @else if $direction == left {
+      padding-left: $first;
+    } @else if $direction == right {
+      padding-right: $first;
+    } @else if
+      (
+        $direction ==
+          top
+          AND
+          $direction ==
+          right
+          AND
+          $direction ==
+          bottom
+          AND
+          $direction ==
+          left
+      )
+    {
+      padding: $first $second $first $second;
+    }
+  }
+  @if $type == margin {
+    @if $direction == all {
+      padding: $first;
+    } @else if $direction == top-bottom {
+      margin-top: $first;
+      margin-bottom: $second;
+    } @else if $direction == left-right {
+      margin-left: $first;
+      margin-right: $second;
+    } @else if $direction == top {
+      margin-top: $first;
+    } @else if $direction == bottom {
+      margin-bottom: $first;
+    } @else if $direction == left {
+      margin-left: $first;
+    } @else if $direction == right {
+      margin-right: $first;
+    }
+  }
+}
+
+/*Font size*/
+@function calculateRem($size) {
+  $remSize: ($size / 16px);
+  @return $remSize * 1rem;
+}
+
+@mixin font-size($size) {
+  font-size: calculateRem($size);
+}
+
+@mixin font-sizeImp($sizeimp) {
+  font-size: calculateRem($sizeimp) !important;
+}
+
+/*End*/
+
+@mixin color($color) {
+  color: $color;
+}
+@mixin colorImp($colorImp) {
+  color: $colorImp !important;
+}
+@mixin both-color($bgcolor, $color) {
+  background: $bgcolor !important;
+  color: $color !important;
+}
+
+@mixin bgcolor($bgcolor) {
+  background: $bgcolor;
+}
+@mixin bgcolorImp($bgcolorImp) {
+  background: $bgcolorImp !important;
+}
+
+@mixin font-weight($weight) {
+  font-weight: $weight;
+}
+
+/*Border */
+@mixin border($direction, $width, $style, $color) {
+  border#{$direction}: $width $style $color;
+}
+@mixin border-radius($r) {
+  border-radius: $r;
+}
+/*End*/

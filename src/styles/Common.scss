@@ -1,0 +1,647 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  outline: none;
+  :focus {
+    outline-style: none !important;
+    box-shadow: none !important;
+    border-color: transparent !important;
+    background-color: transparent !important;
+  }
+}
+
+body {
+  font-family: map-get($map: $font-family, $key: font-barlowregular);
+  padding: 0 !important;
+  overflow: inherit !important;
+}
+
+.App {
+  position: relative;
+  @include bgcolor($gray-primary);
+  height: 100%;
+}
+.MuiButton-label {
+  text-transform: none;
+  // @include breakpoint(mobileonly) {
+  //   font-size: 12px;
+  // }
+}
+.MuiLinearProgress-barColorPrimary {
+  background-color: transparent !important;
+}
+.progress-yellow .MuiLinearProgress-barColorPrimary {
+  background-color: $yelow !important;
+}
+.progress-green .MuiLinearProgress-barColorPrimary {
+  background-color: $green-color !important;
+}
+.progress-embeded .MuiLinearProgress-barColorPrimary {
+  background-color: $red-yellow !important;
+}
+.progress-red {
+  background-color: $red !important;
+}
+.cursor--pointer {
+  cursor: pointer;
+}
+.flexGrow {
+  flex-grow: 1;
+  display: flex;
+  width: 100%;
+}
+.align-item {
+  align-items: center;
+}
+.paperstyel {
+  @include space(padding, all, $padding-16, 0);
+  text-align: $align-left;
+  @include breakpoint(Ipad-pro) {
+    padding: 0;
+  }
+}
+.input {
+  flex: 1;
+  @include space(margin, left, $margin-8, 0);
+}
+.iconButton {
+  @include space(padding, all, $padding-16, 0);
+}
+.divider {
+  height: 35px !important;
+  margin: 4px !important;
+  @include breakpoint(Ipad-pro) {
+    height: 30px !important;
+  }
+}
+
+.large-hedding {
+  @include color($black-gray);
+}
+.input-label {
+  @include space(margin, bottom, $margin-10, 0);
+}
+
+.validated-error {
+  // min-height: 16px;
+  @include color($primary);
+  @include font-size($font-reg);
+  @include space(margin, top-bottom, $margin-5, $margin-5);
+  @include breakpoint(desktop150) {
+    @include font-size($font-xmd-reg);
+    @include space(margin, all, 0, 0);
+  }
+}
+
+.header-margin-top {
+  // margin-top: 110px;
+  @include space(margin, top, 110px, 0);
+}
+/*Use these classes for borders*/
+.border-bottom {
+  @include border("-bottom", $border-width, $bsolid, $back-color);
+}
+
+.border-allside {
+  @include border("", $border-width, $bsolid, $dark-gray);
+}
+.border-allside-gray {
+  @include border("", $border-width, $bsolid, $black-gray);
+}
+.border-radius {
+  border-radius: $boder-radius !important;
+}
+.loginAlertSection {
+  @include breakpoint(mobileonly) {
+    padding: 10px 0px;
+  }
+}
+
+/*End*/
+/*Use thses classes for buttons*/
+a {
+  text-decoration: none !important;
+}
+.primary-button {
+  @include bgcolorImp($secondary);
+  @include colorImp($white);
+  @include space(padding, all, $padding-10 !important, 0);
+  text-transform: unset !important;
+  font-family: map-get(
+    $map: $font-family,
+    $key: "font-barlowmedium"
+  ) !important;
+  line-height: inherit !important;
+  border-radius: $boder-radius !important;
+  @include font-sizeImp($font-xl-reg);
+  // @include box-shadow(
+  //   0px,
+  //   10px,
+  //   20px,
+  //   map-get($map: $boxshadow, $key: "red-smooth")
+  // );
+
+  @include box-shadow(0px, 1px, 10px, $primary-btn-shadow);
+  @include breakpoint(desktop150) {
+  }
+  &:hover {
+    @include box-shadow(0px, 5px, 15px, $primary-btn-shadow);
+  }
+}
+.secondary-button {
+  @include both-color($black-gray, $white);
+  @include space(padding, all, $padding-10 !important, 0);
+  text-transform: unset !important;
+  // font-family: map-get($map: $font-family, $key: font-barlowmedium) !important;
+  line-height: inherit !important;
+  border-radius: $boder-radius !important;
+  @include font-size($font-xl-reg);
+  @include box-shadow(
+    0px,
+    10px,
+    20px,
+    map-get($map: $boxshadow, $key: "black-smooth")
+  );
+  @include breakpoint(desktop150) {
+  }
+  @include breakpoint(mobileonly) {
+    @include space(padding, all, $padding-10 !important, 0);
+  }
+  &:hover {
+    @include box-shadow(0px, 10px, 20px, $secondary-btn-shadow);
+  }
+}
+/*End*/
+/*bredcrum*/
+.bredcrum-conatiner {
+  font-family: map-get($map: $font-family, $key: "font-barlowmedium");
+  // @include bgcolor($gray-primary);
+  // min-height: 895px;
+  z-index: 99;
+  @include breakpoint(Ipad) {
+    min-height: 900px;
+  }
+  #{&}__bredcrum_inr {
+    width: 100%;
+    z-index: 99;
+    @include bgcolor($back-color);
+  }
+  #{&}__bredcrum-text {
+    @include space(padding, top-bottom, $padding-20, $padding-20);
+    ol {
+      .MuiBreadcrumbs-separator {
+        @include color($black-secondary);
+        font-family: map-get($map: $font-family, $key: "font-barlowregular");
+        @include font-weight($font-700);
+        @include font-size($font-xl-reg);
+      }
+      li {
+        > a {
+          text-decoration: none;
+          font-family: map-get($map: $font-family, $key: "font-barlowmedium");
+          @include color($secondary);
+          @include font-size($font-xl-reg);
+        }
+        // > p {
+        //   font-family: map-get($map: $font-family, $key: "font-barlowbold");
+        //   @include color($black-secondary);
+        //   @include font-weight($font-700);
+        //   @include font-size($font-xl-reg);
+        // }
+      }
+    }
+  }
+  #{&}__bredcrum-normaltext {
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+}
+/*END*/
+/*icon space set */
+.margin-right-15 {
+  //   margin-right: map-get($map: $margin, $key: "margin-15");
+  @include space(margin, right, $margin-8, 0);
+  @include breakpoint(mobileonly) {
+    @include font-size(15px);
+    margin: 0;
+  }
+}
+.margin-right-20 {
+  //   margin-right: map-get($map: $margin, $key: "margin-20") !important;
+  @include space(margin, right, $margin-20 !important, 0);
+}
+/*End*/
+
+.margin-top-174 {
+  margin-top: 0px;
+}
+.MuiPaper-elevation1 {
+  box-shadow: none !important;
+}
+.card-box-shadow {
+  &:hover {
+    @include card-box-shadow(
+      0px,
+      0px,
+      6px,
+      map-get($map: $boxshadow, $key: "black-smooth")
+    );
+  }
+}
+
+.sticky-card-position {
+  position: sticky;
+  top: 100px;
+  height: 100%;
+}
+.sticky-position {
+  position: sticky;
+  top: 82px;
+}
+.sticky-head-position {
+  position: sticky;
+  top: 0;
+  height: 100%;
+}
+
+.MuiBadge-colorSecondary {
+  @include bgcolorImp($secondary);
+}
+
+.MuiAppBar-colorPrimary {
+  background-color: $white !important;
+}
+.modal-open {
+  overflow: hidden;
+}
+.align-center {
+  text-align: $align-center;
+}
+.gray-color {
+  color: $black-gray;
+}
+
+/*For Custom Scroll*/
+body::-webkit-scrollbar,
+.custom-scroll::-webkit-scrollbar,
+.cardInfo::-webkit-scrollbar,
+.popup-container__iner--xxl::-webkit-scrollbar {
+  width: 0.35em;
+}
+
+body::-webkit-scrollbar-track,
+.custom-scroll::-webkit-scrollbar-track {
+  @include box-shadow(
+    0px,
+    0px,
+    6px,
+    map-get($map: $boxshadow, $key: $black-smooth)
+  );
+}
+
+body::-webkit-scrollbar-thumb,
+.custom-scroll::-webkit-scrollbar-thumb,
+.cardInfo::-webkit-scrollbar-thumb,
+.popup-container__iner--xxl::-webkit-scrollbar-thumb {
+  background-color: $scroll-color;
+  outline: 1px solid $scroll-border-color;
+}
+
+/*end Custom Scroll*/
+.custom-scroll .MuiAccordionSummary-content{
+  margin:0px 0px !important;
+}
+
+.pdl-2 {
+  @include space(padding, left, $margin-15, 0);
+}
+
+input:-internal-autofill-selected {
+  background-color: $white !important;
+  color: -internal-light-dark($black, $white) !important;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  box-shadow: 0 0 0 30px $white inset !important;
+}
+
+#tool-perview::-webkit-scrollbar {
+  width: 12px;
+}
+
+select:disabled {
+  border-color: $disabled-bordercolor;
+  background: $disabled-color;
+}
+
+.MuiSwitch-root {
+  font-size: 0;
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 27px;
+  margin: 10px;
+  cursor: pointer;
+  @include breakpoint(mobileonly) {
+    width: 35px;
+    height: 20px;
+  }
+}
+
+.MuiSwitch-track {
+  background: $switch-color;
+  border-radius: 10px;
+  display: block;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+.MuiSwitch-track {
+  background: $black-gray;
+  border-radius: 50px;
+  display: block;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+.MuiSwitch-thumb {
+  display: block;
+  width: 20px;
+  height: 20px;
+  top: 3px;
+  left: 3px;
+  border-radius: 16px;
+  background-color: $white;
+  position: relative;
+  -webkit-transition: all 200ms ease;
+  transition: all 200ms ease;
+  @include breakpoint(mobileonly) {
+    width: 16px;
+    height: 16px;
+    top: 2px;
+    left: 2px;
+  }
+}
+.MuiSwitch-input {
+  cursor: inherit;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  z-index: 1;
+  margin: 0;
+}
+.Mui-checked .MuiSwitch-thumb {
+  left: 27px;
+  top: 3px;
+  background-color: $white;
+  @include breakpoint(mobileonly) {
+    left: 17px;
+    top: 2px;
+  }
+}
+.Mui-focusVisible {
+  border: none !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+  fill: transparent !important;
+}
+.Mui-checked .MuiSwitch-track {
+  background: $primary;
+}
+
+.MuiFilledInput-underline:before {
+  border: none !important;
+}
+.MuiFilledInput-underline::after {
+  border: none !important;
+}
+.MuiFilledInput-input:-webkit-autofill {
+  border-radius: inherit !important;
+}
+
+input:-internal-autofill-selected {
+  background-color: $white !important;
+
+  color: -internal-light-dark(#000, $white) !important;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  box-shadow: 0 0 0 30px $white inset !important;
+}
+
+#tool-perview::-webkit-scrollbar {
+  width: 12px;
+}
+
+.fill_red {
+  fill: $secondary !important;
+}
+.fill_yellow {
+  fill: $red-yellow !important;
+}
+
+.desktop__only {
+  display: block !important;
+  @include breakpoint(mobileonly) {
+    display: none !important;
+  }
+}
+
+.mobile__only {
+  display: none !important;
+  @include breakpoint(mobileonly) {
+    display: block !important;
+  }
+}
+
+.emptySection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 100px;
+  padding-bottom: 100px;
+  p {
+    margin-top: 20px;
+  }
+  &__button-grop {
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 25px;
+    width: 100% !important;
+    &__login_button {
+      width: 100%;
+      padding: 15px !important;
+      font-size: 1.25rem !important;
+    }
+  }
+}
+
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: $black-gray;
+  font-family: map-get($map: $font-family, $key: "font-barlowmedium");
+  @include font-size($font-reg);
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: $black-gray;
+  font-family: map-get($map: $font-family, $key: "font-barlowmedium");
+  @include font-size($font-reg);
+}
+
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: $black-gray;
+  font-family: map-get($map: $font-family, $key: "font-barlowmedium");
+  @include font-size($font-reg);
+}
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: $black-gray;
+  font-family: map-get($map: $font-family, $key: "font-barlowmedium");
+  @include font-size($font-reg);
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: $black-gray;
+  font-family: map-get($map: $font-family, $key: "font-barlowmedium");
+  @include font-size($font-reg);
+}
+
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: $black-gray;
+  font-family: map-get($map: $font-family, $key: "font-barlowmedium");
+  @include font-size($font-reg);
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.fill-eyecolor {
+  fill: $eyecolor !important;
+}
+
+// .hover-effect {
+//   visibility: hidden !important;
+// }
+// .custom-button:hover .hover-effect {
+//   visibility: visible !important;
+//   transition: all 0.3s ease-in;
+// }
+
+.homeBanner {
+  width: fit-content;
+  margin: auto;
+  @include breakpoint(Ipad-pro) {
+    margin-left: 0px;
+  }
+  .carousel {
+    .slide {
+      @include breakpoint(mobileonly) {
+        text-align: left;
+      }
+      img {
+        @include breakpoint(mobileonly) {
+          width: 50%;
+        }
+      }
+    }
+  }
+}
+
+.homeFullBanner {
+  width: 100%;
+  .carousel {
+    .thumbs-wrapper {
+      display: none;
+    }
+    .carousel-status {
+      display: none;
+    }
+    .carousel-slider {
+      padding: 15px;
+      padding-right: 100px;
+    }
+    .textArea {
+      position: absolute;
+      top: 10px;
+      width: 100%;
+      display: flex;
+      align-content: center;
+      height: 100%;
+      align-items: center;
+      @include breakpoint(Ipad-pro) {
+        // position: unset;
+        top: 10px;
+        width: 100%;
+        display: flex;
+        align-content: center;
+        height: 100%;
+        align-items: center;
+      }
+      &__filter-text {
+        // padding-right: 6%;
+        // @include font-weight($font-600);
+        @include color($black-secondary);
+        @include font-size($font-xsm);
+        line-height: 42px;
+        margin-left: auto;
+        text-align: center;
+        font-weight: 600;
+        width: 100%;
+        @include breakpoint(Ipad-pro) {
+          @include font-size($font-xx-reg);
+          line-height: 24px;
+          width: 90%;
+          margin: auto;
+          padding: 15px;
+          padding-right: 15px;
+          margin-bottom: 50px;
+          text-align: center;
+        }
+        &__review-text {
+          // @include font-weight($font-600);
+          @include color($secondary);
+          @include font-size($font-xsm);
+          font-weight: 600;
+
+          @include breakpoint(Ipad-pro) {
+            @include font-size($font-xx-reg);
+          }
+        }
+      }
+    }
+  }
+}
+
+.MuiSkeleton-rectangular {
+  border-radius: 5px !important;
+}

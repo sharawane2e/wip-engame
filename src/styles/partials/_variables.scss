@@ -1,0 +1,144 @@
+$font-family: (
+  "font-barlowmedium": "barlowmedium",
+  "font-barlowbold": "barlowbold",
+  "font-barlowitalic": "barlowitalic",
+  "font-barlowlight": "barlowlight",
+  "font-barlowregular": "barlowregular",
+);
+
+$white: #fff;
+$light-white: #fdfdfd;
+$black: #000;
+$primary: #f15a5c;
+$secondary: #f15d5c;
+$red: #ff0000;
+$gray-primary: #ececec;
+$gray-secondary: #efefef;
+$black-primary: #363636;
+$black-secondary: #383838;
+$black-smooth: #b3b3b3;
+// $black-gray: #e0e0e0;
+$black-gray: #9d9d9d;
+$accent: #e3ebf7;
+$light-smooth: #d4d4d4;
+$dark-gray: #848484;
+$lightGray: #f9f9f9;
+$dark-gray-color: #999;
+$back-color: #d6d6d6;
+$transparent: transparent;
+$dark-bg: #f5f5f5;
+$yelow: #fff684;
+$green-color: #8aff8a;
+$tabcolor: #f2f2f2;
+$red-yellow: #ff9c46;
+$disabled-color: #dcdcdc;
+$disabled-bordercolor: #767676;
+$scroll-color: #a9a9a9;
+$scroll-border-color: #708090;
+$switch-color: #b3c3d3;
+$mid-gray: #d6d6d6;
+$eyecolor: #c9c9c9;
+$input-box-color: #485463;
+$chipDeleteIconColor: rgb(0 0 0 / 42%);
+
+$bold: bold;
+$font-normal: normal;
+$font-500: 500;
+$font-600: 600;
+$font-700: 700;
+$font-800: 800;
+
+$align-center: center;
+$align-right: right;
+$align-left: left;
+
+$border-width: 1px;
+$border-width2: 2px;
+$bsolid: solid;
+$dotted: dotted;
+
+$boder-radius: 6px;
+
+$red-smooth: rgba(241, 91, 91, 0.5);
+$black-smooth: rgba(0, 0, 0, 0.5);
+$black-1: rgba(0, 0, 0, 0.1);
+$black-4: rgba(0, 0, 0, 0.4);
+$overlay-color: rgba(241, 91, 91, 0.31);
+$black-dark: rgba(132, 132, 132, 0.5);
+$gray-opacity: rgba(132, 132, 132, 1);
+$primary-btn-shadow: rgba(239, 0, 0, 0.5);
+$secondary-btn-shadow: rgba(157, 157, 157);
+$seconday-shadow: rgb(157, 157, 157, 0.3);
+
+$boxshadow: (
+  "red-smooth": rgba(56, 56, 56, 0.4),
+  "black-smooth": rgba(0, 0, 0, 0.25),
+  "black-1": rgba(0, 0, 0, 0.1),
+  "black-4": rgba(0, 0, 0, 0.4),
+);
+
+$padding-0: 0px;
+$padding-2: 2px;
+$padding-5: 5px;
+$padding-6: 6px;
+$padding-8: 8px;
+$padding-10: 10px;
+$padding-12: 12px;
+$padding-14: 14px;
+$padding-15: 15px;
+$padding-16: 16px;
+$padding-18: 18px;
+$padding-20: 20px;
+$padding-22: 22px;
+$padding-24: 24px;
+$padding-25: 25px;
+$padding-26: 26px;
+$padding-27: 27px;
+$padding-30: 30px;
+$padding-35: 35px;
+$padding-40: 40px;
+$padding-50: 50px;
+$padding-55: 55px;
+$padding-75: 75px;
+$padding-90: 90px;
+
+$margin-0: 0px;
+$margin-2: 2px;
+$margin-3: 3px;
+$margin-5: 5px;
+$margin-8: 8px;
+$margin-10: 10px;
+$margin-12: 12px;
+$margin-14: 14px;
+$margin-15: 15px;
+$margin-16: 16px;
+$margin-18: 18px;
+$margin-20: 20px;
+$margin-24: 24px;
+$margin-25: 25px;
+$margin-28: 28px;
+$margin-30: 30px;
+$margin-35: 35px;
+$margin-40: 40px;
+$margin-50: 50px;
+$margin-86: 86px;
+
+$font-xxl: 50px;
+$font-xl: 45px;
+$font-xmd: 40px;
+$font-md: 45px;
+$font-xlg: 40px;
+$font-lg34: 34px;
+$font-lg: 32px;
+$font-xsm: 30px;
+$font-sm: 25px;
+$font-xx-reg: 20px;
+$font-xx-reg18: 18px;
+$font-xl-reg: 16px;
+$font-x-reg: 15px;
+$font-reg: 14px;
+$font-xmd-reg: 12px;
+$font-md-reg: 10px;
+$font-sm-reg: 5px;
+$font-ssm-reg: 2px;
+$font-zero: 0px;

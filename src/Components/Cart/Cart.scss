@@ -1,0 +1,363 @@
+.shopping-cart-data {
+    min-height: 90vh;
+  }
+  .shoping-cart {
+    font-family: map-get($map: $font-family, $key: "font-barlowmedium");
+    @include space(padding, top, $padding-15, 0);
+    #{&}__container-inr {
+      @include space(padding, bottom, $padding-0, 0);
+    }
+    #{&}__left-card {
+      display: flex;
+      align-items: $align-center;
+      @include font-size($font-xx-reg);
+      @include border("-bottom", 2px, $bsolid, $seconday-shadow);
+      @include space(padding, top-bottom, $padding-0, $padding-0!important);
+      @include space(padding, left-right, $padding-0, $padding-0!important);
+      margin: 12px;
+      line-height: 2;
+    }
+    #{&}__right-card {
+      display: flex;
+      justify-content: flex-end;
+    }
+    #{&}__tool-card {
+      @include space(padding, top-bottom, $padding-20, $padding-20);
+      @include space(padding, left-right, $padding-20, $padding-20);
+      @include space(margin, bottom, $margin-10, 0);
+      .curent-tool-img {
+        > img {
+          max-width: 100%;
+          @include breakpoint(mobileonly) {
+            max-height: 130px;
+          }
+        }
+      }
+    }
+    #{&}__tool-images {
+      justify-content: center;
+    }
+    #{&}__card-coupon {
+      @include space(padding, all, $padding-30, 0);
+      @include space(margin, bottom, $margin-10, 0);
+      @include breakpoint(Ipad) {
+        @include space(padding, all, $padding-20, 0);
+      }
+      @include breakpoint(mobileonly) {
+        @include space(padding, all, $padding-20, 0);
+      }
+    }
+    .continue-button {
+      display: flex;
+      justify-content: flex-end;
+      @include space(margin, top-bottom, $margin-20, $margin-20);
+  
+      @include breakpoint(mobileonly) {
+        margin-bottom: 80px !important;
+      }
+      @media only screen and (min-device-width: 375px) and (max-device-height: 812px) and (orientation: landscape) {
+        justify-content: center;
+        .MuiButton-label {
+          padding: 4px;
+        }
+      }
+      > a {
+        display: flex;
+        width: 100%;
+        // @media only screen and (min-device-width: 375px) and (max-device-height: 812px) and (orientation: landscape) {
+        //   width: 34% !important;
+        // }
+        .custom-button {
+          min-width: 100%;
+
+          @include space(padding, top-bottom, $padding-15, $padding-15!important);
+          @include space(padding, left-right, $padding-15, $padding-15!important);
+          font-size: 1.2rem !important;
+          @include breakpoint(desktop) {
+            @include space(
+              padding,
+              top-bottom,
+              $padding-10,
+              $padding-10!important
+            );
+            @include space(
+              padding,
+              left-right,
+              $padding-10,
+              $padding-10!important
+            );
+            font-size: 1rem !important;
+          }
+          @include breakpoint(mobileonly) {
+            // @include space(padding, all, $padding-20, 0);
+          }
+
+        }
+      }
+    }
+    .margin-right {
+      @include space(margin, right, $margin-10, 0);
+      width: 20px !important;
+      height: 20px !important;
+      @include breakpoint(Ipad) {
+        width: 20px;
+        @include space(margin, right, $margin-5, 0);
+      }
+    }
+    #{&}__tool-title {
+      @include font-size($font-xl-reg);
+      @include breakpoint(mobileonly) {
+        text-align: center;
+      }
+    }
+    #{&}__tool-discription {
+      @include font-size($font-xmd-reg);
+      word-break: break-all;
+      @include breakpoint(mobileonly) {
+        text-align: center;
+      }
+    }
+    #{&}__total-amount {
+      text-align: $align-right;
+      @include color($black-secondary);
+      @include font-size($font-xx-reg);
+      word-break: break-all;
+      line-height: 24px;
+      @include breakpoint(mobileonly) {
+        text-align: center;
+      }
+    }
+    #{&}__subscription {
+      display: flex;
+      width: min-content;
+      width: fit-content;
+  
+      > span {
+        display: flex;
+        align-items: center;
+        margin-right: 10px;
+        font-family: map-get($map: $font-family, $key: "font-barlowbold");
+        @include breakpoint(Ipad-pro) {
+          @include font-size($font-reg);
+        }
+      }
+      > select {
+        display: flex;
+        width: fit-content;
+        @include space(padding, all, $padding-12, 0);
+        @include border("", $border-width, $bsolid, $black-secondary);
+        outline: 0;
+        &:hover {
+          @include border("", $border-width, $bsolid, $gray-opacity);
+        }
+        @include breakpoint(Ipad-pro) {
+          @include font-size($font-md-reg);
+          width: fit-content;
+          @include space(padding, all, $padding-5, 0);
+        }
+      }
+    }
+    #{&}__subscription-card {
+      @include space(margin, bottom, $margin-15, 0);
+    }
+  
+    #{&}__validity-input {
+      display: flex;
+      @include breakpoint(mobileonly) {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 10px;
+      }
+      > span {
+        display: flex;
+        align-items: $align-center;
+        @include space(margin, left-right, $margin-8, 0);
+        font-family: map-get($map: $font-family, $key: "font-barlowbold");
+        @include breakpoint(Ipad-pro) {
+          @include font-size($font-reg);
+        }
+      }
+      .TextField-root {
+        display: flex;
+      }
+      .MuiOutlinedInput-input {
+        @include border-radius($boder-radius);
+        @include space(padding, all, $padding-12, 0);
+        width: 60px;
+        @media all and (max-width: 1024px) {
+          @include font-size($font-reg);
+          width: 50px;
+          @include space(padding, all, $margin-5, 0);
+        }
+      }
+      .shoping-cart__input-days {
+        @include space(margin, left, $margin-8, 0);
+        font-family: map-get($map: $font-family, $key: "font-barlowmedium");
+      }
+    }
+    #{&}__subscription-text {
+      @include font-size($font-xl-reg);
+    }
+    #{&}__tool-icons {
+      display: flex;
+      justify-content: flex-end;
+      align-items: $align-center;
+      cursor: pointer;
+      .MuiTypography-body1 {
+        display: flex;
+      }
+      @include breakpoint(mobileonly) {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        justify-content: center;
+        margin-top: 10px;
+      }
+    }
+    #{&}__tool-tick {
+      @include space(margin, right, $margin-5, 0);
+      fill: $black-gray;
+      width: 20px !important;
+      height: 24px !important;
+      &:hover {
+        fill: $secondary;
+      }
+    }
+    #{&}__tool-delete {
+      margin-left: 5px;
+      fill: $black-gray;
+      &:hover {
+        fill: $secondary;
+      }
+    }
+    #{&}__coupon-textbox {
+      display: flex;
+      .MuiOutlinedInput-input {
+        @include space(padding, all, $padding-15, 0);
+      }
+    }
+    #{&}__coupon-hedding {
+      @include font-size($font-xx-reg);
+      text-align: $align-center;
+      @include space(padding, top-bottom, $padding-10, $padding-10);
+    }
+    #{&}__coupon-amount {
+      @include font-size($font-xsm);
+      text-align: $align-center;
+      word-break: break-all;
+      line-height: 24px;
+    }
+    #{&}__coupon-code {
+      text-align: $align-left;
+      @include space(padding, top-bottom, $padding-30, $padding-30);
+      span {
+        @include font-size($font-xl-reg);
+      }
+      .shoping-cart__coupon-apply {
+        display: flex;
+        justify-content: $align-center;
+        @include space(margin, top-bottom, $margin-15, 0);
+        .shoping-cart__coupon-apply-input {
+          width: 80%;
+          outline: none;
+          @include space(padding, all, $padding-10, 0);
+          @include border("", $border-width, $dotted, $black-secondary);
+          border-right: none;
+          border-top-left-radius: $boder-radius;
+          border-bottom-left-radius: $boder-radius;
+        }
+        button {
+          border: none;
+          text-transform: capitalize;
+          @include both-color($back-color, $white);
+          @include space(padding, all, $padding-10, 0);
+          border-top-right-radius: $boder-radius;
+          border-bottom-right-radius: $boder-radius;
+          outline: none;
+          font-family: map-get($map: $font-family, $key: "font-barlowbold");
+          @include font-size($font-xl-reg);
+        }
+  
+        @media all and (max-width: 1025px) {
+          .shoping-cart__coupon-apply-input {
+            @include space(padding, all, $padding-5, 0);
+          }
+          button {
+            @include font-size($font-xmd-reg);
+            width: 60%;
+            @include space(padding, top-bottom, $padding-12, $padding-12);
+            text-align: $align-center;
+          }
+        }
+      }
+    }
+  
+    .checkout-button {
+      @include space(margin, bottom, $padding-10, 0);
+      width: 100%;
+      padding: 15px !important;
+      font-size: 1.25rem !important;
+      // @media only screen and (min-device-width: 375px) and (max-device-height: 812px) and (orientation: landscape) {
+      //   width: 35%;
+      // }
+      a {
+        color: inherit;
+      }
+      span{
+        margin-left: 10px
+      }
+      .MuiButton-label {
+        > svg {
+          @include space(margin, right, $margin-8, 0);
+          width: 20px !important;
+          height: 20px !important;
+          @include breakpoint(Ipad) {
+            width: 20px;
+            @include space(margin, right, $margin-5, 0);
+          }
+        }
+      }
+  
+      @media all and (min-width: 1024px) and (max-width: 1366px) {
+        // width: 178px !important;
+        padding: 10px 16px !important;
+        .MuiButton-label {
+          @include font-size($font-reg);
+        }
+      }
+    }
+   
+  }
+  
+  
+  
+  
+  // Cart loader
+  .cartLoader{
+    padding: 10px;
+    margin-bottom: 10px;
+     &__paper-last-container{
+       margin-top: 12px;
+       margin-bottom: 12px;
+     }
+  }
+  .skeleton-button{
+    display:flex;
+    justify-content: center;
+    width:100%;
+    margin:auto !important;
+  }
+  .paper-first-container{
+    margin-top:10px;
+  }
+  .cartLoaderContainer{
+   min-height: 10vh; 
+  }
+
+  .width-fill-available{
+    width: -webkit-fill-available;
+  }
+
+  button{
+    cursor: pointer;
+  }

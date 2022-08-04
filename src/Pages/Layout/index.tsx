@@ -10,6 +10,9 @@ import { getUserDetails, setReduxUser } from '../../Utils/userFunctions';
 import { setUserDetails } from '../../redux/UserRedux/userAction';
 import axios from 'axios';
 import MyWidgetsPage from '../MyWidgetsPage';
+import AllWidgets from '../../Components/AllWidgets';
+import Header from '../../Components/Header';
+import Cart from '../../Components/Cart';
 
 function Layout() {
 
@@ -65,10 +68,14 @@ function Layout() {
   return (
     <>
         <SnackbarProvider maxSnack={3} autoHideDuration={3000}>
-          <TopNav/>
+          {/* <TopNav/> */}
+          <Header/>
           <Routes>
-              <Route path="/" element={<CardsContainer/>} />
-              <Route path="cart" element={<CartPage/>} />
+              <Route path="/" element={<AllWidgets/>} />
+              <Route path="cart" element={<Cart/>} />
+
+              {/* <Route path="/" element={<CardsContainer/>} /> */}
+              {/* <Route path="cart" element={<CartPage/>} /> */}
               <Route path="mywidgets" element={<MyWidgetsPage/>} />
           </Routes>
         </SnackbarProvider>
