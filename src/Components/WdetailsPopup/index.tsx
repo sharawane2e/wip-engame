@@ -4,7 +4,6 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { useDispatch, useSelector } from 'react-redux';
-// import "./CustomPopup.scss";
 import { IconButton, Select, SelectChangeEvent } from '@mui/material';
 import { MenuItem } from '@mui/material';
 import { ListSubheader } from '@mui/material';

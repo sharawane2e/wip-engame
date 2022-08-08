@@ -1,0 +1,445 @@
+.border--colordata {
+    @include border("", $border-width, $bsolid, $back-color);
+  }
+  .purchased-tool {
+    //height: 100vh;
+    font-family: map-get($map: $font-family, $key: "font-barlowmedium");
+    #{&}__container {
+      @include space(padding, top-bottom, $padding-30, $padding-30);
+      .css-zow5z4-MuiGrid-root > .MuiGrid-item {
+        @include space(padding, right, $padding-24, 0);
+      }
+      .MuiGrid-item {
+        @include breakpoint(mobileonly) {
+          padding: 5px;
+          min-width: 100%;
+        }
+      }
+    }
+    .textbox-hide {
+      outline: 0;
+      border: 0;
+      background: transparent;
+      width: 300px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #{&}__borderdata {
+      display: flex;
+      align-items: $align-center;
+      @include font-size($font-xx-reg);
+      @include border("-bottom", 2px, $bsolid, $seconday-shadow);
+      padding: 0 !important;
+      margin: 12px;
+      line-height: 2;
+    }
+    #{&}__tabing {
+      display: flex;
+      justify-content: flex-end;
+      .MuiSkeleton-rectangular {
+        margin-right: 10px;
+      }
+    }
+    #{&}__filterTabs {
+      width: 100%;
+      margin: 0px;
+      overflow: auto;
+      /* width: 100%; */
+      margin-bottom: 15px;
+    }
+    #{&}__hedding {
+      @include space(margin, bottom, $margin-20, 0);
+      @include breakpoint(mobileonly) {
+        min-width: min-content !important;
+        @include space(margin, bottom, $margin-15, 0);
+      }
+      .hedding-text {
+        font-family: map-get($map: $font-family, $key: "font-barlowmedium");
+        @include font-size($font-xx-reg);
+      }
+      .tab--button {
+        border: $border-width $bsolid $tabcolor;
+        width: max-content;
+        display: flex;
+        font-family: map-get($map: $font-family, $key: "font-barlowmedium");
+        @include font-size($font-reg);
+        @include space(padding, all, $padding-5, $padding-10);
+        @include space(padding, left, $padding-15, 0);
+        @include space(padding, right, $padding-15, 0);
+        @include space(margin, right, $margin-10, 0);
+        justify-content: $align-center;
+        background-color: $tabcolor;
+        color: $black-secondary;
+        align-items: $align-center;
+        text-align: $align-center;
+        cursor: pointer;
+        &:hover {
+          border: $border-width $bsolid $secondary;
+        }
+        @include breakpoint(Ipad-pro) {
+          width: max-content;
+          line-height: 1.2rem;
+          // padding: 5px 10px;
+          @include space(padding, all, $padding-5, $padding-10);
+          @include space(padding, left, $padding-10, 0);
+          @include space(padding, right, $padding-10, 0);
+        }
+        @include breakpoint(Ipad) {
+          width: max-content;
+          line-height: 1.2rem;
+          @include space(padding, all, $padding-5, $padding-10);
+          @include space(padding, left, $padding-10, 0);
+          @include space(padding, right, $padding-10, 0);
+        }
+      }
+      .tab--active {
+        background-color: $secondary;
+        color: $white;
+        border: $border-width $bsolid $secondary;
+      }
+      .tab--button:last-child {
+        margin-right: 0;
+      }
+    }
+    .progress-bar {
+      width: 100px;
+      @include breakpoint(mobileonly) {
+        min-width: 100%;
+      }
+    }
+    .extend-validity {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      text-decoration: underline;
+      font-family: map-get($map: $font-family, $key: "barlowregular");
+      justify-content: flex-end;
+      @include font-size($font-reg);
+      margin-top: -27px;
+    }
+    .timer-svg {
+      > svg {
+        fill: $red;
+      }
+    }
+    #{&}__tool-type-data {
+      @include space(padding, left-right, $padding-0 !important, 0 !important);
+      @include space(
+        padding,
+        top-bottom,
+        $padding-8 !important,
+        $padding-8 !important
+      );
+    }
+  
+    #{&}__purchased-date {
+      display: flex;
+      align-items: center;
+      > img,
+      svg {
+        display: inline-flex;
+        vertical-align: middle;
+      }
+  
+      .purchased-tool__date-type-text,
+      .purchased-tool__date-type-time {
+        display: inline-flex;
+        vertical-align: middle;
+      }
+      .purchased-curent-text {
+        color: $black-secondary;
+        font-weight: $font-700;
+      }
+      .purchased-tool__date-type-text {
+        @include font-size($font-reg);
+        @include space(padding, left, $padding-5, 0);
+        text-decoration: none;
+      }
+      .bold-style {
+        font-weight: bold;
+      }
+      .purchased-tool__date-type-time {
+        @include font-size($font-reg);
+        @include space(padding, left, $padding-15, 0);
+        @include breakpoint(mobileonly) {
+          position: absolute;
+          right: 20px;
+        }
+      }
+    }
+    .purchased-tool__dateNTime {
+      display: flex;
+    }
+    .purchased-tool__toggleclass {
+      cursor: pointer;
+    }
+  
+    .expiry-type {
+      color: $black-gray;
+      @include font-size($font-xmd-reg);
+    }
+    .purchased-types {
+      text-decoration: underline;
+      font-weight: normal;
+    }
+    .purchased-tool__hover {
+      :hover {
+        color: $secondary;
+      }
+    }
+    .show--accordion {
+      padding-bottom: 6px !important;
+    }
+    .margin-rightdata {
+      @include space(margin, left, $padding-5, 0);
+    }
+    .curent-time {
+      @include space(margin, left, $padding-15, 0);
+    }
+    .purchased-image {
+      width: 100% !important;
+      max-width: 100%;
+      padding: 0px !important;
+      justify-content: center;
+      align-items: center;
+      @include breakpoint(mobileonly) {
+        min-width: 100%;
+      }
+    }
+    .tool-hits-days {
+      text-align: $align-center;
+    }
+    #{&}__tool-image {
+      background: $dark-bg;
+      @include space(margin, right, $margin-3, 0);
+      img {
+        @include breakpoint(mobileonly) {
+          padding: 15px;
+          max-height: 130px;
+        }
+      }
+    }
+    #{&}__tool-data {
+      background: $dark-bg;
+      @include breakpoint(mobileonly) {
+        min-width: 100%;
+      }
+      .MuiTypography-root {
+        @include breakpoint(mobileonly) {
+          min-width: 100%;
+        }
+      }
+      .switchBtn {
+        display: flex;
+      }
+    }
+    #{&}__tool-card {
+      @include space(padding, top-bottom, $padding-30, $padding-30);
+      @include space(padding, left-right, $padding-50, $padding-30);
+      @include breakpoint(mobileonly) {
+        @include space(padding, top-bottom, $padding-15, $padding-15);
+        @include space(padding, left-right, $padding-15, $padding-15);
+        margin-bottom: 15px;
+      }
+    }
+    #{&}__tool-title {
+      color: $black-secondary;
+      font-family: map-get($map: $font-family, $key: "font-barlowmedium");
+      font-size: 1.1rem;
+      @include space(padding, bottom, $padding-10, 0);
+      font-weight: $font-500;
+    }
+    // .purchased-tool__tool-data {
+    //   .MuiGrid-container {
+    //     .MuiGrid-item {
+    //       padding: 24px !important;
+    //       width: 100%;
+    //     }
+    //   }
+    // }
+    .subscription-day__icon {
+      display: none;
+    }
+    .display-flex {
+      display: flex;
+      padding-bottom: 5px;
+    }
+  
+    #{&}__tool-type {
+      .subscription-type-text {
+        font-family: map-get($map: $font-family, $key: "font-barlowbold");
+        @include font-size($font-reg);
+      }
+      .CopyToClipboard {
+        cursor: pointer;
+      }
+      .tooltip__key {
+        cursor: pointer;
+        @include font-size($font-reg);
+        .tooltip__keyCode {
+        }
+      }
+  
+      .subscription-day {
+        font-family: map-get($map: $font-family, $key: "font-barlowmedium");
+        @include font-size($font-reg);
+        cursor: pointer;
+        &:hover {
+          @include color($secondary);
+          .subscription-day__icon {
+            display: flex !important;
+            @include color($secondary);
+          }
+        }
+      }
+    }
+    #{&}__tool-validity {
+      display: flex;
+      align-items: $align-center;
+      .tool-extned {
+        font-family: map-get($map: $font-family, $key: "font-barlowmedium");
+        @include color($secondary);
+        text-decoration: underline;
+      }
+    }
+    #{&}__tool-nodays {
+      display: flex;
+      justify-content: $align-center;
+      .tool-validity {
+        align-items: $align-center;
+      }
+    }
+    .grid-flex {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      .MuiSwitch-root {
+        margin: 0 !important;
+      }
+    }
+    #{&}__tool-left-day {
+      font-family: map-get($map: $font-family, $key: "font-barlowbold");
+      @include font-size($font-xl-reg);
+    }
+    .icon-margin {
+      @include space(margin, right, $padding-15, 0);
+      @include breakpoint(Ipad) {
+        @include space(margin, right, 0, 0);
+      }
+    }
+    .accordion-margin {
+      @include space(margin, top, $margin-3, 0);
+      @include space(padding, bottom, $padding-20, 0);
+    }
+    .show--toogle {
+      color: $dark-gray;
+      display: flex;
+      align-items: $align-center;
+      .purchased-curent-text {
+        color: $dark-gray;
+        font-weight: $font-normal;
+      }
+    }
+    .copy-to-clip {
+      > svg {
+        width: 15px;
+        height: 15px;
+        cursor: pointer;
+      }
+    }
+    #{&}__Indicator {
+      height: 43px;
+      display: flex;
+      align-items: $align-center;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    #{&}__embeded-div {
+      padding-left: 15px;
+    }
+    #{&}__embeded-Fdiv {
+      padding-left: 15px;
+      @include breakpoint(mobileonly) {
+        padding-left: 0px;
+      }
+    }
+    #{&}__embeded-icon {
+      display: flex;
+      // @include border("", $border-width, $bsolid, $black-gray);
+      // @include space(padding, all, $padding-8, 0);
+      background-color: $transparent;
+      cursor: pointer;
+      // width: 45px;
+      // height: 43px;
+      align-items: $align-center;
+      justify-content: $align-center;
+      & > svg {
+        // fill: $accent;
+      }
+      &:hover {
+        // @include border("", $border-width, $bsolid, $secondary);
+        svg {
+          > path {
+            fill: $secondary;
+          }
+        }
+        svg {
+          > g > path {
+            fill: $primary;
+          }
+        }
+        path {
+          fill: $primary;
+        }
+        g {
+          stroke: $primary;
+        }
+      }
+    }
+    #{&}__date-time {
+      @include space(margin, top, $margin-15, 0);
+      .purchased-on {
+        font-family: map-get($map: $font-family, $key: "font-barlowbold");
+        @include font-size($font-xmd-reg);
+        @include color($black-gray);
+      }
+      .purchased-date {
+        font-family: map-get($map: $font-family, $key: "font-barlowmedium");
+        @include font-size($font-xmd-reg);
+        @include color($black-gray);
+      }
+    }
+    #{&}__doenloadP {
+      display: none;
+      @include breakpoint(mobileonly) {
+        display: block;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: $font-xmd-reg;
+      }
+    }
+    #{&}__expiry-date {
+      display: flex;
+      justify-content: flex-end;
+      @include color($black-gray);
+      @include breakpoint(mobileonly) {
+        justify-content: flex-start;
+      }
+    }
+  }
+  .blankPage {
+    height: 70vh;
+  }
+
+  .mb-10{
+    margin-bottom: 10px;
+  }
+
+  .pb-10{
+    padding-bottom: 10px;
+  }
+  
+  .custom_show_more{
+    padding: 15px 12px !important;
+  }

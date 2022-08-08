@@ -1,12 +1,12 @@
-.popup_container{
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    z-index: 9999;
-    top: 0;
-    background: rgba(0,0,0,0.7);
-}
+// .popup_container{
+//     position: fixed;
+//     width: 100%;
+//     height: 100%;
+//     left: 0;
+//     z-index: 9999;
+//     top: 0;
+//     background: rgba(0,0,0,0.7);
+// }
 
 .popup_box{
     position: absolute;
@@ -91,3 +91,317 @@ textarea{
     border: 1px solid gray;
     // pointer-events: none;
 }
+
+.popup-background {
+    background: #ececec url("https://engame.e2eresearch.com/static/media/login-registartion.3e5af29d.svg") no-repeat !important;
+  }
+  .popup-background:before {
+    content: "";
+    position: absolute;
+    right: -33px;
+    top: -7px;
+    @include border("-left", 50px, $bsolid, $transparent);
+    @include border("-right", 50px, $bsolid, $transparent);
+    @include border("-top", 50px, $bsolid, $primary);
+  
+    transform: rotate(225deg);
+  }
+  .popup-close {
+    position: absolute;
+    right: 10px;
+    top: 13px;
+    cursor: pointer;
+    @include breakpoint(mobileonly) {
+      top: 10px;
+      right: 13px;
+    }
+    > svg {
+      fill: $white;
+    }
+  }
+  .tool-perview-data {
+    .popup-close {
+      > svg {
+        fill: $black !important;
+      }
+    }
+  }
+  .popup-padding {
+    @include space(padding, all, $padding-30, 0);
+    // padding-right: 50px;
+    @include breakpoint(desktop) {
+      @include space(padding, all, $padding-8, 0);
+    }
+    @include breakpoint(mobileonly) {
+      @include space(padding, all, $padding-0, 0);
+    }
+  }
+
+  .popup-container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    z-index: 9999;
+    top: 0;
+    .message__img {
+      width: 75px;
+    }
+    .sucess_message {
+      @include space(padding, top-bottom, $padding-20, $padding-20);
+      // @include space(padding, left-right, $padding-5, $padding-5);
+    }
+    #{&}__iner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60%;
+      @include bgcolor($white);
+    }
+  
+    #{&}__iner--xxl {
+      width: 1100px;
+      @include breakpoint(Ipad-pro) {
+        width: 90%;
+        overflow-y: auto;
+      }
+    }
+  
+    #{&}__iner--xl {
+      width: 520px;
+      @include breakpoint(Ipad-pro) {
+        width: 90%;
+      }
+    }
+  
+    #{&}__iner--md {
+      width: 500px;
+      @include breakpoint(Ipad-pro) {
+        width: 90%;
+        min-height: 500px;
+      }
+    }
+    #{&}__iner--xl-md {
+      width: 600px;
+      @include breakpoint(mobileonly) {
+        width: 95vw;
+      }
+    }
+    #{&}__iner--sm {
+      width: 400px;
+      @include breakpoint(mobileonly) {
+        width: 90%;
+      }
+    }
+    #{&}__iner--xsm {
+      width: 25%;
+    }
+    /*End*/
+    #{&}__header {
+      @include space(padding, top-bottom, $padding-20, $padding-20);
+      @include space(padding, left-right, $padding-20, $padding-20);
+      display: flex;
+      font-family: map-get($map: $font-family, $key: "font-barlowregular");
+      font-weight: $font-600;
+    }
+    #{&}__text {
+      display: flex;
+      flex: 1;
+      @include font-size($font-xx-reg);
+      align-items: $align-center;
+    }
+    #{&}__body {
+      // height: 560px;
+      @include space(padding, all, $padding-30, 0);
+      @include breakpoint(mobileonly) {
+        @include space(padding, all, $padding-20, 0);
+      }
+      .MuiGrid-spacing-xs-3 > .MuiGrid-item {
+        @include breakpoint(mobileonly) {
+          @include space(padding, top, $padding-12, 0);
+          @include space(padding, left-right, $padding-12, $padding-12);
+        }
+      }
+    }
+  
+    #{&}__close {
+      display: flex;
+      justify-content: flex-end;
+      cursor: pointer;
+      & > svg {
+        width: 1.5rem !important;
+        height: 1.5rem !important;
+        fill: $dark-gray;
+      }
+    }
+    #{&}__close-withoutheader {
+      position: absolute;
+      right: 0;
+      cursor: pointer;
+      @include space(padding, top, $padding-10, 0);
+      @include space(padding, bottom, $padding-10, 0);
+      @include space(padding, left, $padding-30, 0);
+      @include space(padding, right, $padding-30, 0);
+      & > svg {
+        width: 2rem !important;
+        height: 2rem !important;
+        fill: $black-dark;
+      }
+    }
+    .MuiGrid-grid-sm-6 {
+      @include breakpoint(Ipad) {
+        flex-grow: 0;
+        max-width: 100% !important;
+        flex-basis: 100% !important;
+      }
+    }
+    .MuiGrid-grid-sm-7 {
+      @include breakpoint(Ipad) {
+        flex-grow: 0;
+        max-width: 100% !important;
+        flex-basis: 100% !important;
+      }
+    }
+  }
+  
+  .form-area {
+    @include breakpoint(Ipad-pro) {
+      padding: 0;
+    }
+    @include breakpoint(desktop150) {
+      @include space(padding, top-bottom, $padding-5, $padding-90);
+      @include space(padding, left-right, $padding-15, $padding-30);
+    }
+    &.login--form {
+      @include breakpoint(desktop150) {
+        @include space(padding, top-bottom, $padding-5, $padding-5);
+      }
+    }
+  
+    #{&}__login {
+      font-family: map-get($map: $font-family, $key: "font-barlowmedium");
+      @include font-size($font-lg);
+      text-align: $align-left;
+      // @include space(padding, top, $padding-20, 0);
+      @include space(padding, bottom, $padding-55, 0);
+      @include breakpoint(desktop) {
+        @include space(padding, top-bottom, $padding-5, $padding-50);
+      }
+  
+      @include breakpoint(desktop150) {
+        @include space(padding, bottom, $padding-25, 0);
+        @include font-size($font-xx-reg18);
+      }
+      @include breakpoint(mobileonly) {
+        @include space(padding, top, $padding-15, 0);
+      }
+    }
+    .input-label {
+      @include font-size($font-xl-reg);
+      font-family: map-get($map: $font-family, $key: "font-barlowlight");
+      @include color($black-smooth);
+      @include breakpoint(desktop150) {
+        // font-size: map-get($map: $text-size, $key: "small");
+        @include font-size($font-reg);
+        @include space("margin", bottom, $margin-2, 0);
+      }
+    }
+    .MuiOutlinedInput-input {
+      @include space(padding, all, $padding-15, 0);
+      @include font-size($font-xmd-reg);
+      @include breakpoint(desktop150) {
+        @include space(padding, top, $padding-10, 0);
+        @include space(padding, bottom, $padding-10, 0);
+        @include font-size($font-xmd-reg);
+      }
+    }
+    #{&}__fileds {
+      & > * {
+        width: 100%;
+      }
+    }
+    #{&}__control {
+      @include space(margin, bottom, $margin-8, 0);
+      // @include breakpoint(desktop) {
+      //   @include space(margin, bottom, $margin-10, 0);
+      // }
+      .MuiFormLabel-filled {
+        @include font-size($font-reg);
+        color: $black-gray;
+      }
+      .Mui-focused {
+        @include font-size($font-reg);
+        color: $black-gray;
+      }
+      .MuiFilledInput-input {
+        // @include breakpoint(desktop) {
+        //   padding: 18px 12px 10px;
+        // }
+        @include breakpoint(mobileonly) {
+          // padding: 15px 10px 10px;
+          font-size: 12px;
+        }
+      }
+  
+      @include breakpoint(desktop150) {
+        .MuiIconButton-label {
+          > svg {
+            width: 18px;
+            height: 18px;
+          }
+        }
+      }
+      input {
+        color: $input-box-color !important;
+        @include font-size($font-xl-reg);
+      }
+    }
+    .forgot-link {
+      @include font-weight($font-600);
+      text-align: $align-right;
+      @include space(padding, top, $padding-15, 0);
+      @include space(padding, bottom, $padding-10, 0);
+  
+      & > a {
+        @include color($secondary);
+        font-family: map-get($map: $font-family, $key: "font-barlowmedium");
+        @include font-weight($font-500);
+      }
+      @include breakpoint(desktop150) {
+        @include font-size($font-xmd-reg);
+      }
+    }
+    .form-newaccont {
+      text-align: $align-center;
+      @include font-size($font-xl-reg);
+      font-family: map-get($map: $font-family, $key: "font-barlowmedium");
+      @include space(padding, top, $padding-15, 0);
+      & > a {
+        @include space(padding, left, $padding-5, 0);
+        @include color($secondary);
+        @include font-weight($font-500);
+      }
+    }
+    .MuiFilledInput-root {
+      background-color: $white !important;
+    }
+  }
+  .form-button-grop {
+    text-align: $align-center;
+    @include space(padding, top-bottom, $padding-20, $padding-25);
+    @include breakpoint(desktop) {
+      @include space(padding, top-bottom, $padding-15, $padding-15);
+    }
+    .login__button {
+      // min-width: 292px !important;
+      width: 100%;
+      @include space(padding, all, $padding-15 !important, 0);
+      @include font-sizeImp($font-xx-reg);
+      @include breakpoint(desktop150) {
+        @include font-size($font-xmd-reg);
+        @include space(padding, top-bottom, $padding-15, $padding-10);
+      }
+    }
+  }
+  

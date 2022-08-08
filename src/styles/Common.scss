@@ -338,82 +338,100 @@ select:disabled {
   background: $disabled-color;
 }
 
-.MuiSwitch-root {
-  font-size: 0;
-  position: relative;
-  display: inline-block;
-  width: 50px;
-  height: 27px;
-  margin: 10px;
-  cursor: pointer;
-  @include breakpoint(mobileonly) {
-    width: 35px;
-    height: 20px;
-  }
-}
+// .MuiSwitch-root {
+//   font-size: 0;
+//   position: relative;
+//   display: inline-block;
+//   width: 50px;
+//   height: 27px;
+//   margin: 10px;
+//   cursor: pointer;
+//   @include breakpoint(mobileonly) {
+//     width: 35px;
+//     height: 20px;
+//   }
+// }
 
-.MuiSwitch-track {
-  background: $switch-color;
-  border-radius: 10px;
-  display: block;
-  height: 100%;
-  width: 100%;
-  position: absolute;
-}
+// .MuiSwitch-track {
+//   background: $switch-color;
+//   border-radius: 10px;
+//   display: block;
+//   height: 100%;
+//   width: 100%;
+//   position: absolute;
+// }
 
-.MuiSwitch-track {
-  background: $black-gray;
-  border-radius: 50px;
-  display: block;
-  height: 100%;
-  width: 100%;
-  position: absolute;
-}
-.MuiSwitch-thumb {
-  display: block;
-  width: 20px;
-  height: 20px;
-  top: 3px;
-  left: 3px;
-  border-radius: 16px;
-  background-color: $white;
-  position: relative;
-  -webkit-transition: all 200ms ease;
-  transition: all 200ms ease;
-  @include breakpoint(mobileonly) {
-    width: 16px;
-    height: 16px;
-    top: 2px;
-    left: 2px;
-  }
-}
-.MuiSwitch-input {
-  cursor: inherit;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  opacity: 0;
-  z-index: 1;
-  margin: 0;
-}
-.Mui-checked .MuiSwitch-thumb {
-  left: 27px;
-  top: 3px;
-  background-color: $white;
-  @include breakpoint(mobileonly) {
-    left: 17px;
-    top: 2px;
-  }
-}
+// .MuiSwitch-track {
+//   background: $black-gray;
+//   border-radius: 50px;
+//   display: block;
+//   height: 100%;
+//   width: 100%;
+//   position: absolute;
+// }
+
+// .MuiSwitch-thumb {
+//   display: block;
+//   width: 20px;
+//   height: 20px;
+//   top: 3px;
+//   left: 3px;
+//   border-radius: 16px;
+//   background-color: $white;
+//   position: relative;
+//   -webkit-transition: all 200ms ease;
+//   transition: all 200ms ease;
+//   @include breakpoint(mobileonly) {
+//     width: 16px;
+//     height: 16px;
+//     top: 2px;
+//     left: 2px;
+//   }
+// }
+
+// .MuiSwitch-input {
+//   cursor: inherit;
+//   position: absolute;
+//   width: 100%;
+//   height: 100%;
+//   top: 0;
+//   left: 0;
+//   opacity: 0;
+//   z-index: 1;
+//   margin: 0;
+// }
+
+// .MuiSwitch-thumb {
+//   left: 27px;
+//   top: 3px;
+//   background-color: $white;
+//   @include breakpoint(mobileonly) {
+//     left: 17px;
+//     top: 2px;
+//   }
+// }
+
+// .MuiSwitch-track {
+//   background: $primary;
+// }
+
+// .Mui-checked{
+//   left: 27px;
+//   top: 3px;
+//   background-color: $white;
+//   @include breakpoint(mobileonly) {
+//     left: 17px;
+//     top: 2px;
+//   }
+// }
+
 .Mui-focusVisible {
   border: none !important;
   box-shadow: none !important;
   background-color: transparent !important;
   fill: transparent !important;
 }
-.Mui-checked .MuiSwitch-track {
+.Mui-checked {
   background: $primary;
 }
 
@@ -644,4 +662,14 @@ select {
 
 .MuiSkeleton-rectangular {
   border-radius: 5px !important;
+}
+
+.popup-overlay {
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
 }

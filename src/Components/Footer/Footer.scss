@@ -1,0 +1,98 @@
+.footer {
+  bottom: 0px;
+  width: 100%;
+  z-index: 999999;
+  @include font-size($font-xmd-reg);
+  @include bgcolor($gray-primary);
+  @include space(padding, top-bottom, $padding-24, $padding-24);
+  @include breakpoint(mobileonly) {
+    padding: 10px 2px 10px 2px;
+  }
+  &__divider{
+    width: 100%;
+    margin-top: 20px !important;
+    margin-bottom: 20px !important;
+    border-color: #CBCBCB !important;
+  }
+  &__gridmain {
+    padding: 0px 6vw;
+    @include breakpoint(mobileonly) {
+      padding: 0px;
+    }
+    &__gridInnerChild {
+      display: flex;
+      justify-content: center;
+      
+      &__atag {
+        &:first-child {
+          padding-left: 0;
+          @include breakpoint(mobileonly) {
+            padding-left: 8px;
+          }
+        }
+        padding-left: 30px;
+        padding-right: 50px;
+        font-size: 16px;
+        @include breakpoint(Ipad-pro) {
+          padding: 10px 8px 10px 9px;
+          font-size: 12px;
+        }
+        @include breakpoint(mobileonly) {
+          padding: 10px 8px 10px 9px;
+          font-size: 12px;
+        }
+        a {
+          color: #A4A4A4;
+          &:hover {
+            color: #383838;
+          }
+        }
+      }
+    }
+   
+    &__rightChild {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-right: 10px;
+      font-size: 16px;
+      @include breakpoint(mobileonly) {
+        justify-content: center;
+        font-size: 12px;
+      }
+      @include breakpoint(Ipad-pro) {
+        justify-content: center;
+      }
+      .copyright-text {
+        color: #bbbbbb;
+        margin-bottom: 0 !important;
+      }
+    }
+  }
+}
+.lowerFooter {
+  @include space(padding, top, $padding-10, 0);
+  @include space(padding, bottom, $padding-10, 0);
+  background-color: transparent;
+  margin: auto;
+  width: 50%;
+  @include breakpoint(mobileonly) {
+    width: 100%;
+  }
+  .MuiGrid-root {
+    text-align: center;
+    @include breakpoint(mobileonly) {
+      width: 100%;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    a {
+      font-size: 12px;
+      color: $black;
+      &:hover {
+        color: $primary;
+      }
+    }
+  }
+}

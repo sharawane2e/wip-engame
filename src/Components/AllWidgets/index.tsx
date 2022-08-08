@@ -19,6 +19,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
+import AppPopup from '../AppPopup';
 
 
 const AllWidgets = () => {
@@ -33,12 +34,17 @@ const AllWidgets = () => {
     const [showPreviewPopup, setShowPreviewPopup] = useState(false);
     const [searchbarText, setSearchbarText] = useState("");
     const [showLoader, setShowLoader] = useState(false);
+    const [showPopup, setShowPopup] = useState(false);
+    const [popupType, setPopupType] = useState("login");
 
     const BASE_URL = "https://apiengame.e2eresearch.com";
 
     useEffect(() => {
         setShowLoader(true)
         getAllProducts();
+        if(!storeData.user.userDetails.isLoggedIn){
+            setShowPopup(true);
+        }
     }, []);
 
     const getAllProducts = () => { 
@@ -67,6 +73,11 @@ const AllWidgets = () => {
         }
     }
 
+    const popup = (type:any, isShow:any) => {
+        setPopupType(type);
+        setShowPopup(isShow)
+    };
+
     return (
         <>
             <div className="toolcard">
@@ -74,59 +85,62 @@ const AllWidgets = () => {
                     <Grid container spacing={4}>
 
                     {cardsArr.map((tooldata:any, index:any) => (
-                    <Grid
-                            item
-                            xl={2}
-                            lg={3}
-                            md={3}
-                            sm={4}
-                            xs={12}
-                            key={index}
-                            id={tooldata.id}
-                        >
-                            <Paper className="toolcard__imageblck">
-                            <div className="toolcard__image">
-                                <img
-                                src={BASE_URL + tooldata.imgUrl}
-                                alt="Widget"
-                                />
-                                <div className="toolcard__preview">
-                                    <button className='custom-button toolcard__perview-button' onClick={() => {setCPWidgetObj(tooldata); setShowPreviewPopup(true)}}><VisibilityIcon className="eyes_icon" />{" "}Preview</button>
-                                </div>
-                                <div className="toolcard__tooltip">
-                                <Tooltip title="How it works?" placement="top">
-                                    <QuestionMarkIcon className="toolcard__tooltip__icon"/>
-                                </Tooltip>
-                                </div>
-                            </div>
+                        <Grid
+                                item
+                                xl={2}
+                                lg={3}
+                                md={3}
+                                sm={4}
+                                xs={12}
+                                key={index}
+                                id={tooldata.id}
+                            >
+                                <Paper className="toolcard__imageblck">
+                                    <div className="toolcard__image">
+                                        <img
+                                        src={BASE_URL + tooldata.imgUrl}
+                                        alt="Widget"
+                                        />
+                                        <div className="toolcard__preview">
+                                            {/* <button className='custom-button toolcard__perview-button' onClick={() => {setCPWidgetObj(tooldata); setShowPreviewPopup(true)}}><VisibilityIcon className="eyes_icon" />{" "}Preview</button> */}
+                                            <button className='custom-button toolcard__perview-button' onClick={() => {setCPWidgetObj(tooldata); popup("ToolPreview", true);}}><VisibilityIcon className="eyes_icon" />{" "}Preview</button>
+                                        </div>
+                                        <div className="toolcard__tooltip">
+                                        <Tooltip title="How it works?" placement="top">
+                                            <QuestionMarkIcon className="toolcard__tooltip__icon"/>
+                                        </Tooltip>
+                                        </div>
+                                    </div>
 
-                            <div className="toolcard__align toolcard__toolicons">
-                                <div className="toolcard__items toolcard__download">
-                                <Tooltip title="Embeded Code" placement="top">
-                                    <div className="toolcard__sub-icons">
-                                    {/* <EmbededCode /> */}
+                                    <div className="toolcard__align toolcard__toolicons">
+                                        <div className="toolcard__items toolcard__download">
+                                        <Tooltip title="Embeded Code" placement="top">
+                                            <div className="toolcard__sub-icons">
+                                            {/* <EmbededCode /> */}
+                                            </div>
+                                        </Tooltip>
+                                        </div>
+                                        <div className="toolcard__items toolcard__shopping">
+                                        <Tooltip title="Add to cart" placement="top">
+                                            <div className="toolcard__sub-icons" onClick={() => {setShowATCPopup(true); setCPWidgetObj(tooldata)}}>
+                                            {isInCart(tooldata.id) ? (
+                                                <ShoppingCartIcon />
+                                            ) : (
+                                                <ShoppingCartCheckoutIcon />
+                                            )}
+                                            </div>
+                                        </Tooltip>
+                                        </div>
                                     </div>
-                                </Tooltip>
-                                </div>
-                                <div className="toolcard__items toolcard__shopping">
-                                <Tooltip title="Add to cart" placement="top">
-                                    <div className="toolcard__sub-icons" onClick={() => {setShowATCPopup(true); setCPWidgetObj(tooldata)}}>
-                                    {isInCart(tooldata.id) ? (
-                                        <ShoppingCartIcon />
-                                    ) : (
-                                        <ShoppingCartCheckoutIcon />
-                                    )}
+                                
+                                </Paper>
+                                
+                                <div className="toolcard__align toolcard__toolname">
+                                    <div className="toolcard__aligninr1 toolcard__font-family">
+                                        {tooldata.toolname}
                                     </div>
-                                </Tooltip>
                                 </div>
-                            </div>
-                            </Paper>
-                            <div className="toolcard__align toolcard__toolname">
-                            <div className="toolcard__aligninr1 toolcard__font-family">
-                                {tooldata.toolname}
-                            </div>
-                            </div>
-                    </Grid>
+                        </Grid>
                     ))}
 
                     </Grid>
@@ -148,6 +162,13 @@ const AllWidgets = () => {
                     setShowPreviewPopup={setShowPreviewPopup}
                 />
             }
+
+            <AppPopup
+                showPopup={showPopup}
+                setShowPopup={setShowPopup}
+                type={popupType}
+                widgetObj={CPWidgetObj}
+            />
         </>
     )
 }

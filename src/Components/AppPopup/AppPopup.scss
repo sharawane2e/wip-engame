@@ -1,0 +1,99 @@
+.curent-tool-name {
+    padding: 20px 0px 20px 0px;
+    display: flex;
+    font-family: "barlowregular";
+    font-weight: 600;
+    position: absolute;
+    top: 3px;
+    width: 90%;
+    @include font-size($font-xx-reg18);
+    @include breakpoint(mobileonly) {
+      padding: 10px 0px 20px 0px;
+      width: 50%;
+    }
+  }
+  
+  #tool-perview {
+    @include space("margin", top, $padding-40, 0);
+    min-height: 75vh;
+    max-height: 75vh;
+    height: 75vh;
+    overflow-y: scroll;
+    @include breakpoint(mobileonly) {
+      margin-top: 40px;
+      min-height: 40vh;
+      max-height: 75vh;
+      height: 40vh;
+    }
+  }
+  
+  .previewLoader {
+    background: $white;
+    height: calc(100% - 50px);
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    position: absolute;
+    right: 2px;
+    left: 0px;
+    top: 50px;
+    border-radius: 6px;
+  }
+  
+  .lds-ellipsis {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+  }
+  .lds-ellipsis div {
+    position: absolute;
+    top: 33px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: $primary;
+    animation-timing-function: cubic-bezier(0, 1, 1, 0);
+  }
+  .lds-ellipsis div:nth-child(1) {
+    left: 8px;
+    animation: lds-ellipsis1 0.6s infinite;
+  }
+  .lds-ellipsis div:nth-child(2) {
+    left: 8px;
+    animation: lds-ellipsis2 0.6s infinite;
+  }
+  .lds-ellipsis div:nth-child(3) {
+    left: 32px;
+    animation: lds-ellipsis2 0.6s infinite;
+  }
+  .lds-ellipsis div:nth-child(4) {
+    left: 56px;
+    animation: lds-ellipsis3 0.6s infinite;
+  }
+  @keyframes lds-ellipsis1 {
+    0% {
+      transform: scale(0);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  @keyframes lds-ellipsis3 {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(0);
+    }
+  }
+  @keyframes lds-ellipsis2 {
+    0% {
+      transform: translate(0, 0);
+    }
+    100% {
+      transform: translate(24px, 0);
+    }
+  }
+  

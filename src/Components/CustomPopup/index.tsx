@@ -4,7 +4,6 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { useDispatch, useSelector } from 'react-redux';
-import "./CustomPopup.scss";
 import { IconButton, Select, SelectChangeEvent } from '@mui/material';
 import { MenuItem } from '@mui/material';
 import { ListSubheader } from '@mui/material';
@@ -54,14 +53,16 @@ export default function CustomPopup({page, widgetObj, setShowATCPopup}: CustomPo
 
   useEffect(() => {
     CalcPrice()
-  }, [wtCount, subsType])
+  }, [wtCount, subsType]);
 
   const cartObj = {
     "details" : {
       "id": widgetObj.id,
       "subs_type": subsType,
       "total_count": Number(wtCount),
-      "price": Number(wtPrice)
+      "price": Number(wtPrice),
+      "is_paused": false,
+      "payment_method": "Net Banking"
     },
     "widget" : widgetObj,
     "username" : storeData?.user?.userDetails?.username

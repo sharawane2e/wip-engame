@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import CardsContainer from '../../Components/CardsContainer';
 import TopNav from '../../Components/TopNavBar';
 import CartPage from '../CartPage';
@@ -13,6 +13,9 @@ import MyWidgetsPage from '../MyWidgetsPage';
 import AllWidgets from '../../Components/AllWidgets';
 import Header from '../../Components/Header';
 import Cart from '../../Components/Cart';
+import MyWidgets from '../MyWidgets';
+import ProfilePage from '../ProfilePage';
+import PageNotFound from '../PageNotFound';
 
 function Layout() {
 
@@ -22,6 +25,7 @@ function Layout() {
 
   const auth:any = (localStorage.getItem("auth"));
   const username = JSON.parse(auth).username;
+  const isLoggedIn = JSON.parse(auth)?.isLoggedIn;
 
   let userObj = {
     isLoggedIn: true,
@@ -65,6 +69,16 @@ function Layout() {
     cartWidgets: []
   }
 
+  function PrivateRoute({ children }:any) {
+    let isLogin = storeData?.user?.userDetails?.isLoggedIn;
+    if(isLogin != undefined && isLogin == true){
+      return children
+    }
+    else{
+      return <Navigate to="/" />
+    }
+  }
+
   return (
     <>
         <SnackbarProvider maxSnack={3} autoHideDuration={3000}>
@@ -72,11 +86,13 @@ function Layout() {
           <Header/>
           <Routes>
               <Route path="/" element={<AllWidgets/>} />
-              <Route path="cart" element={<Cart/>} />
+              <Route path="cart" element={<PrivateRoute> <Cart/> </PrivateRoute>} />
+              <Route path="mywidgets" element={<PrivateRoute> <MyWidgets/> </PrivateRoute>} />
+              <Route path="profile" element={<PrivateRoute> <ProfilePage/> </PrivateRoute>} />
 
-              {/* <Route path="/" element={<CardsContainer/>} /> */}
-              {/* <Route path="cart" element={<CartPage/>} /> */}
-              <Route path="mywidgets" element={<MyWidgetsPage/>} />
+              {/* <Route path="/" element={<CardsContainer/>} />
+              <Route path="cart" element={<CartPage/>} />
+              <Route path="mywidgets" element={<MyWidgetsPage/>} /> */}
           </Routes>
         </SnackbarProvider>
     </>

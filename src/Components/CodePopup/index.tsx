@@ -1,7 +1,6 @@
 import { IconButton } from '@mui/material'
 import React from 'react';
 import CloseIcon from '@mui/icons-material/Close';
-import "../CustomPopup/CustomPopup.scss";
 import { CopyBlock, dracula, github } from "react-code-blocks";
 
 type CustomPopupProps = {
