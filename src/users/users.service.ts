@@ -96,10 +96,8 @@ export class UserService {
     if(userObj){
       let widgetObjIndex = userObj.cartwidgets.findIndex(x => x.details.id == detailObj.id);
       userObj.cartwidgets[widgetObjIndex].details = detailObj;
-      // userObj.save();
     }
 
-    // const userObj = await this.getOneUser(username);
     const result = await userObj.update({
       $set: {
         firstname: userObj.firstname,
@@ -125,6 +123,76 @@ export class UserService {
     let ind = userObj.cartwidgets.findIndex(x => x.widget.id == widgetId);
     userObj.cartwidgets.splice(ind,1)
     userObj.save();
+
+    return userObj;
+  }
+
+  async PurchaseCartWidgets(username: string) {
+
+    let userObj = await this.getOneUser(username);
+
+    if(userObj){
+      let allCartWidgets = userObj.cartwidgets.slice();
+      allCartWidgets.map((widget:any) => {
+        widget.details['purchase_date'] = this.getDateInFormat();
+        widget.details['purchase_time'] = this.getTimeInFormat();
+      })
+      userObj.purchasedwidgets = userObj.purchasedwidgets.concat(allCartWidgets.slice());
+      userObj.cartwidgets = [];
+    }
+
+    const result = await userObj.update({
+      $set: {
+        firstname: userObj.firstname,
+        lastname: userObj.lastname,
+        username: userObj.username,
+        password: userObj.password,
+        accessToken: userObj.accessToken,
+        purchasedwidgets: userObj.purchasedwidgets,
+        cartwidgets: userObj.cartwidgets
+      }
+    })
+
+    if (result.n === 0) {
+      throw new NotFoundException(`Error occured !`,
+      );
+    }
+
+    return userObj;
+  }
+
+  async PausePlayWidgets(detailsObj: object) {
+
+    let details = JSON.parse(JSON.stringify(detailsObj));
+
+    let sample = {
+      username : "",
+      widgetId : 1,
+      is_paused: true
+    }
+
+    let userObj = await this.getOneUser(details.username);
+
+    if(userObj){
+      userObj.purchasedwidgets.filter((wid:any) => wid.widget.id == details.widgetId)[0].details.is_paused = details.is_paused;
+    }
+
+    const result = await userObj.update({
+      $set: {
+        firstname: userObj.firstname,
+        lastname: userObj.lastname,
+        username: userObj.username,
+        password: userObj.password,
+        accessToken: userObj.accessToken,
+        purchasedwidgets: userObj.purchasedwidgets,
+        cartwidgets: userObj.cartwidgets
+      }
+    })
+
+    if (result.n === 0) {
+      throw new NotFoundException(`Error occured !`,
+      );
+    }
 
     return userObj;
   }
@@ -158,4 +226,25 @@ export class UserService {
     }
     return product;
   }
+
+  getDateInFormat = () => {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    let mm:any = today.getMonth() + 1; // Months start at 0!
+    let dd:any = today.getDate();
+
+    if (dd < 10) dd = '0' + dd;
+    if (mm < 10) mm = '0' + mm;
+
+    const formattedToday = dd + '/' + mm + '/' + yyyy;
+
+    return formattedToday;
+  }
+
+  getTimeInFormat = () => {
+    let date = new Date();
+    let timeformat = date.toLocaleTimeString();
+    return timeformat;
+  }
+
 }

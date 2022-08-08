@@ -70,6 +70,20 @@ import {
     ) {
       return this.UserService.EditCartWidget(detailObj, username);
     }
+
+    @Patch('purchasewidgets')
+    async PurchaseWidgets(
+      @Body('username') username: string,
+    ) {
+      return this.UserService.PurchaseCartWidgets(username);
+    }
+
+    @Patch('pausewidget')
+    async PlayPauseWidgets(
+      @Body('detailsObj') detailsObj: object,
+    ) {
+      return this.UserService.PausePlayWidgets(detailsObj);
+    }
   
     @Delete(':id')
     async removeProduct(@Param('id') prodId: string) {

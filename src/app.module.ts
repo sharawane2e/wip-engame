@@ -19,7 +19,8 @@ var password = encodeURIComponent('research#345');
     //   'mongodb+srv://admin:admin@cluster0.n5rp3k3.mongodb.net/?retryWrites=true&w=majority',
     // )
     MongooseModule.forRoot(
-      `mongodb://${username}:${password}@localhost:27017/engame`,
+      // `mongodb://${username}:${password}@localhost:27017/engame`,
+      `mongodb://localhost:27017/engame`,
     ),
   ],
   controllers: [AppController],

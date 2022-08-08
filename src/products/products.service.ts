@@ -171,9 +171,9 @@ export class ProductsService {
 
       let UserClone:any = JSON.parse(JSON.stringify(userObj));
       let widClone:any = JSON.parse(JSON.stringify(widgetObj));  
-      let widIndex = UserClone.cartwidgets.findIndex((x:any) => x.details.id == Number(widgetId));
-      let widgetHC = UserClone.cartwidgets[widIndex].widget.hitcount;
-      UserClone.cartwidgets[widIndex].widget.hitcount = widgetHC + 1;
+      let widIndex = UserClone.purchasedwidgets.findIndex((x:any) => x.details.id == Number(widgetId));
+      let widgetHC = UserClone.purchasedwidgets[widIndex].widget.hitcount;
+      UserClone.purchasedwidgets[widIndex].widget.hitcount = widgetHC + 1;
 
       const result = await userObj.update({
         $set: {
