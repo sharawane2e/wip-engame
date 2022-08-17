@@ -122,12 +122,15 @@ const AllWidgets = () => {
                                         </div>
                                         <div className="toolcard__items toolcard__shopping">
                                         <Tooltip title="Add to cart" placement="top">
-                                            <div className="toolcard__sub-icons" onClick={() => {setShowATCPopup(true); setCPWidgetObj(tooldata)}}>
-                                            {isInCart(tooldata.id) ? (
-                                                <ShoppingCartIcon />
-                                            ) : (
-                                                <ShoppingCartCheckoutIcon />
-                                            )}
+                                            <div className="toolcard__sub-icons" 
+                                                // onClick={() => {setShowATCPopup(true); setCPWidgetObj(tooldata)}}
+                                                onClick={() => {setCPWidgetObj(tooldata); popup( "AddToCart",true)}}
+                                            >
+                                                {isInCart(tooldata.id) ? (
+                                                    <ShoppingCartIcon />
+                                                ) : (
+                                                    <ShoppingCartCheckoutIcon />
+                                                )}
                                             </div>
                                         </Tooltip>
                                         </div>

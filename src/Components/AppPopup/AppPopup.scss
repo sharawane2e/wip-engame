@@ -97,3 +97,31 @@
     }
   }
   
+
+  .popup-container__footer {
+    display: flex;
+    @include space(margin, top-bottom, $margin-10, $margin-10);
+    .add--card {
+      width: 170px !important;
+      margin: 0 auto;
+
+      // padding: $padding-15 !important;
+      &:disabled {
+        background-color: $dark-gray-color;
+      }
+      .MuiButton-label {
+        > svg {
+          @include space(margin, right, $margin-5, 0);
+        }
+      }
+    }
+    .add--card[disabled] {
+      background-color: $dark-gray-color !important;
+      @include box-shadow(
+        0px,
+        10px,
+        20px,
+        map-get($map: $boxshadow, $key: $black-smooth)
+      );
+    }
+  }

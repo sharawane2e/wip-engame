@@ -469,6 +469,10 @@ input:-webkit-autofill:active {
   fill: $red-yellow !important;
 }
 
+.fill_green {
+  fill: $green-color !important;
+}
+
 .desktop__only {
   display: block !important;
   @include breakpoint(mobileonly) {
@@ -672,4 +676,371 @@ select {
   z-index: 9999;
   top: 0;
   left: 0;
+}
+
+.emptyPage {
+  display: flex;
+  justify-content: $align-center;
+  align-items: $align-center;
+  min-height: 90vh;
+  width: 100%;
+  background: $light-white;
+  flex-direction: column;
+  @include breakpoint(Ipad) {
+    min-height: 100vh;
+  }
+  @include breakpoint(mobileonly) {
+    padding: 15px;
+  }
+
+  &__headding {
+    @include space(margin, bottom, $margin-20, 0);
+    &__para {
+      // font-weight: 600 !important;
+      font-family: map-get($map: $font-family, $key: "font-barlowmedium");
+      color: $black-secondary;
+      font-size: $font-sm !important;
+      text-align: center;
+      padding-bottom: $padding-50;
+    }
+  }
+  &__img {
+    max-width: 100% !important;
+    padding-bottom: $padding-40;
+  }
+  &__button {
+    margin-top: 20px;
+    .continueShoping {
+      padding: 10px 25px !important;
+    }
+  }
+  // @include breakpoint(desktop) {
+  //   height: 70vh;
+  // }
+  @include breakpoint(largeDesktop) {
+    min-height: 86vh;
+  }
+}
+
+.subscription-type {
+  @include space(padding, bottom, $padding-40, 0);
+  position: relative;
+  > .select-box > select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    -ms-word-break: normal;
+    word-break: normal;
+    width: 100%;
+    outline: 0;
+    @include border("", $border-width, $bsolid, $dark-gray);
+    @include space(padding, all, $padding-14, 0);
+    @include border-radius($boder-radius);
+    @include space(margin, bottom, $margin-30, 0);
+    cursor: pointer;
+  }
+  > .select-box > select:focus {
+    @include border("", $border-width, $bsolid, $dark-gray !important);
+  }
+  &__subscriptionRenew {
+    cursor: no-drop !important;
+  }
+
+  .select-box:after {
+    content: "";
+    top: 18px;
+    right: 14px;
+    padding: 12px 0px 0px 8px;
+    position: absolute;
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAHCAYAAAA8sqwkAAAABHNCSVQICAgIfAhkiAAAAIpJREFUGFdj1NLSMvjPyBj//evXxgcPHnxgwAKQ1TBqamtPYGRkyGf4///Ct6/fHNE1gRQzMDHuB5oj8P//v0JGBQUFAS5u7gMMjAz66JpQFTMsvH71agIjyAXYNHFxcSkgTIYoBqkFa8CmiYGRUQHiDIRiFA0YmoAC6IoxNCBr+s/AcAHmDOSAAwB0qVVlemhC6AAAAABJRU5ErkJggg==);
+    background-repeat: no-repeat;
+    width: 4px;
+  }
+  .select-box-disable:after {
+    display: none;
+  }
+  #{&}__iner {
+    display: flex;
+    justify-content: space-between;
+  }
+  #{&}__days {
+    display: flex;
+    flex: 0 0 40%;
+  }
+  #{&}__text {
+    display: flex;
+    align-items: $align-center;
+    @include space(padding, left, $padding-10, 0);
+  }
+  #{&}__amount {
+    display: flex;
+    // flex: 0 0 58%;
+    justify-content: flex-end;
+    align-items: $align-center;
+    word-break: break-all;
+    @include space(padding, left, $padding-10, 0);
+  }
+  #{&}__amount-text {
+    font-family: map-get($map: $font-family, $key: "font-barlowbold");
+    @include font-size($font-sm);
+  }
+  #{&}__inputbox {
+    width: 100px;
+    .MuiInputBase-root {
+      .MuiOutlinedInput-input {
+        @include space(padding, all, $padding-12, 0);
+        // @include border("", $border-width, $bsolid, $dark-gray);
+      }
+    }
+  }
+}
+
+.subscription-update {
+  display: flex;
+  > button {
+    width: 170px !important;
+    margin: 0 auto;
+  }
+}
+.popup--text {
+  display: flex;
+  justify-content: center;
+}
+
+.toolcard {
+  &__allTools {
+    display: block;
+    width: 100%;
+    padding: $padding-5 $padding-15 !important;
+    &__heading {
+      font-weight: $font-600 !important;
+      font-size: $font-xx-reg18 !important;
+      color: $black-secondary;
+    }
+  }
+  padding: $padding-40 6vw;
+  background: $white;
+  min-height: 68vh;
+  @include breakpoint(mobileonly) {
+    min-height: 30vh !important;
+  }
+
+  #{&}__toolbar {
+    padding-left: 0;
+    padding-right: 0;
+    align-items: inherit !important;
+
+    @include breakpoint(lg-desktop) {
+      // min-height: 66.5vh !important;
+      padding-right: 0;
+    }
+  }
+
+  #{&}__inner {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #{&}__tooltip {
+    position: absolute;
+    right: 5px;
+    top: 3px;
+    cursor: pointer;
+    display: none;
+    .MuiSvgIcon-root {
+      color: $secondary;
+    }
+  }
+
+  #{&}__imageblck {
+    &:hover {
+      // @include border("", $border-width, $bsolid, $black-secondary);
+      @include card-box-shadow(
+        2px,
+        4px,
+        7px,
+        0px map-get($map: $boxshadow, $key: "red-smooth")
+      );
+      .toolcard__preview {
+        display: block;
+      }
+      .toolcard__tooltip {
+        display: block;
+      }
+      + .toolcard__align {
+        // @include color($secondary);
+        @include font-weight($font-500);
+      }
+    }
+    &__dummy {
+      &__cart_code {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        margin-top: 0px;
+        span {
+          border-radius: 5px !important;
+        }
+      }
+      &__WName {
+        width: 75%;
+        margin: auto;
+        margin-bottom: 10px;
+        margin-top: 10px;
+        span {
+          border-radius: 5px !important;
+        }
+      }
+      &__productImg {
+        padding: 10px;
+        span {
+          border-radius: 5px !important;
+        }
+      }
+    }
+    @include border("", $border-width, $bsolid, $black-1);
+    @include card-box-shadow(
+      0px,
+      0px,
+      4px,
+      map-get($map: $boxshadow, $key: "black-smooth")
+    );
+    @include border-radius($boder-radius);
+  }
+
+  #{&}__image {
+    display: flex;
+    min-height: 130px;
+    justify-content: $align-center;
+    align-items: $align-center;
+    text-align: $align-center;
+    @include space(padding, top-bottom, $padding-16, $padding-16);
+    @include space(padding, left-right, $padding-20, $padding-20);
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+    > img {
+      max-width: 100%;
+      width: 100%;
+      max-height: 95px;
+    }
+  }
+  #{&}__preview {
+    position: absolute;
+    @include bgcolor(transparent);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: none;
+  }
+  #{&}__perview-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    @include both-color($secondary, $white);
+    @include font-size($font-md-reg);
+    @include space(padding, top-bottom, $padding-2, $padding-2);
+    @include space(padding, left-right, $padding-12, $padding-12);
+    @include border-radius($boder-radius);
+    &:hover {
+      @include bgcolor($secondary);
+    }
+    & > span {
+      @include font-size($font-reg);
+      @include font-weight($font-normal);
+    }
+    .MuiButton-label {
+      > svg {
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+  .eyes_icon {
+    @include space(margin, right, $margin-5, 0);
+  }
+  #{&}__toolicons {
+    @include space(padding, all, $padding-16, 0);
+  }
+  #{&}__align {
+    display: flex;
+  }
+  #{&}__items {
+    display: flex;
+    flex: 0 0 50%;
+    cursor: pointer;
+  }
+  #{&}__shopping {
+    display: flex;
+    justify-content: flex-end;
+    cursor: pointer;
+  }
+  #{&}__sub-icons {
+    display: flex;
+    // @include border("", $border-width, $bsolid, $back-color);
+    // @include border-radius($boder-radius);
+    // @include space(padding, all, $padding-8, 0);
+    & > svg {
+      fill: $back-color;
+    }
+    &:hover {
+      // @include border("", $border-width, $bsolid, $secondary);
+      svg {
+        fill: $primary;
+      }
+      path {
+        fill: $primary;
+      }
+      g {
+        stroke: $primary;
+      }
+    }
+  }
+  #{&}__font-family {
+    font-family: map-get($map: $font-family, $key: "font-barlowmedium");
+    @include font-size($font-xl-reg);
+  }
+  #{&}__aligninr1 {
+    flex: 0 0 100%;
+  }
+  #{&}__aligninr {
+    display: flex;
+    flex: 0 0 20%;
+    justify-content: flex-end;
+  }
+  #{&}__toolname {
+    @include space(margin, top-bottom, $margin-10, $margin-10);
+
+    text-align: center;
+  }
+
+  .popup-container__footer {
+    display: flex;
+    @include space(margin, top-bottom, $margin-10, $margin-10);
+    .add--card {
+      width: 170px !important;
+      margin: 0 auto;
+
+      // padding: $padding-15 !important;
+      &:disabled {
+        background-color: $dark-gray-color;
+      }
+      .MuiButton-label {
+        > svg {
+          @include space(margin, right, $margin-5, 0);
+        }
+      }
+    }
+    .add--card[disabled] {
+      background-color: $dark-gray-color !important;
+      @include box-shadow(
+        0px,
+        10px,
+        20px,
+        map-get($map: $boxshadow, $key: $black-smooth)
+      );
+    }
+  }
 }

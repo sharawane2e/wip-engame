@@ -23,32 +23,43 @@ export const getDateInFormat = () => {
 
     const formattedToday = dd + '/' + mm + '/' + yyyy;
 
-    return formattedToday;
+    return formattedToday; // returns date in DD/MM/YY Format !
 }
 
 export const getDateDifference = (start:any, end:any) => {
-    var date1 = new Date(start);
-    var date2 = new Date(end);
-      
-    var Difference_In_Time = date2.getTime() - date1.getTime();
-    var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
 
-    return Difference_In_Days;
+    const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+
+    let startSplit = start.split("/");
+    let endSplit = end.split("/");
+
+    const firstDate:any = new Date(startSplit[2], startSplit[1], startSplit[0]);
+    const secondDate:any = new Date(endSplit[2], endSplit[1], endSplit[0]);
+
+    const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
+
+    return diffDays;
 }
 
 export const getToalDaysLeft = (daysCount:any, startDate:any) => {
-    let someDate = new Date();
-    let numberOfDaysToAdd = daysCount;
-    let result = someDate.setDate(someDate.getDate() + numberOfDaysToAdd);
-
-    var date1 = new Date(startDate);
-    var date2 = new Date(result);
-      
-    var Difference_In_Time = date2.getTime() - date1.getTime();
-    var Difference_In_Days = (Difference_In_Time / (1000 * 3600 * 24)) - 1;
-
-    return Math.round(Difference_In_Days);
+    let date_diff = getDateDifference(startDate, getDateInFormat());
+    console.log("date_diff", date_diff);
+    return (daysCount - date_diff);
 }
+
+// export const getToalDaysLeft = (daysCount:any, startDate:any) => {
+//     let someDate = new Date();
+//     let numberOfDaysToAdd = daysCount;
+//     let result = someDate.setDate(someDate.getDate() + numberOfDaysToAdd);
+
+//     var date1 = new Date(startDate);
+//     var date2 = new Date(result);
+      
+//     var Difference_In_Time = date2.getTime() - date1.getTime();
+//     var Difference_In_Days = (Difference_In_Time / (1000 * 3600 * 24)) - 1;
+
+//     return Math.round(Difference_In_Days);
+// }
 
 export const playPauseWidget = (obj:any) => {
     
@@ -57,5 +68,6 @@ export const playPauseWidget = (obj:any) => {
             detailsObj : obj
         })
         .then(x => res(true))
+        .catch(y => res(false))
     })
 }

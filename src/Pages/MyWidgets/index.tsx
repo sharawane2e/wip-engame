@@ -23,6 +23,10 @@ import { getDateInFormat, getToalDaysLeft, playPauseWidget } from '../../Utils/h
 import { useSnackbar } from 'notistack';
 import { setReduxUser } from '../../Utils/userFunctions';
 import { setUserDetails } from '../../redux/UserRedux/userAction';
+// import NoresultImg2 from "../../Assets/images/not-found.svg";
+// import NoresultImg from "../../Assets/images/not-found.png";
+// import {ReactComponent as NoresultImg} from '../../Assets/images/not-found.png';
+
 
 // const BorderLinearProgress = withStyles((theme:any) => ({
 //     root: {
@@ -101,7 +105,7 @@ function MyWidgets() {
             str =  (widObj.details.total_count - widObj.widget.hitcount) + " Hits left";
         }
         else{
-            str = getToalDaysLeft(widObj.details.total_count, getDateInFormat()) + " Days left";
+            str = getToalDaysLeft(widObj.details.total_count, widObj.details.purchase_date) + " Days left";
         }
         return str;
     }
@@ -124,6 +128,14 @@ function MyWidgets() {
             filteredArr = storeData?.user?.userDetails?.purchasedWidgets.filter((x:any) => x.details.is_paused == true);
             setPurchasedWidArr(filteredArr);
         }
+        else if(filter == "days"){
+            filteredArr = storeData?.user?.userDetails?.purchasedWidgets.filter((x:any) => x.details.subs_type == "Days");
+            setPurchasedWidArr(filteredArr);
+        }
+        else if(filter == "hits"){
+            filteredArr = storeData?.user?.userDetails?.purchasedWidgets.filter((x:any) => x.details.subs_type == "Hits");
+            setPurchasedWidArr(filteredArr);
+        }
         else{
             setPurchasedWidArr([]);
         }
@@ -137,16 +149,21 @@ function MyWidgets() {
         }
         playPauseWidget(obj)
         .then(x => {
-            console.log("changed");
-            setReduxUser(storeData.user.userDetails.username)
-            .then(data => {
-              dispatch(setUserDetails(data))
-            });
-            if(!is_paused){
-                enqueueSnackbar(`Widget has been paused !`, { variant: "warning" });
+            if(x){
+                console.log("changed");
+                setReduxUser(storeData.user.userDetails.username)
+                .then(data => {
+                  dispatch(setUserDetails(data))
+                });
+                if(!is_paused){
+                    enqueueSnackbar(`Widget has been paused !`, { variant: "warning" });
+                }
+                else{
+                    enqueueSnackbar(`Widget has been enabled !`, { variant: "success" });
+                }
             }
             else{
-                enqueueSnackbar(`Widget has been enabled !`, { variant: "success" });
+                enqueueSnackbar(`Some Error Occured`, { variant: "error" });
             }
         })
     }
@@ -317,14 +334,15 @@ function MyWidgets() {
                                                 {/* <img src={checkCircle} /> */}
                                                 {item?.details.is_paused ? (
                                                     <PauseCircleOutlineIcon className="fill_yellow" />
-                                                ) : item.details.is_expiring_soon ? (
-                                                    <TimerIcon className="fill_red" />
-                                                ) : item.details.is_active ? (
-                                                    <CheckCircleIcon />
-                                                ) : !item.details.is_active ? (
+
+                                                // ) : item.details.is_active ? (
+                                                    
+                                                    ) : item.details.is_expiring_soon ? (
+                                                        <TimerIcon className="fill_red" />
+                                                ) : item.details.is_active == false ? (
                                                     <ErrorOutlineIcon className="fill_red" />
                                                 ) : (
-                                                    ""
+                                                    <CheckCircleIcon className="fill_green" />
                                                 )}
                 
                                                 <div className="purchased-tool__date-type-text purchased-curent-text">
@@ -440,6 +458,7 @@ function MyWidgets() {
                                                         // checked={item?.is_paused ? false : true}
                                                         // checked={true}
                                                         defaultChecked={!item?.details?.is_paused}
+                                                        checked={!item?.details?.is_paused}
                                                         onChange={(e:any) => handlePlayPause(item?.widget?.id ,e.target.checked)}
                                                         // onClick={() => {
                                                         // setPausePopup(true);
@@ -670,7 +689,6 @@ function MyWidgets() {
                                 : 
                                 (
                                     <>
-                                        {/* <NoSearchFound img={NoresultImg} heading="No result found" /> */}
                                     </>
                                 )}
                         </Container>
