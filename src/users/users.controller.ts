@@ -1,3 +1,6 @@
+import { MailService } from './../mail/mail.service';
+import { MailerService } from '@nestjs-modules/mailer';
+import { ProductsService } from './../products/products.service';
 import { userDto } from './../dto/userdto';
 import {
     Controller,
@@ -7,14 +10,17 @@ import {
     Param,
     Patch,
     Delete,
+    UseGuards,
   } from '@nestjs/common';
   
   import { UserService } from './users.service';
+  import { AuthGuard } from '@nestjs/passport';
   
   @Controller('user')
+  
   export class UsersController {
-    constructor(private readonly UserService: UserService) {}
-
+    constructor(private readonly UserService: UserService, MailService:MailService) {}
+    
     @Get('')
     async getAllProducts() {
       const products = await this.UserService.getProducts();
@@ -26,7 +32,7 @@ import {
       return this.UserService.getOneUser(username);
     }
 
-    @Post()
+    @Post('adduser')
     async create(@Body() userDto: userDto) {
       return await this.UserService.insertUser(userDto);
     }
@@ -39,6 +45,17 @@ import {
     @Post('check')
     async newValidated(@Body() username: userDto) {
       return await this.UserService.getOneUser(username.username);
+    }
+
+    @Post('verifyemail/:token')
+    async verification(@Param('token') token: any) {
+      return await this.UserService.verifyEmail(token);
+    }
+
+    @Post('sendmail')
+    async sendmail(@Param('token') token: any) {
+      return await this.UserService.sendEmail();
+      // return await this.MailService.sendEmail();
     }
 
     @Post('findbytoken')

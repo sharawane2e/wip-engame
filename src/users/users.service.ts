@@ -1,15 +1,18 @@
 import { userDto } from './../dto/userdto';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-
 import { User } from './users.model';
+import { generateCode } from 'src/Utils/HelperFunctions';
+const nodemailer = require("nodemailer");
+import { JwtService } from '@nestjs/jwt';
+// require('https').globalAgent.options.ca = require('ssl-root-cas/latest').create();
 
 @Injectable()
 export class UserService {
   static findbytoken: any;
   constructor(
-    @InjectModel('User') private readonly userModel: Model<User>,
+    @InjectModel('User') private readonly userModel: Model<User>, private jwtService: JwtService
   ) {}
 
   async insertUser(userDto : userDto): Promise<User> {
@@ -20,22 +23,40 @@ export class UserService {
     // });
     // const result = await newProduct.save();
     // return result.id as Number;
-    return await new this.userModel({...userDto, createdAt: new Date()}).save();
+
+    let newtoken = generateCode(15);
+
+    return await new this.userModel({...userDto, accessToken: this.jwtService.sign(userDto), createdAt: new Date()}).save();
 
   }
 
   async validateUser(userDto : any) {
-    const user = await this.getOneUser(userDto.username);
-    let obj = {}
+    let user = await this.getOneUser(userDto.username);
+    let obj = {};
+    let tokenObj = {
+      "username": user.username,
+      "id": user._id
+    }
     if (!user) {
       // throw new NotFoundException('Could not find User.');
       obj['authenticated'] = false;
       obj['errorMsg'] = "No such user !";
     }
+    else if(!user.isEmailVerified){
+      obj['authenticated'] = true;
+      obj['isEmailVerified'] = false;
+      obj['errorMsg'] = "Please verify your email first !";
+    }
     else{
       if(userDto.password == user.password){
         obj['authenticated'] = true;
         obj['username'] = user.username;
+        obj['isEmailVerified'] = user.isEmailVerified;
+        user.accessToken = "";
+        user.accessToken = this.jwtService.sign(JSON.parse(JSON.stringify(tokenObj)));
+
+        this.updateUser(user)
+
       }
       else{
         obj['authenticated'] = false;
@@ -58,6 +79,7 @@ export class UserService {
       lastname: user.lastname,
       username: user.username,
       password: user.password,
+      isEmailVerified: user.isEmailVerified,
       accessToken: user.accessToken,
       purchasedwidgets: user.purchasedwidgets,
       cartwidgets: user.cartwidgets
@@ -72,6 +94,7 @@ export class UserService {
       lastname: user.lastname,
       username: user.username,
       password: user.password,
+      isEmailVerified: user.isEmailVerified,
       accessToken: user.accessToken,
       purchasedwidgets: user.purchasedwidgets,
       cartwidgets: user.cartwidgets
@@ -104,6 +127,7 @@ export class UserService {
         lastname: userObj.lastname,
         username: userObj.username,
         password: userObj.password,
+        isEmailVerified: userObj.isEmailVerified,
         accessToken: userObj.accessToken,
         purchasedwidgets: userObj.purchasedwidgets,
         cartwidgets: userObj.cartwidgets
@@ -147,6 +171,7 @@ export class UserService {
         lastname: userObj.lastname,
         username: userObj.username,
         password: userObj.password,
+        isEmailVerified: userObj.isEmailVerified,
         accessToken: userObj.accessToken,
         purchasedwidgets: userObj.purchasedwidgets,
         cartwidgets: userObj.cartwidgets
@@ -183,6 +208,7 @@ export class UserService {
         lastname: userObj.lastname,
         username: userObj.username,
         password: userObj.password,
+        isEmailVerified: userObj.isEmailVerified,
         accessToken: userObj.accessToken,
         purchasedwidgets: userObj.purchasedwidgets,
         cartwidgets: userObj.cartwidgets
@@ -195,6 +221,44 @@ export class UserService {
     }
 
     return userObj;
+  }
+
+  async verifyEmail(token: Number){
+    let user = await this.findbytoken(token);
+    let returnObj = {
+      "username": null,
+      "isEmailVerified": false
+    }
+    if(user){
+      user.isEmailVerified = true;
+      returnObj.username = user.username;
+      returnObj.isEmailVerified = true;
+    }
+    else{
+      returnObj.username = null;
+      returnObj.isEmailVerified = false;
+    }
+
+    const result = await user.update({
+      $set: {
+        firstname: user.firstname,
+        lastname: user.lastname,
+        username: user.username,
+        password: user.password,
+        isEmailVerified: user.isEmailVerified,
+        accessToken: user.accessToken,
+        purchasedwidgets: user.purchasedwidgets,
+        cartwidgets: user.cartwidgets
+      }
+    })
+
+    if (result.n === 0) {
+      throw new NotFoundException(`Error occured !`,
+      );
+    }
+
+    return returnObj;
+
   }
 
   async findbytoken(token:any){
@@ -245,6 +309,71 @@ export class UserService {
     let date = new Date();
     let timeformat = date.toLocaleTimeString();
     return timeformat;
+  }
+
+  async updateUser(obj: userDto){
+    let user = await this.getOneUser(obj.username);
+    if(user){
+      const result = await user.update({
+        $set: {
+          firstname: obj.firstname,
+          lastname: obj.lastname,
+          username: obj.username,
+          password: obj.password,
+          isEmailVerified: obj.isEmailVerified,
+          accessToken: obj.accessToken,
+          purchasedwidgets: obj.purchasedwidgets,
+          cartwidgets: obj.cartwidgets
+        }
+      })
+  
+      if (result.n === 0) {
+        throw new NotFoundException(`Error occured !`,
+        );
+      }
+
+    }
+    else{
+      throw new BadRequestException(`Error`);
+    }
+  }
+
+  async sendEmail() {
+    const transporter = await nodemailer.createTransport({
+      // service: "office365",
+      port: 5000,
+      secure: false,
+      auth: {
+        user: 'e2e.portal@e2eresearch.com',
+        pass: 'WorlD#$123987%'
+      },
+      tls: {
+        rejectUnauthorized: false
+      }
+    });
+    
+    var mailOptions = {
+      from: 'e2e.portal@e2eresearch.com',
+      to: 'gaurav.sekhri@e2eresearch.com',
+      subject: 'Sending Email using Node.js',
+      text: 'That was easy!'
+    };
+
+    await transporter.verify(function(error, success) {
+      if (error) {
+           console.log(error);
+      } else {
+           console.log('Server is ready to take our messages');
+      }
+    });
+    
+    await transporter.sendMail(mailOptions, function(error:any, info:any){
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
   }
 
 }

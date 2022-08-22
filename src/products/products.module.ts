@@ -7,10 +7,17 @@ import { ProductsController } from './products.controller';
 import { ProductsService } from './products.service';
 import { ProductSchema } from './products.model';
 
+import { JwtModule } from '@nestjs/jwt';
+import { jwtConstants } from 'src/users/constants';
+
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: 'Product', schema: ProductSchema }]),
     MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
+    JwtModule.register({
+      secret: jwtConstants.secret,
+      signOptions: { expiresIn: '60s' },
+    }),
   ],
   controllers: [ProductsController],
   providers: [ProductsService, UserService],
