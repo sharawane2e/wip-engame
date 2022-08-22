@@ -1,6 +1,6 @@
 import { createReducer } from "@reduxjs/toolkit";
 import { getUserDetails } from "../../Utils/userFunctions";
-import { setCartWidgets, setisLoggedIn, setLoginErrMsg, setPurchasedWidgets, setUserDetails } from "./userAction";
+import { setCartWidgets, setIsEmailVerified, setisLoggedIn, setLoginErrMsg, setPurchasedWidgets, setUserDetails } from "./userAction";
 
 // const initialState = {
 //     isLoggedIn: false,
@@ -44,6 +44,7 @@ const initialState = {
         username: "",
         firstname: "",
         lastname: "",
+        isEmailVerified: false,
         accessToken: "",
         purchasedWidgets: [],
         cartWidgets: []
@@ -62,6 +63,8 @@ export const userReducer = createReducer(initialState, (builder) => {
     builder.addCase(setPurchasedWidgets, (state, action) => ({...state, userDetails : {...state.userDetails, purchasedWidgets : action.payload}}));
 
     builder.addCase(setCartWidgets, (state, action) => ({...state, userDetails : {...state.userDetails, cartWidgets : action.payload}}));
+
+    builder.addCase(setIsEmailVerified, (state, action) => ({...state, userDetails : {...state.userDetails, isEmailVerified : action.payload}}));
 
 });
 

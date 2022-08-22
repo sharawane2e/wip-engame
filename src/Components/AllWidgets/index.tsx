@@ -20,6 +20,7 @@ import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import AppPopup from '../AppPopup';
+import { isEmailVerified, verifyUserEmail } from '../../Utils/helperFunctions';
 
 
 const AllWidgets = () => {
@@ -35,16 +36,34 @@ const AllWidgets = () => {
     const [searchbarText, setSearchbarText] = useState("");
     const [showLoader, setShowLoader] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
-    const [popupType, setPopupType] = useState("login");
+    const [popupType, setPopupType] = useState("");
 
     const BASE_URL = "https://apiengame.e2eresearch.com";
+    const page = window.location.pathname;
 
     useEffect(() => {
         setShowLoader(true)
         getAllProducts();
-        if(!storeData.user.userDetails.isLoggedIn){
-            setShowPopup(true);
+        if(!storeData.user.userDetails.isLoggedIn && !storeData.email.emailDetails.isEmailRedirect){
+            popup("login", true)
         }
+        if(storeData.email.emailDetails.isEmailRedirect){
+            verifyUserEmail(storeData.email.emailDetails.accessToken)
+            .then((x:any) => {
+                console.log("x",x)
+                if(x == true){
+                    popup("EmailVerifySuccess", true);
+                }
+                else{
+                    enqueueSnackbar(`Unable to verify email.`, { variant: "error" });
+                }
+            })
+        }
+
+        // if(storeData.user.userDetails.isLoggedIn && !storeData.user.userDetails.isEmailVerified){
+        //     popup("verifyEmail", true);
+        // }
+
     }, []);
 
     const getAllProducts = () => { 
@@ -78,12 +97,43 @@ const AllWidgets = () => {
         setShowPopup(isShow)
     };
 
+    const handleCodePreview = (card:any) => {
+        let cardObj = JSON.parse(JSON.stringify(card));
+        // cardObj.widget_embed_code.replace('"*secratekey*"', "genSubscriptionKey(card)")
+        // cardObj.widget_embed_code[942] = "gaurav";
+        let genKey = genSubscriptionKey(card);
+        cardObj.widget_embed_code = cardObj.widget_embed_code.replace('\"*secratekey*\"', '\"' + genKey + '\"')
+        setCPWidgetObj(cardObj); 
+        setShowCodePopup(true); 
+    }
+
+    function parseJwt (token:any) {
+        var base64Url = token.split('.')[1];
+        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+    
+        return JSON.parse(jsonPayload);
+    };
+
+    const checkJWT = () => {
+        const token = storeData.user.userDetails.accessToken;
+        const { exp } = parseJwt(token);
+        if (Date.now() >= exp * 1000) {
+          console.log("jwt expired", exp * 1000, Date.now(), parseJwt(token))
+        }
+        else{
+            console.log("jwt not expired")
+        }
+    }
+
     return (
         <>
+            <button onClick={() => checkJWT()}>Click</button>
             <div className="toolcard">
                 <Toolbar className="toolcard__toolbar">
                     <Grid container spacing={4}>
-
                     {cardsArr.map((tooldata:any, index:any) => (
                         <Grid
                                 item
@@ -115,8 +165,9 @@ const AllWidgets = () => {
                                     <div className="toolcard__align toolcard__toolicons">
                                         <div className="toolcard__items toolcard__download">
                                         <Tooltip title="Embeded Code" placement="top">
-                                            <div className="toolcard__sub-icons">
-                                            {/* <EmbededCode /> */}
+                                            <div className="toolcard__sub-icons" onClick={() => handleCodePreview(tooldata)}>
+                                                {/* <EmbededCode /> */}
+                                                Debug
                                             </div>
                                         </Tooltip>
                                         </div>
@@ -163,6 +214,13 @@ const AllWidgets = () => {
                     widgetObj={CPWidgetObj} 
                     clientkey={genSubscriptionKey(CPWidgetObj)}
                     setShowPreviewPopup={setShowPreviewPopup}
+                />
+            }
+
+            {showCodePopup && 
+                <CodePopup 
+                    widgetObj={CPWidgetObj} 
+                    setShowCodePopup={setShowCodePopup}
                 />
             }
 

@@ -13,3 +13,5 @@ export const setUserData = createAction<any>('SET_USERDATA');
 export const setCartWidgets = createAction<any>('SET_CARTWIDGETS');
 
 export const setPurchasedWidgets = createAction<any>('SET_PURCHASED_WIDGETS');
+
+export const setIsEmailVerified = createAction<any>('SET_IS_EMAIL_VERIFIED');

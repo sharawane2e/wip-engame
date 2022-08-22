@@ -1,11 +1,12 @@
 import { combineReducers } from "redux";
-// @ts-ignore
-import { popupReducer } from "./PopupRedux/popup-reducer.tsx";
+import { emailReducer } from "./EmailProcessRedux/emailprocess-reducer";
+import { popupReducer } from "./PopupRedux/popup-reducer";
 import { userReducer } from "./UserRedux/user-reducer";
 
 const rootReducer = combineReducers({
   popup: popupReducer,
-  user: userReducer
+  user: userReducer,
+  email: emailReducer
 });
 
 export default rootReducer;

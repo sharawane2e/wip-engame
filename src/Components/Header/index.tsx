@@ -54,6 +54,7 @@ const Header = () => {
         username: "",
         firstname: "",
         lastname: "",
+        isEmailVerified: false,
         accessToken: "",
         purchasedWidgets: [],
         cartWidgets: []
@@ -86,6 +87,7 @@ const Header = () => {
                     <span className="vertical-line">|</span>
                     <div
                         className="menu-button registerBtn"
+                        onClick={() => popup("register", true)}
                     >
                         Register
                     </div>

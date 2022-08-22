@@ -48,6 +48,7 @@ function Layout() {
             obj.username = data.username;
             obj.firstname = data.firstname;
             obj.lastname = data.lastname;
+            obj.isEmailVerified = data.isEmailVerified;
             obj.accessToken = data.accessToken;
             obj.purchasedWidgets = data.purchasedwidgets;
             obj.cartWidgets = data.cartwidgets;

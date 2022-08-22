@@ -24,6 +24,7 @@ function LoginPage() {
       username: "",
       firstname: "",
       lastname: "",
+      isEmailVerified: false,
       accessToken: "",
       purchasedWidgets: [],
       cartWidgets: []
@@ -31,31 +32,31 @@ function LoginPage() {
   dispatch(setUserDetails(details));
   }, [])
 
-  const ValidateUser = (uname:any, pswd:any) => {
-    let isAuth:any;
-    let userObj = {
-      "username": uname,
-      "password": pswd
-    }
-    axios.post("http://localhost:5000/user/login", userObj)
-    .then((x:any) => {
-      console.log(x.data)
-      isAuth = x.data.authenticated;
-      if(!isAuth){
-        dispatch(setLoginErrMsg(x.data.errorMsg));
-        localStorage.setItem("auth", '{"isLoggedIn" : "false", "username" : ""}');
-      }
-      else{
-        setReduxUser(username)
-        .then(data => {
-          dispatch(setUserDetails(data))
-          navigate("/");
-        });
-        localStorage.setItem("auth", '{"isLoggedIn" : "true", "username" : "' + username +' "}');
+  // const ValidateUser = (uname:any, pswd:any) => {
+  //   let isAuth:any;
+  //   let userObj = {
+  //     "username": uname,
+  //     "password": pswd
+  //   }
+  //   axios.post("http://localhost:5000/user/login", userObj)
+  //   .then((x:any) => {
+  //     console.log(x.data)
+  //     isAuth = x.data.authenticated;
+  //     if(!isAuth){
+  //       dispatch(setLoginErrMsg(x.data.errorMsg));
+  //       localStorage.setItem("auth", '{"isLoggedIn" : "false", "username" : ""}');
+  //     }
+  //     else{
+  //       setReduxUser(username)
+  //       .then(data => {
+  //         dispatch(setUserDetails(data))
+  //         navigate("/");
+  //       });
+  //       localStorage.setItem("auth", '{"isLoggedIn" : "true", "username" : "' + username +' "}');
         
-      }
-    })
-  }
+  //     }
+  //   })
+  // }
 
 
   return (
@@ -67,7 +68,7 @@ function LoginPage() {
         <div className='lb_error_msg'>{storeData?.user?.userDetails?.loginErrMsg}</div>
         <input className='lb_inputclass' type="text" placeholder='Username' onChange={(e) => setUsername(e.target.value)}/>
         <input className='lb_inputclass' type="text" placeholder='Password' onChange={(e) => setPassword(e.target.value)}/>
-        <button className='login_btn' onClick={() => ValidateUser(username,password)}>Login</button>
+        {/* <button className='login_btn' onClick={() => ValidateUser(username,password)}>Login</button> */}
       </div>
     </div>
   )

@@ -102,8 +102,8 @@
     display: flex;
     @include space(margin, top-bottom, $margin-10, $margin-10);
     .add--card {
-      width: 170px !important;
-      margin: 0 auto;
+      width: 170px ;
+      // margin: 0 auto;
 
       // padding: $padding-15 !important;
       &:disabled {
@@ -124,4 +124,84 @@
         map-get($map: $boxshadow, $key: $black-smooth)
       );
     }
+
+    .verifybtns{
+      margin: 10px 10px 0px 10px;
+    }
+  }
+
+  .registration--form {
+    @include breakpoint(desktop150) {
+      @include space(padding, top-bottom, $padding-10, $padding-10);
+    }
+    .MuiFilledInput-root {
+      background-color: $white !important;
+    }
+  }
+  .back-button {
+    font-family: map-get($map: $font-family, $key: "font-barlowmedium");
+    display: block;
+    @include space(padding, top-bottom, $padding-15, $padding-15);
+    text-align: $align-center;
+    @include font-size($font-xl-reg);
+    > a {
+      @include color($black-secondary);
+      &:hover {
+        text-decoration: none !important;
+      }
+    }
+    @include breakpoint(desktop150) {
+      @include font-size($font-xmd-reg);
+    }
+    @include breakpoint(desktop) {
+      @include space(padding, top-bottom, $padding-10, $padding-10);
+    }
+  }
+  .form-button-grop {
+    .register__button {
+      // min-width: 292px !important;
+      width: 100%;
+      @include space(padding, all, $padding-15 !important, 0);
+      @include font-sizeImp($font-xx-reg);
+      @include breakpoint(desktop150) {
+        @include font-size($font-xmd-reg);
+        @include space(padding, top-bottom, $padding-15, $padding-10);
+      }
+    }
+  }
+
+  .margin-10{
+    margin: 10px 10px 0px 10px;
+  }
+  
+  .verify_text{
+    height: 70px;
+    // margin-bottom: 40px;
+    line-height: 1.4;
+  }
+
+  .verify_email_loader{
+    height: 70px;
+    text-align: center;
+  }
+
+  .verify_success_icon{
+    height: 140px;
+    display: flex;
+    justify-content: center;
+    width: -webkit-fill-available;
+  }
+
+  .verify_success_icon > img{
+    width: auto;
+    height: 100%;
+  }
+
+  .verify_success_text{
+    text-align: center;
+    margin: 20px 0px 40px 0px;
+  }
+
+  .verify_success_text > h2{
+    margin-bottom: 20px;
   }

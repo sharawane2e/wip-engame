@@ -10,11 +10,23 @@ import axios from 'axios';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useSnackbar } from 'notistack';
 import { AddtoCartHelper } from '../../Utils/cartFunctions';
+import CircularProgress from '@mui/material/CircularProgress';
+import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
+import emailVerifyImg from "../../Assets/emailverify.png";
+import { setEmailDetails } from '../../redux/EmailProcessRedux/emailAction';
+import { isEmailVerified, sendCustomMail } from '../../Utils/helperFunctions';
 
 const AppPopup = (props:any) => {
 
     const { showPopup, type, setShowPopup, widgetObj } = props;
     const page = window.location.pathname;
+    // let popupType = type;
+    const [popupType, setPopupType] = useState("");
+
+    useEffect(() => {
+        setPopupType(type);
+        console.log(type)
+    }, [type])
 
     const storeData = useSelector((data:any) => data);
     const localUser:any = localStorage.getItem("auth");
@@ -22,12 +34,39 @@ const AppPopup = (props:any) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    const [showTPLoader, setShowTPLoader] = useState(true);
-    const [itemCount, setItemCount] = useState(1000);
-    const [itemPrice, setItemPrice] = useState(0);
+    const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+    const [showTPLoader, setShowTPLoader] = useState(true); // Tool-Preview
+    const [showURLoader, setShowURLoader] = useState(false); // User-Register
+    const [showVELoader, setShowVELoader] = useState(false); // Verify-Email
     const [subsType, setSubsType] = useState("Hits");
     const [wtCount, setWtCount] = useState(100);
     const [wtPrice, setWtPrice] = useState(10);
+
+    const [newUserDetails, setNewUserDetails] = useState({
+        "name" : "",
+        "email": "",
+        "password": "",
+        "cpassword": ""
+    });
+
+    const [newUserErrors, setNewUserErrors] = useState({
+        "nameError": "",
+        "emailError": "",
+        "passwordError": "",
+        "cpasswordError": ""
+    });
+
+    let details = {
+        isLoggedIn: false,
+        loginErrMsg: "",
+        username: "",
+        firstname: "",
+        lastname: "",
+        isEmailVerified: false,
+        accessToken: "",
+        purchasedWidgets: [],
+        cartWidgets: []
+    }
 
     const { enqueueSnackbar } = useSnackbar();
     const navigate = useNavigate();
@@ -40,7 +79,25 @@ const AppPopup = (props:any) => {
             setWtCount(widgetObj?.details?.total_count);
             setWtPrice(widgetObj?.details?.price);
         }
+        else if(type == "verifyEmail"){
+            // if(storeData.email.emailDetails.isEmailRedirect || !storeData.user.userDetails.isEmailVerified){
+            //     // logout();
+            //     axios.post("http://localhost:5000/user/verifyemail/" + storeData.email.emailDetails.accessToken)
+            //     .then((x:any) => {
+            //         console.log(x.data)
+            //         verifyEmail();
+            //     })
+            // }
+            // else{
+                verifyEmail();
+            // }
+        }
     }, [showPopup]);
+
+    const logout = () => {
+        localStorage.setItem("auth", '{"isLoggedIn" : "false", "username" : ""}');
+        dispatch(setUserDetails(details));
+    }
 
     const cartObj = {
         "details" : {
@@ -53,7 +110,7 @@ const AppPopup = (props:any) => {
         },
         "widget" : widgetObj,
         "username" : storeData?.user?.userDetails?.username
-      }
+    }
 
     const ValidateUser = (uname:any, pswd:any) => {
         let isAuth:any;
@@ -116,9 +173,110 @@ const AppPopup = (props:any) => {
         })
     }
 
+    const registerUser = () => {
+
+        console.log("newUserDetails", newUserDetails)
+
+        let details:any = { ...newUserDetails };
+        let errorObj:any = { ...newUserErrors };
+
+        let obj = {
+            "firstname": details.name,
+            "lastname": " ",
+            "username": details.name,
+            "password": details.password,
+            "isEmailVerified": false,
+            "accessToken": "gggggggg",
+            "purchasedwidgets": [],
+            "cartwidgets": []
+        }
+
+        if(details.name == ""){
+            errorObj.nameError = "Please enter your name !";
+            errorObj.emailError = "";
+            errorObj.passwordError = "";
+            errorObj.cpasswordError = "";
+        }
+        else if(details.email == ""){
+            errorObj.nameError = "";
+            errorObj.emailError = "Please enter your email !";
+            errorObj.passwordError = "";
+            errorObj.cpasswordError = "";
+        }
+        else if(details.password == ""){
+            errorObj.nameError = "";
+            errorObj.emailError = "";
+            errorObj.passwordError = "Please enter your password !";
+            errorObj.cpasswordError = "";
+        }
+        else if(details.cpassword == ""){
+            errorObj.nameError = "";
+            errorObj.emailError = "";
+            errorObj.passwordError = "";
+            errorObj.cpasswordError = "Please confirm password !";
+        }
+        else if(details.cpassword != details.password){
+            errorObj.nameError = "";
+            errorObj.emailError = "";
+            errorObj.passwordError = "";
+            errorObj.cpasswordError = "Password does not match !";
+        }
+        else{
+            setShowURLoader(true)
+            axios.post("http://localhost:5000/user/adduser", obj)
+            .then((x:any) => {
+                console.log(x.data);
+                setShowURLoader(false);
+                setReduxUser(x.data.username)
+                .then(data => {
+                  dispatch(setUserDetails(data))
+                });
+                sendCustomMail({
+                    "name": x.data.username,
+                    "loginLink": "http://localhost:3000/emailverify/" + x.data.accessToken
+                })
+                localStorage.setItem("auth", '{"isLoggedIn" : "true", "username" : "' + x.data.username +' "}');
+                setPopupType("verifyEmail")
+            })
+            .catch((err:any) => console.log(err))
+        }
+
+        setNewUserErrors(errorObj);
+
+    }
+
+    const handleUserInput = (key:string, val:any) => {
+        let obj:any = { ...newUserDetails };
+        obj[key] = val;
+        setNewUserDetails(obj);
+    }
+
+    const registerErrors = (key:string, val:any) => {
+        let obj:any = { ...newUserErrors };
+        obj[key] = val;
+        setNewUserErrors(obj);
+    }
+
+    const verifyEmail = () => {
+        setShowVELoader(true);
+
+        let token = storeData.email.emailDetails.isEmailRedirect ? storeData.email.emailDetails.accessToken : storeData.user.userDetails.accessToken;
+
+        isEmailVerified(token)
+        .then((x:any) => {
+            console.log(x);
+            setTimeout(() => {
+                setShowVELoader(false);
+                if(x == true){
+                    setPopupType("EmailVerifySuccess")
+                }
+            }, 1000);
+        })
+    }
+
     useEffect(() => {
         CalcPrice()
-      }, [wtCount, subsType]);
+    }, [wtCount, subsType]);
     
     const CalcPrice = () => {
         if(subsType == "Hits"){
@@ -129,11 +287,21 @@ const AppPopup = (props:any) => {
         }
     }
 
+    const loginAgainbtn = () => {
+        let dispatchObj = {
+            "isEmailRedirect": false,
+            "accessToken": ""
+          }
+    
+          dispatch(setEmailDetails(dispatchObj));
+        setPopupType("login")
+    }
+
     return showPopup == true ? (
         <>
             <div className="popup-overlay"></div>
             <div className="popup-container">
-                {type == "login" && 
+                {popupType == "login" && 
                     <>
                         <div className="popup-container__iner popup-background popup-container__iner--xl border-radius">
                             <div className="popup-close" 
@@ -227,7 +395,174 @@ const AppPopup = (props:any) => {
                     </>
                 }
 
-                {type == "ToolPreview" &&
+                {popupType == "register" &&
+                    <>
+                        <div className="popup-container__iner popup-background popup-container__iner--xl border-radius">
+                            <div className="popup-close" 
+                                onClick={() => setShowPopup(false)}
+                            >
+                                <CloseIcon />
+                            </div>
+                            <div className="popup-container__body">
+                                <Grid container spacing={1} className="popup-padding">
+                                    <Grid item xs={12} sm={12} lg={12}>
+                                            <div className="form-area registration--form">
+                                                <div className="form-area__login  large-hedding">Register</div>
+                                                <form className="form-area__fileds" noValidate autoComplete="off">
+
+                                                {showURLoader ? 
+                                                    <div className='user_register_loader'>
+                                                        <CircularProgress />
+                                                    </div>
+                                                :
+                                                    <>
+                                                        <FormControl className="form-area__control">
+                                                            <TextField
+                                                            id="outlined-name-input"
+                                                            placeholder="Name"
+                                                            label="Name"
+                                                            variant="filled"
+                                                            // value={name}
+                                                            onChange={(e) => handleUserInput("name", e.target.value)}
+                                                            // onBlur={(e) => handleBlur(e, "name")}
+                                                            // message={formErrors.name}
+                                                            type="Name"
+                                                            // variant="outlined"
+                                                            // onKeyDown={_handleKeyDown}
+                                                            />
+                                                            <div className="validated-error">
+                                                                {newUserErrors.nameError}
+                                                            </div>
+                                                        </FormControl>
+
+                                                        <FormControl className="form-area__control">
+                                                            <TextField
+                                                            id="outlined-email-input"
+                                                            placeholder="Emails"
+                                                            type="Email"
+                                                            label="E-mail"
+                                                            variant="filled"
+                                                            // value={email}
+                                                            // onChange={(e) => handleChange(e, "email")}
+                                                            onChange={(e) => handleUserInput("email", e.target.value)}
+                                                            // onBlur={(e) => handleBlur(e, "email")}
+                                                            // onBlur={(e) => handleCMail(e)}
+                                                            // message={formErrors.email}
+                                                            // onKeyDown={_handleKeyDown}
+                                                            // onKeyUpCapture={(e) => handleCMail(e)}
+                                                            />
+                                                            <div className="validated-error">
+                                                            {newUserErrors.emailError}
+                                                            </div>
+                                                        </FormControl>
+
+                                                        <FormControl className="form-area__control"
+                                                            variant="filled"
+                                                        >
+                                                            <InputLabel htmlFor="filled-adornment-password">
+                                                            Password
+                                                            </InputLabel>
+                                                            <FilledInput
+                                                            // label="E-mail"
+                                                            id="outlined-adornment-password"
+                                                            placeholder="Password "
+                                                            type={showPassword ? "text" : "password"}
+                                                            // value={setpassword}
+                                                            // onChange={(e) => handleChange(e, "setpassword")}
+                                                            onChange={(e) => handleUserInput("password", e.target.value)}
+                                                            // onBlur={(e) => handleBlur(e, "setpassword")}
+                                                            // message={formErrors.setpassword}
+                                                            // onKeyDown={_handleKeyDown}
+                                                            endAdornment={
+                                                                <InputAdornment position="end">
+                                                                <IconButton
+                                                                    aria-label="toggle password visibility"
+                                                                    onClick={() => setShowPassword(!showPassword)}
+                                                                    edge="end"
+                                                                >
+                                                                    {showPassword ? (
+                                                                    <Visibility className="fill-eyecolor" />
+                                                                    ) : (
+                                                                    <VisibilityOff className="fill-eyecolor" />
+                                                                    )}
+                                                                </IconButton>
+                                                                </InputAdornment>
+                                                            }
+                                                            />
+                                                            <div className="validated-error">
+                                                            {newUserErrors.passwordError}
+                                                            </div>
+                                                        </FormControl>
+
+                                                        <FormControl
+                                                            className="form-area__control"
+                                                            variant="filled"
+                                                        >
+                                                            <InputLabel htmlFor="filled-adornment-password">
+                                                            Confirm Password
+                                                            </InputLabel>
+                                                            <FilledInput
+                                                            id="outlined-adornment-confirmpassword"
+                                                            placeholder="Confirm Password"
+                                                            type={showPasswordConfirm ? "text" : "password"}
+                                                            // value={confirmpassword}
+                                                            // onChange={(e) => handleChange(e, "confirmpassword")}
+                                                            onChange={(e) => handleUserInput("cpassword", e.target.value)}
+                                                            // onBlur={(e) => handleBlur(e, "confirmpassword")}
+                                                            // message={formErrors.confirmpassword}
+                                                            // onKeyDown={_handleKeyDown}
+                                                            endAdornment={
+                                                                <InputAdornment
+                                                                position="end"
+                                                                // onChange={(e) => checkPasswordMatch(e)}
+                                                                >
+                                                                <IconButton
+                                                                    aria-label="toggle password visibility"
+                                                                    onClick={() => setShowPasswordConfirm(!showPasswordConfirm)}
+                                                                    edge="end"
+                                                                >
+                                                                    {showPasswordConfirm ? (
+                                                                    <Visibility className="fill-eyecolor" />
+                                                                    ) : (
+                                                                    <VisibilityOff className="fill-eyecolor" />
+                                                                    )}
+                                                                </IconButton>
+                                                                </InputAdornment>
+                                                            }
+                                                            />
+                                                            <div className="validated-error">
+                                                            {newUserErrors.cpasswordError}
+                                                            </div>
+                                                        </FormControl>
+                                                    </>
+                                                }
+                                                </form>
+                                                <div className="form-button-grop">
+                                                <button
+                                                    onClick={() => registerUser()}
+                                                    className="register__button primary-button"
+                                                >
+                                                    Register
+                                                </button>
+                                                </div>
+                                                <div className="form-newaccont">
+                                                <span>Already a member?</span>
+                                                <NavLink to="#" 
+                                                    // onClick={backLogin} 
+                                                    className=""
+                                                    >
+                                                        Login
+                                                </NavLink>
+                                                </div>
+                                            </div>
+                                    </Grid>
+                                </Grid>
+                            </div>
+                        </div>
+                    </>
+                }
+
+                {popupType == "ToolPreview" &&
                     <>
                             <div className="popup-container__iner popup-container__iner--xxl border-radius tool-perview-data">
                                 <div className="popup-close" onClick={() => setShowPopup(false)}>
@@ -261,7 +596,7 @@ const AppPopup = (props:any) => {
                     </>
                 }
 
-                {type == "AddToCart" &&
+                {popupType == "AddToCart" &&
                     <>
                         <div className="popup-container__iner border-radius popup-container__iner--sm">
                             <div className="popup-container__header border-bottom">
@@ -327,7 +662,7 @@ const AppPopup = (props:any) => {
                     </>
                 }
 
-                {type == "EditWidgetinCart" &&
+                {popupType == "EditWidgetinCart" &&
                     <>
                         <div className="popup-container__iner border-radius popup-container__iner--sm">
                             <div className="popup-container__header border-bottom">
@@ -388,6 +723,102 @@ const AppPopup = (props:any) => {
                                     >
                                         <ShoppingCartIcon className="hover-effect" /> Edit Cart Item
                                     </Button>
+                                </div>
+                            </div>
+                        </div>
+                    </>
+                }
+
+                {popupType == "verifyEmail" &&
+                    <>
+                        <div className="popup-container__iner border-radius popup-container__iner--sm">
+                            <div className="popup-container__header border-bottom">
+                                <div className="popup-container__text ">Verify Email</div>
+                                {/* <div className="popup-container__close" onClick={() => setShowPopup(false)}>
+                                    <CloseIcon />
+                                </div> */}
+                            </div>
+                            <div className="popup-container__body">
+
+                                {showVELoader ? 
+                                    <div className='verify_email_loader'>
+                                        <CircularProgress />
+                                    </div>
+                                :
+                                    <div className='verify_text'>
+                                        Please verify your email first.
+                                        Please click on the link shared on your email.
+                                    </div>
+                                }
+
+                                <div className="popup-container__footer">
+                                    <Button
+                                        className="primary-button add--card verifybtns"
+                                        // onClick={() => editWidget()}
+                                        disabled={wtCount === 0 ? true : false}
+                                    >
+                                        Resend
+                                    </Button>
+
+                                    <Button
+                                        className="primary-button add--card verifybtns"
+                                        onClick={() => verifyEmail()}
+                                        disabled={wtCount === 0 ? true : false}
+                                    >
+                                        Refresh
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
+                    </>
+                }
+
+                {popupType == "EmailVerifySuccess" &&
+                    <>
+                        <div className="popup-container__iner border-radius popup-container__iner--sm">
+                            {/* <div className="popup-container__header border-bottom">
+                                <div className="popup-container__text ">Verify Email</div>
+                                <div className="popup-container__close" onClick={() => setShowPopup(false)}>
+                                    <CloseIcon />
+                                </div>
+                            </div> */}
+                            <div className="popup-container__body">
+
+                                {showVELoader ? 
+                                    <div className='verify_email_loader'>
+                                        <CircularProgress />
+                                    </div>
+                                :
+                                    <>
+                                        <div className='verify_success_icon'>
+                                            {/* <MarkEmailReadIcon fontSize="large" color="success"/> */}
+                                            <img src={emailVerifyImg}/>
+                                        </div>
+                                        <div className='verify_success_text'>
+                                            <h2>Email Verified Successfully</h2>
+                                            <span>Thank you ! Your email has been verified successfully.</span>
+                                        </div>
+                                    </>
+                                }
+
+                                <div className="popup-container__footer">
+                                    {storeData.user.userDetails.isLoggedIn ? 
+                                        <Button
+                                            className="primary-button add--card"
+                                            onClick={() => setShowPopup(false)}
+                                            sx={{minWidth: "100%"}}
+                                        >
+                                            Continue Shopping
+                                        </Button>
+                                    :
+                                        <Button
+                                            className="primary-button add--card"
+                                            onClick={() => loginAgainbtn()}
+                                            sx={{minWidth: "100%"}}
+                                        >
+                                            Login Now
+                                        </Button>
+                                    }
                                 </div>
                             </div>
                         </div>

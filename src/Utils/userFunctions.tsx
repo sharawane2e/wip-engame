@@ -13,6 +13,7 @@ export const setReduxUser = (username:any) => {
                 username: data?.username,
                 firstname: data?.firstname,
                 lastname: data?.lastname,
+                isEmailVerified: data?.isEmailVerified,
                 accessToken: data ? data?.accessToken : "",
                 purchasedWidgets: data?.purchasedwidgets?.slice(),
                 cartWidgets: data?.cartwidgets?.slice()

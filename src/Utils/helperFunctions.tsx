@@ -71,3 +71,52 @@ export const playPauseWidget = (obj:any) => {
         .catch(y => res(false))
     })
 }
+
+export const sendCustomMail = (context:any) => {
+
+    let body = {
+        "context" : context
+    }
+
+    return new Promise((res,rej) => {
+        axios.post("http://localhost:5000/mail/sendmail", body)
+        .then((x:any) => {
+            res(x);
+        })
+        .catch((err:any) => {
+            rej(err)
+        })
+    })
+
+}
+
+export const isEmailVerified = (token:any) => {
+    return new Promise((res,rej) => {
+        let body = {
+            "token": token
+        }
+        axios.post("http://localhost:5000/user/findbytoken", body)
+        .then((x:any) => {
+            if(x.data.isEmailVerified == true){
+                res(true)
+            }
+            else{
+                res(false)
+            }
+        })
+    })
+}
+
+export const verifyUserEmail = (token:any) => {
+    return new Promise((res,rej) => {
+        axios.post("http://localhost:5000/user/verifyemail/" + token)
+        .then((x:any) => {
+            if(x.data.isEmailVerified == true){
+                res(true)
+            }
+            else{
+                res(false)
+            }
+        })
+    })
+}

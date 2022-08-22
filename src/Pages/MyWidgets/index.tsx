@@ -168,6 +168,18 @@ function MyWidgets() {
         })
     }
 
+    const downloadfile = (fileName:any, embedcode:any) => {
+        var link = document.createElement("a");
+        link.href = window.URL.createObjectURL(
+          new Blob([embedcode], {
+            type: "application/octet-stream",
+          })
+        );
+        link.download = fileName + ".html";
+        document.body.appendChild(link);
+        link.click();
+      };
+
     return (
         <>
             <div className="purchased-tool bredcrum-conatiner">
@@ -665,12 +677,12 @@ function MyWidgets() {
                                                         <Typography
                                                         component="div"
                                                         className="purchased-tool__embeded-icon border-radius"
-                                                        // onClick={() =>
-                                                        //     downloadfile(
-                                                        //     item.widget.name,
-                                                        //     item.widget.widget_embed_code
-                                                        //     )
-                                                        // }
+                                                        onClick={() =>
+                                                            downloadfile(
+                                                            item.widget.name,
+                                                            item.widget.widget_embed_code
+                                                            )
+                                                        }
                                                         >
                                                         {/* <EmbdedCodeImg /> */}
                                                             <GetAppIcon fontSize="large"/>
