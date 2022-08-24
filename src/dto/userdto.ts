@@ -8,4 +8,6 @@ export class userDto {
     accessToken: String
     purchasedwidgets: Array<Object>
     cartwidgets: Array<Object>
+    phoneNumber: Number
+    organization: String
 }

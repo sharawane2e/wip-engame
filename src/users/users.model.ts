@@ -8,7 +8,9 @@ export const UserSchema = new mongoose.Schema({
   isEmailVerified: { type: Boolean, required: true },
   accessToken: { type: String, required : true},
   purchasedwidgets: { type: Array, required: true },
-  cartwidgets: { type: Array, required: true }
+  cartwidgets: { type: Array, required: true },
+  phoneNumber: { type: Number, required: true },
+  organization: { type: String, required: true }
 });
 
 export interface User extends mongoose.Document {
@@ -18,7 +20,9 @@ export interface User extends mongoose.Document {
   username: String,
   password: String,
   isEmailVerified: Boolean,
-  accessToken: String
+  accessToken: String,
   purchasedwidgets: Array<any>,
-  cartwidgets: Array<any>
+  cartwidgets: Array<any>,
+  phoneNumber: Number,
+  organization: String
 }

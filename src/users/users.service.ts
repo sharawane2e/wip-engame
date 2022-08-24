@@ -55,7 +55,7 @@ export class UserService {
         user.accessToken = "";
         user.accessToken = this.jwtService.sign(JSON.parse(JSON.stringify(tokenObj)));
 
-        this.updateUser(user)
+        this.partialUserUpdate(user)
 
       }
       else{
@@ -97,7 +97,9 @@ export class UserService {
       isEmailVerified: user.isEmailVerified,
       accessToken: user.accessToken,
       purchasedwidgets: user.purchasedwidgets,
-      cartwidgets: user.cartwidgets
+      cartwidgets: user.cartwidgets,
+      phoneNumber: user.phoneNumber,
+      organization: user.organization,
     };
   }
 
@@ -130,7 +132,9 @@ export class UserService {
         isEmailVerified: userObj.isEmailVerified,
         accessToken: userObj.accessToken,
         purchasedwidgets: userObj.purchasedwidgets,
-        cartwidgets: userObj.cartwidgets
+        cartwidgets: userObj.cartwidgets,
+        phoneNumber: userObj.phoneNumber,
+        organization: userObj.organization
       }
     })
 
@@ -174,7 +178,9 @@ export class UserService {
         isEmailVerified: userObj.isEmailVerified,
         accessToken: userObj.accessToken,
         purchasedwidgets: userObj.purchasedwidgets,
-        cartwidgets: userObj.cartwidgets
+        cartwidgets: userObj.cartwidgets,
+        phoneNumber: userObj.phoneNumber,
+        organization: userObj.organization
       }
     })
 
@@ -211,7 +217,9 @@ export class UserService {
         isEmailVerified: userObj.isEmailVerified,
         accessToken: userObj.accessToken,
         purchasedwidgets: userObj.purchasedwidgets,
-        cartwidgets: userObj.cartwidgets
+        cartwidgets: userObj.cartwidgets,
+        phoneNumber: userObj.phoneNumber,
+        organization: userObj.organization,
       }
     })
 
@@ -248,7 +256,9 @@ export class UserService {
         isEmailVerified: user.isEmailVerified,
         accessToken: user.accessToken,
         purchasedwidgets: user.purchasedwidgets,
-        cartwidgets: user.cartwidgets
+        cartwidgets: user.cartwidgets,
+        phoneNumber: user.phoneNumber,
+        organization: user.organization
       }
     })
 
@@ -323,7 +333,9 @@ export class UserService {
           isEmailVerified: obj.isEmailVerified,
           accessToken: obj.accessToken,
           purchasedwidgets: obj.purchasedwidgets,
-          cartwidgets: obj.cartwidgets
+          cartwidgets: obj.cartwidgets,
+          phoneNumber: obj.phoneNumber,
+          organization: obj.organization
         }
       })
   
@@ -331,6 +343,37 @@ export class UserService {
         throw new NotFoundException(`Error occured !`,
         );
       }
+
+    }
+    else{
+      throw new BadRequestException(`Error`);
+    }
+  }
+
+  async partialUserUpdate(obj: userDto){
+    let user = await this.getOneUser(obj.username);
+    if(user){
+      const result = await user.update({
+        $set: {
+          firstname: obj.firstname != null ? obj.firstname : user.firstname,
+          lastname: obj.lastname != null ? obj.lastname : user.lastname,
+          username: obj.username != null ? obj.username : user.username,
+          password: obj.password != null ? obj.password : user.password,
+          isEmailVerified: obj.isEmailVerified != null ? obj.isEmailVerified : user.isEmailVerified,
+          accessToken: obj.accessToken != null ? obj.accessToken : user.accessToken,
+          purchasedwidgets: obj.purchasedwidgets != null ? obj.purchasedwidgets : user.purchasedwidgets,
+          cartwidgets: obj.cartwidgets != null ? obj.cartwidgets : user.cartwidgets,
+          phoneNumber: obj.phoneNumber != null ? obj.phoneNumber : user.phoneNumber,
+          organization: obj.organization != null ? obj.organization : user.organization
+        }
+      })
+  
+      if (result.n === 0) {
+        throw new NotFoundException(`Error occured !`,
+        );
+      }
+
+      return user;
 
     }
     else{

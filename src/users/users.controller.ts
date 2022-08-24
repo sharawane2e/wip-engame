@@ -47,6 +47,11 @@ import {
       return await this.UserService.getOneUser(username.username);
     }
 
+    @Patch('updateuser')
+    async updateUser(@Body() details: userDto) {
+      return await this.UserService.partialUserUpdate(details);
+    }
+
     @Post('verifyemail/:token')
     async verification(@Param('token') token: any) {
       return await this.UserService.verifyEmail(token);

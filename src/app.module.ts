@@ -1,3 +1,4 @@
+import { UserlogsModule } from './userlog/userlog.module';
 import { UsersModule } from './users/users.module';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -20,6 +21,7 @@ import { jwtConstants } from './users/constants';
     CartModule,
     UsersModule,
     MailModule,
+    UserlogsModule,
     // MongooseModule.forRoot(
     //   'mongodb+srv://admin:admin@cluster0.n5rp3k3.mongodb.net/?retryWrites=true&w=majority',
     // )
