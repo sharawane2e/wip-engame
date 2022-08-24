@@ -16,6 +16,7 @@ import Cart from '../../Components/Cart';
 import MyWidgets from '../MyWidgets';
 import ProfilePage from '../ProfilePage';
 import PageNotFound from '../PageNotFound';
+import ContactUsPage from '../InfoPages/ContactUsPage';
 
 function Layout() {
 
@@ -90,6 +91,7 @@ function Layout() {
               <Route path="cart" element={<PrivateRoute> <Cart/> </PrivateRoute>} />
               <Route path="mywidgets" element={<PrivateRoute> <MyWidgets/> </PrivateRoute>} />
               <Route path="profile" element={<PrivateRoute> <ProfilePage/> </PrivateRoute>} />
+              <Route path="contact-us" element={<PrivateRoute> <ContactUsPage/> </PrivateRoute>} />
 
               {/* <Route path="/" element={<CardsContainer/>} />
               <Route path="cart" element={<CartPage/>} />

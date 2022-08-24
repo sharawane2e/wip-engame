@@ -4,8 +4,12 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import ContactForm from '../../Components/ContactForm'
 import Footer from '../../Components/Footer'
+import GoogleMap from './map/google-map-react'
 
 const ContactUsPage = () => {
+
+    const locations = require("../InfoPages/map/locations.json");
+
     return (
         <>
             <div className="StaticPage">
@@ -98,21 +102,19 @@ const ContactUsPage = () => {
                                     <p>We’d love to hear from you!</p>
                                 </div>
                                 </Grid>
-                                {/* <Grid item xl={6} lg={6} md={6} sm={6} xs={12}>
+                                <Grid item xl={6} lg={6} md={6} sm={6} xs={12}>
                                 <div className="Form_container">
-                                    <ContactForm
-                                    contactListDetails={contactListDetails}
-                                    setContactListDetails={setContactListDetails}
-                                    setContactOpen={setContactOpen}
-                                    />
+                                    
+
+
                                 </div>
-                                </Grid> */}
-                                {/* <Grid item xl={6} lg={6} md={6} sm={6} xs={12}>
+                                </Grid>
+                                <Grid item xl={6} lg={6} md={6} sm={6} xs={12}>
                                 <div>
                                     <p className="Info-data__wrapper__context-text">Map</p>
-                                    <GoogleMap locations={locations} />
+                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3504.26453579156!2d77.06487091478108!3d28.561818082445697!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d04a34db9b4ab%3A0x8966e0b626355651!2sE2E%20Research%20Services%20Pvt%20Ltd!5e0!3m2!1sen!2sin!4v1661324666905!5m2!1sen!2sin" width="520" height="450" loading="lazy"></iframe>
                                 </div>
-                                </Grid> */}
+                                </Grid>
                             </Grid>
                             </div>
                             {/* {contactListDetails ? (

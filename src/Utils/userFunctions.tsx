@@ -16,7 +16,9 @@ export const setReduxUser = (username:any) => {
                 isEmailVerified: data?.isEmailVerified,
                 accessToken: data ? data?.accessToken : "",
                 purchasedWidgets: data?.purchasedwidgets?.slice(),
-                cartWidgets: data?.cartwidgets?.slice()
+                cartWidgets: data?.cartwidgets?.slice(),
+                phoneNumber: data?.phoneNumber,
+                organization: data?.organization
             }
             // store.dispatch(setUserDetails(details));
             res(details)
@@ -56,30 +58,30 @@ const action1 = () => {
     }
   }
 
-export const ValidateUser = (uname:any, pswd:any) => {
-    // return new Promise((res,rej) => {
-        let isAuth:any;
-        let userObj = {
-            "username": uname,
-            "password": pswd
-        }
-        axios.post("http://localhost:5000/user/login", userObj)
-        .then((x:any) => {
-            isAuth = x.data.authenticated;
-            if(!isAuth){
-                store.dispatch(setLoginErrMsg(x.data.errorMsg));
-                localStorage.setItem("auth", '{"isLoggedIn" : "false", "username" : ""}');
-            }
-            else{
-                setReduxUser(uname)
-                .then(data => store.dispatch(setUserDetails(data)))
-                // store.dispatch(setLoginErrMsg(x.data.errorMsg));
-                localStorage.setItem("auth", '{"isLoggedIn" : "true", "username" : "' + uname +' "}');
-            }
-        })
-    // })
+// export const ValidateUser = (uname:any, pswd:any) => {
+//     // return new Promise((res,rej) => {
+//         let isAuth:any;
+//         let userObj = {
+//             "username": uname,
+//             "password": pswd
+//         }
+//         axios.post("http://localhost:5000/user/login", userObj)
+//         .then((x:any) => {
+//             isAuth = x.data.authenticated;
+//             if(!isAuth){
+//                 store.dispatch(setLoginErrMsg(x.data.errorMsg));
+//                 localStorage.setItem("auth", '{"isLoggedIn" : "false", "username" : ""}');
+//             }
+//             else{
+//                 setReduxUser(uname)
+//                 .then(data => store.dispatch(setUserDetails(data)))
+//                 // store.dispatch(setLoginErrMsg(x.data.errorMsg));
+//                 localStorage.setItem("auth", '{"isLoggedIn" : "true", "username" : "' + uname +' "}');
+//             }
+//         })
+//     // })
 
-}
+// }
 
 // export const loginSeq = async (uname:any, pswd:any) => {
 //     const a = ValidateUser

@@ -83,8 +83,10 @@ body {
   @include space(margin, bottom, $margin-10, 0);
 }
 
-.validated-error {
+.validated-error, .resend-error {
   // min-height: 16px;
+  max-width: 50%;
+  word-break: break-all;
   @include color($primary);
   @include font-size($font-reg);
   @include space(margin, top-bottom, $margin-5, $margin-5);
@@ -92,6 +94,10 @@ body {
     @include font-size($font-xmd-reg);
     @include space(margin, all, 0, 0);
   }
+}
+
+.resend-error{
+  cursor: pointer;
 }
 
 .header-margin-top {
@@ -159,8 +165,8 @@ a {
   @include font-size($font-xl-reg);
   @include box-shadow(
     0px,
+    1px,
     10px,
-    20px,
     map-get($map: $boxshadow, $key: "black-smooth")
   );
   @include breakpoint(desktop150) {
@@ -682,7 +688,7 @@ select {
   display: flex;
   justify-content: $align-center;
   align-items: $align-center;
-  min-height: 90vh;
+  // min-height: 90vh;
   width: 100%;
   background: $light-white;
   flex-direction: column;

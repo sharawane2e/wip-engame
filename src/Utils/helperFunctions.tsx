@@ -120,3 +120,13 @@ export const verifyUserEmail = (token:any) => {
         })
     })
 }
+
+export const getOneUserData = (email:any) => {
+    return new Promise((res,rej) => {
+        axios.get("http://localhost:5000/user/" + email)
+        .then((x:any) => {
+            console.log(x);
+            res(x.data)
+        })
+    })
+}

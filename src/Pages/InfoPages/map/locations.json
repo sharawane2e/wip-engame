@@ -1,0 +1,32 @@
+[
+    {
+      "id": 123,
+      "title": "E2E Research Services Pvt. Ltd.",
+      "website": "https://e2eresearch.com/home/",
+      "image":
+        "https://e2eresearch.com/home/wp-content/uploads/2021/02/E2E-logo.png",
+      "address": [
+        {
+          "id": 1,
+          "country": "India",
+          "city": "New Delhi",
+          "street": "409 D-21 Corporate Park Sector 21 Dwarka",
+          "postcode": "110077",
+          "lat": "28.62474",
+          "lng": "77.08351"
+        },
+        {
+          "id": 2,
+          "country": "India",
+          "city": "New Delhi",
+          "street": "409 D-21 Corporate Park Sector 21 Dwarka",
+          "postcode": "110077",
+          "lat": "28.62474",
+          "lng": "77.08351"
+        }
+        
+      ]
+    }
+    
+  ]
+  

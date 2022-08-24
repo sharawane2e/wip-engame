@@ -12,9 +12,9 @@ import { useSnackbar } from 'notistack';
 import { AddtoCartHelper } from '../../Utils/cartFunctions';
 import CircularProgress from '@mui/material/CircularProgress';
 import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
-import emailVerifyImg from "../../Assets/emailverify.png";
+import emailVerifyImg from "../../Assets/emailVerify3.png";
 import { setEmailDetails } from '../../redux/EmailProcessRedux/emailAction';
-import { isEmailVerified, sendCustomMail } from '../../Utils/helperFunctions';
+import { getOneUserData, isEmailVerified, sendCustomMail } from '../../Utils/helperFunctions';
 
 const AppPopup = (props:any) => {
 
@@ -38,9 +38,13 @@ const AppPopup = (props:any) => {
     const [showTPLoader, setShowTPLoader] = useState(true); // Tool-Preview
     const [showURLoader, setShowURLoader] = useState(false); // User-Register
     const [showVELoader, setShowVELoader] = useState(false); // Verify-Email
+    const [showRELoader, setShowRELoader] = useState(false); // Resend-Email
     const [subsType, setSubsType] = useState("Hits");
     const [wtCount, setWtCount] = useState(100);
     const [wtPrice, setWtPrice] = useState(10);
+    const [showResendLink, setShowResendLink] = useState(false);
+    const [resendEmail, setResendEmail] = useState("");
+    const [resendError, setResendError] = useState("");
 
     const [newUserDetails, setNewUserDetails] = useState({
         "name" : "",
@@ -65,7 +69,9 @@ const AppPopup = (props:any) => {
         isEmailVerified: false,
         accessToken: "",
         purchasedWidgets: [],
-        cartWidgets: []
+        cartWidgets: [],
+        phoneNumber: 0,
+        organization: ""
     }
 
     const { enqueueSnackbar } = useSnackbar();
@@ -114,6 +120,7 @@ const AppPopup = (props:any) => {
 
     const ValidateUser = (uname:any, pswd:any) => {
         let isAuth:any;
+        let emailVerified:any;
         let userObj = {
           "username": uname,
           "password": pswd
@@ -122,15 +129,23 @@ const AppPopup = (props:any) => {
         .then((x:any) => {
           console.log(x.data)
           isAuth = x.data.authenticated;
+          emailVerified = x.data.isEmailVerified;
           if(!isAuth){
-            dispatch(setLoginErrMsg(x.data.errorMsg));
+            setShowResendLink(false)
+            dispatch(setLoginErrMsg("x.data.errorMsg"));
+            localStorage.setItem("auth", '{"isLoggedIn" : "false", "username" : ""}');
+          }
+          else if(!emailVerified){
+            setShowResendLink(true)
             localStorage.setItem("auth", '{"isLoggedIn" : "false", "username" : ""}');
           }
           else{
+            setShowResendLink(false)
             setReduxUser(username)
             .then(data => {
-              dispatch(setUserDetails(data))
-              navigate("/");
+                console.log(data)
+                dispatch(setUserDetails(data))
+                navigate("/");
             });
             localStorage.setItem("auth", '{"isLoggedIn" : "true", "username" : "' + username +' "}');
             setShowPopup(false)
@@ -188,7 +203,9 @@ const AppPopup = (props:any) => {
             "isEmailVerified": false,
             "accessToken": "gggggggg",
             "purchasedwidgets": [],
-            "cartwidgets": []
+            "cartwidgets": [],
+            "phoneNumber": 0,
+            "organization": " "
         }
 
         if(details.name == ""){
@@ -227,16 +244,16 @@ const AppPopup = (props:any) => {
             .then((x:any) => {
                 console.log(x.data);
                 setShowURLoader(false);
-                setReduxUser(x.data.username)
-                .then(data => {
-                  dispatch(setUserDetails(data))
-                });
+                // setReduxUser(x.data.username)
+                // .then(data => {
+                //   dispatch(setUserDetails(data))
+                // });
                 sendCustomMail({
                     "name": x.data.username,
                     "loginLink": "http://localhost:3000/emailverify/" + x.data.accessToken
                 })
                 localStorage.setItem("auth", '{"isLoggedIn" : "true", "username" : "' + x.data.username +' "}');
-                setPopupType("verifyEmail")
+                setPopupType("emailsent")
             })
             .catch((err:any) => console.log(err))
         }
@@ -293,14 +310,46 @@ const AppPopup = (props:any) => {
             "accessToken": ""
           }
     
-          dispatch(setEmailDetails(dispatchObj));
-        setPopupType("login")
+        dispatch(setEmailDetails(dispatchObj));
+        setShowResendLink(false);
+        setPopupType("login");
+    }
+
+    const resendLinkEmail = () => {
+
+        setShowRELoader(true);
+
+        getOneUserData(resendEmail)
+        .then((x:any) => {
+            if(Object.keys(x).length > 0){
+
+                setResendError("");
+                let context = {
+                    "name": x.username,
+                    "loginLink": "http://localhost:3000/emailverify/" + x.accessToken
+                }
+                sendCustomMail(context)
+                .then((x:any) => {
+                    setShowRELoader(false);
+                    setPopupType("emailsent")
+                });
+            }
+            else{
+                setShowRELoader(false);
+                setResendError("No Such User");
+            }
+        })
+
+
+
+
     }
 
     return showPopup == true ? (
         <>
             <div className="popup-overlay"></div>
             <div className="popup-container">
+
                 {popupType == "login" && 
                     <>
                         <div className="popup-container__iner popup-background popup-container__iner--xl border-radius">
@@ -315,9 +364,7 @@ const AppPopup = (props:any) => {
                                     <div className="form-area login--form">
                                         <div className="form-area__login  large-hedding">Login</div>
                                         <form className="form-area__fileds" noValidate autoComplete="off">
-                                        <div className="validated-error">
-                                            {storeData?.user?.userDetails?.loginErrMsg}
-                                        </div>
+
                                         <FormControl className="form-area__control">
                                             <TextField
                                             id="outlined-email-input"
@@ -362,6 +409,7 @@ const AppPopup = (props:any) => {
                                             />
                                         </FormControl>
 
+
                                         <div className="forgot-link">
                                             <NavLink to="#" 
                                             // onClick={forgotPassword}
@@ -370,14 +418,25 @@ const AppPopup = (props:any) => {
                                             </NavLink>
                                         </div>
 
+                                        {showResendLink ? 
+                                            <div className="resend-error" onClick={() => setPopupType("resendMail")}>
+                                                Email not verified ! <br/>
+                                                Click <strong>here</strong> to resend link
+                                            </div>
+                                            :
+                                            <div className="validated-error">
+                                                {storeData?.user?.userDetails?.loginErrMsg}
+                                            </div>
+                                        }
+
                                         </form>
                                         <div className="form-button-grop">
-                                        <button
-                                            onClick={() => ValidateUser(username,password)}
-                                            className="login__button primary-button"
-                                        >
-                                            Log In
-                                        </button>
+                                            <button
+                                                onClick={() => ValidateUser(username,password)}
+                                                className="login__button primary-button"
+                                            >
+                                                Log In
+                                            </button>
                                         </div>
                                         <div className="form-newaccont">
                                         <span>New Here?</span>
@@ -775,13 +834,12 @@ const AppPopup = (props:any) => {
 
                 {popupType == "EmailVerifySuccess" &&
                     <>
-                        <div className="popup-container__iner border-radius popup-container__iner--sm">
-                            {/* <div className="popup-container__header border-bottom">
-                                <div className="popup-container__text ">Verify Email</div>
-                                <div className="popup-container__close" onClick={() => setShowPopup(false)}>
-                                    <CloseIcon />
-                                </div>
-                            </div> */}
+                        <div className="popup-container__iner popup-background popup-container__iner--xl border-radius">
+                            <div className="popup-close" 
+                                onClick={() => setShowPopup(false)}
+                            >
+                                <CloseIcon />
+                            </div>
                             <div className="popup-container__body">
 
                                 {showVELoader ? 
@@ -811,15 +869,240 @@ const AppPopup = (props:any) => {
                                             Continue Shopping
                                         </Button>
                                     :
-                                        <Button
-                                            className="primary-button add--card"
-                                            onClick={() => loginAgainbtn()}
-                                            sx={{minWidth: "100%"}}
-                                        >
-                                            Login Now
-                                        </Button>
+                                    <Button
+                                        className="primary-button add--card"
+                                        onClick={() => loginAgainbtn()}
+                                        sx={{minWidth: "100%"}}
+                                    >
+                                        Login Now
+                                    </Button>
                                     }
                                 </div>
+                            </div>
+                        </div>
+                    </>
+                }
+
+                {popupType == "emailsent" &&
+                    <>
+                        <div className="popup-container__iner popup-background popup-container__iner--xl border-radius">
+                            <div className="popup-close" 
+                                onClick={() => setShowPopup(false)}
+                            >
+                                <CloseIcon />
+                            </div>
+                            <div className="popup-container__body">
+
+                                {showVELoader ? 
+                                    <div className='verify_email_loader'>
+                                        <CircularProgress />
+                                    </div>
+                                :
+                                    <>
+                                        <div className='verify_success_icon'>
+                                            {/* <MarkEmailReadIcon fontSize="large" color="success"/> */}
+                                            <img src={emailVerifyImg}/>
+                                        </div>
+                                        <div className='verify_success_text'>
+                                            <h2>Activation Email Sent !</h2>
+                                            <span>A mail has been sent to your registered email. Please click on the activation link to activate your account.</span>
+                                        </div>
+                                    </>
+                                }
+
+                                <div className="popup-container__footer">
+                                    <Button
+                                        className="primary-button add--card"
+                                        onClick={() => loginAgainbtn()}
+                                        sx={{minWidth: "100%"}}
+                                    >
+                                        Login Now
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
+                    </>
+                }
+
+                {popupType == "resendMail" && 
+                    <>
+                        <div className="popup-container__iner popup-background popup-container__iner--xl border-radius">
+                            <div className="popup-close" 
+                                onClick={() => setShowPopup(false)}
+                            >
+                                <CloseIcon />
+                            </div>
+                            <div className="popup-container__body">
+                                <Grid container spacing={1} className="popup-padding">
+                                    <Grid item xs={12} sm={12} lg={12}>
+                                        <div className="form-area login--form">
+                                            <div className="form-area__login  large-hedding">Activation Link</div>
+                                            <form className="form-area__fileds" noValidate autoComplete="off">
+
+                                                    {showRELoader ? 
+                                                        <div className='user_resendmail_loader'>
+                                                            <CircularProgress />
+                                                        </div>
+                                                    :
+                                                    <>
+                                                        <FormControl className="form-area__control">
+                                                            <TextField
+                                                            id="outlined-email-input"
+                                                            placeholder="E-mail address"
+                                                            value={resendEmail}
+                                                            onChange={(e:any) => setResendEmail(e.target.value)}
+                                                            // onBlur={(e) => handleBlur(e, "email")}
+                                                            // message={formErrors.email}
+                                                            type="Email"
+                                                            variant="filled"
+                                                            label="Email"
+                                                            // onKeyDown={_handleKeyDown}
+                                                            />
+                                                        </FormControl>
+
+                                                        
+                                                        {resendError.length > 0 
+                                                            ? 
+                                                            <div className='resend-error'>{resendError}</div> 
+                                                            : 
+                                                            ""
+                                                        }
+
+                                                        <div className="form-button-grop">
+                                                        <button
+                                                            onClick={() => resendLinkEmail()}
+                                                            className="login__button primary-button"
+                                                        >
+                                                            Resend Activation Mail
+                                                        </button>
+                                                        </div>
+                                                    </>
+                                                    }
+
+
+                                            </form>
+                                        </div>
+                                    </Grid>
+                                </Grid>
+                            </div>
+                        </div>
+                    </>
+                }
+
+                {popupType == "resetPassword" && 
+                    <>
+                        <div className="popup-container__iner popup-background popup-container__iner--xl border-radius">
+                            <div className="popup-close" onClick={() => setShowPopup(false)}>
+                                <CloseIcon />
+                            </div>
+                            <div className="popup-container__body">
+                                <Grid container spacing={1} className="popup-padding">
+                                    <Grid item xs={12} sm={12} lg={12}>
+                                        <div className="form-area login--form">
+                                            <div className="form-area__login  large-hedding">Reset Password</div>
+                                            <form className="form-area__fileds" noValidate autoComplete="off">
+
+                                                    {showRELoader ? 
+                                                        <div className='user_resendmail_loader'>
+                                                            <CircularProgress />
+                                                        </div>
+                                                    :
+                                                    <>
+                                                        <FormControl className="form-area__control" variant="filled">
+                                                            <InputLabel htmlFor="standard-adornment-password">
+                                                                Old Password
+                                                            </InputLabel>
+                                                            <FilledInput
+                                                            id="outlined-adornment-password"
+                                                            placeholder="***********************"
+                                                            type={showPassword ? "text" : "password"}
+                                                            value={password}
+                                                            onChange={(e:any) => setPassword(e.target.value)}
+                                                            endAdornment={
+                                                                <InputAdornment position="end">
+                                                                <IconButton onClick={() => setShowPassword(!showPassword)}>
+                                                                    {showPassword ? (
+                                                                    <Visibility className="fill-eyecolor" />
+                                                                    ) : (
+                                                                    <VisibilityOff className="fill-eyecolor" />
+                                                                    )}
+                                                                </IconButton>
+                                                                </InputAdornment>
+                                                            }
+                                                            />
+                                                        </FormControl>
+
+                                                        <FormControl className="form-area__control" variant="filled">
+                                                            <InputLabel htmlFor="standard-adornment-password">
+                                                                New Password
+                                                            </InputLabel>
+                                                            <FilledInput
+                                                            id="outlined-adornment-password"
+                                                            placeholder="***********************"
+                                                            type={showPassword ? "text" : "password"}
+                                                            value={password}
+                                                            onChange={(e:any) => setPassword(e.target.value)}
+                                                            endAdornment={
+                                                                <InputAdornment position="end">
+                                                                <IconButton onClick={() => setShowPassword(!showPassword)}>
+                                                                    {showPassword ? (
+                                                                    <Visibility className="fill-eyecolor" />
+                                                                    ) : (
+                                                                    <VisibilityOff className="fill-eyecolor" />
+                                                                    )}
+                                                                </IconButton>
+                                                                </InputAdornment>
+                                                            }
+                                                            />
+                                                        </FormControl>
+
+                                                        <FormControl className="form-area__control" variant="filled">
+                                                            <InputLabel htmlFor="standard-adornment-password">
+                                                                Confirm Password
+                                                            </InputLabel>
+                                                            <FilledInput
+                                                            id="outlined-adornment-password"
+                                                            placeholder="***********************"
+                                                            type={showPassword ? "text" : "password"}
+                                                            value={password}
+                                                            onChange={(e:any) => setPassword(e.target.value)}
+                                                            endAdornment={
+                                                                <InputAdornment position="end">
+                                                                <IconButton onClick={() => setShowPassword(!showPassword)}>
+                                                                    {showPassword ? (
+                                                                    <Visibility className="fill-eyecolor" />
+                                                                    ) : (
+                                                                    <VisibilityOff className="fill-eyecolor" />
+                                                                    )}
+                                                                </IconButton>
+                                                                </InputAdornment>
+                                                            }
+                                                            />
+                                                        </FormControl>
+                                                        
+                                                        {resendError.length > 0 
+                                                            ? 
+                                                            <div className='resend-error'>{resendError}</div> 
+                                                            : 
+                                                            ""
+                                                        }
+
+                                                        <div className="form-button-grop">
+                                                        <button
+                                                            onClick={() => resendLinkEmail()}
+                                                            className="login__button primary-button"
+                                                        >
+                                                            Submit
+                                                        </button>
+                                                        </div>
+                                                    </>
+                                                    }
+
+
+                                            </form>
+                                        </div>
+                                    </Grid>
+                                </Grid>
                             </div>
                         </div>
                     </>

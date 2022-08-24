@@ -47,7 +47,9 @@ const initialState = {
         isEmailVerified: false,
         accessToken: "",
         purchasedWidgets: [],
-        cartWidgets: []
+        cartWidgets: [],
+        phoneNumber: 0,
+        organization: ""
     }
 }
 

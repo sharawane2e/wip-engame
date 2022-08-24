@@ -388,6 +388,7 @@ textarea{
     }
   }
   .form-button-grop {
+    width: -webkit-fill-available;
     text-align: $align-center;
     @include space(padding, top-bottom, $padding-20, $padding-25);
     @include breakpoint(desktop) {
@@ -395,6 +396,8 @@ textarea{
     }
     .login__button {
       // min-width: 292px !important;
+      outline: 0;
+      border: none;
       width: 100%;
       @include space(padding, all, $padding-15 !important, 0);
       @include font-sizeImp($font-xx-reg);

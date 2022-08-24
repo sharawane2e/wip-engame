@@ -1,7 +1,9 @@
+import { ContactPage } from '@mui/icons-material';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, Route, Routes, useRoutes } from 'react-router-dom';
 import CartPage from '../../Pages/CartPage';
+import ContactUsPage from '../../Pages/InfoPages/ContactUsPage';
 import Layout from '../../Pages/Layout';
 import LoginPage from '../../Pages/LoginPage';
 import MyWidgets from '../../Pages/MyWidgets';
@@ -65,6 +67,7 @@ const RouteHandler = () => {
               <Route path="cart" element={<CartPage/>} />
               <Route path="mywidgets" element={<MyWidgetsPage/>} />
               <Route path="profile" element={<ProfilePage/>} />
+              <Route path="contact-us" element={<ContactUsPage/>} />
           </Route>
         </Routes>
       </>

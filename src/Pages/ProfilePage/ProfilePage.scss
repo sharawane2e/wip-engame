@@ -40,8 +40,8 @@
   }
   .ActiveBorderClass .MuiTouchRipple-root {
     border-left: 3px solid $secondary !important;
-    height: 20px;
-    margin-top: 15px;
+    // height: 20px;
+    // margin-top: 15px;
   }
   .profile-container {
     width: 100%;
@@ -56,7 +56,7 @@
     .input-filds {
       padding: 12px;
       width: 100%;
-      border: 2px solid #cccccc30 !important;
+      border: 2px solid #dadce0 !important;
       border-radius: 3px;
     }
   
@@ -81,17 +81,15 @@
     }
     #{&}__image-container__btn-info {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(147%, 90%);
-      -ms-transform: translate(-100%, -100%);
-      background-color: $black-gray;
+      bottom: 3px;
+      right: 0;
+      background-color: #9d9d9d;
       color: white;
       font-size: 16px;
-      padding: 12px 16px;
-      border: none;
+      padding: 5px 7px;
+      border: 1px solid gray;
       cursor: pointer;
-      border-radius: 2px;
+      border-radius: 0px 0px 5px 0px;
       text-align: center;
       @include breakpoint(mobileonly) {
         left: 57%;
@@ -106,20 +104,25 @@
     #{&}__image-noImage {
       position: relative;
       filter: grayscale(100%);
+      width: fit-content;
       @include breakpoint(mobileonly) {
         margin-bottom: 10px;
       }
     }
     #{&}__image-noImage img {
-      width: 100%;
-      height: 200px;
+      width: 250px;
+      height: 250px;
+      border: 1px solid gray;
+      border-radius: 8px;
     }
     #{&}__image-noImage__btn-info {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(147%, 90%);
-      -ms-transform: translate(-100%, -100%);
+      // top: 50%;
+      // left: 50%;
+      bottom: 0;
+      right: 0;
+      // transform: translate(147%, 90%);
+      // -ms-transform: translate(-100%, -100%);
       background-color: $black-gray;
       color: white;
       font-size: 16px;
@@ -170,6 +173,10 @@
       display: flex;
       color: $secondary;
       justify-content: flex-end;
+
+      span{
+        cursor: pointer;
+      }
     }
     #{&}__grid-container {
       line-height: 1.4rem;
@@ -200,4 +207,17 @@
   .flex-common-60 {
     flex: 0 0 60%;
   }
+
+.user_editDetails_loader{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 367px;
+}
+
+.tabheader{
+  font-weight: 600;
+  font-size: 22px;
+  margin-bottom: 30px;
+}
   

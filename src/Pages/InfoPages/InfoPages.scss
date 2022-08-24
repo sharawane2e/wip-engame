@@ -1,0 +1,150 @@
+.StaticPage {
+    &__div {
+      @include space(padding, all, $padding-0, 0);
+      @include space(padding, bottom, 0, 0);
+      &__container {
+        @include space(padding, all, $padding-25, $padding-25);
+        @include space(padding, bottom, $padding-50, 0);
+        min-height: 100vh;
+        &__mainHeading {
+          display: block;
+          font-size: $font-xx-reg;
+          text-align: left;
+          text-transform: uppercase;
+          font-weight: $font-600;
+          color: $primary;
+          @include border("-bottom", 2px, $bsolid, $seconday-shadow);
+          @include space(padding, all, $padding-0, $padding-10);
+          @include space(padding, bottom, $padding-5, 0);
+          width: 100%;
+          margin: auto !important;
+          @include space(margin, bottom, $margin-35!important, 0);
+        }
+        &__heading {
+          width: 100%;
+          display: block;
+          font-size: $font-xx-reg18;
+          font-weight: $font-600;
+          @include space(margin, top, $margin-30!important, 0);
+        }
+        &__discription {
+          width: 100%;
+          display: block;
+          font-size: $font-xl-reg;
+          font-weight: $font-500;
+          @include space(margin, bottom, $margin-15!important, 0);
+          &__liStyling {
+            @include space(padding, all, $padding-0, $padding-0);
+            font-weight: $font-500 !important;
+          }
+          &__mainLi {
+            @include space(margin, bottom, $padding-30!important, 0);
+          }
+          ol {
+            counter-reset: item;
+            @include space(padding, left, $padding-15, 0);
+            @include space(margin, top, $margin-5!important, 0);
+            font-weight: $font-600 !important;
+          }
+          li {
+            display: block;
+            @include space(margin, bottom, $margin-15, 0);
+            line-height: 20px;
+          }
+          li:before {
+            content: counters(item, ".") " ";
+            counter-increment: item;
+            font-weight: $font-600;
+          }
+          &__list {
+            &__icon {
+              min-width: 25px !important;
+            }
+            @include space(margin, bottom, $margin-10!important, 0);
+            .MuiListItemText-root {
+              @include space(margin, top, $margin-0, 0);
+              @include space(margin, bottom, $margin-0, 0);
+            }
+            .MuiSvgIcon-root {
+              width: 15px;
+              height: 15px;
+              min-width: 20px;
+            }
+          }
+        }
+        &__headingStyle {
+          display: flex;
+          justify-content: center;
+          padding: 14px;
+          font-size: 20px;
+          margin-top: 30px;
+          color: #f15a5c;
+          border: dashed;
+        }
+      }
+    }
+  }
+  .StaticPage__div__container__discription__liStyling__alpha {
+    @include space(padding, left, $padding-15, 0!important);
+  }
+  .StaticPage__DataList {
+    @include space(padding, left, $padding-30, 0);
+    ul {
+      li {
+        @include space(margin, bottom, $margin-10, 0);
+      }
+    }
+  }
+  
+  .contact-head {
+    &__text {
+      color: #42424f;
+      font-size: 1.5rem;
+      font-weight: 500;
+      // padding-bottom: 0.5rem;
+  
+      &__con-info-panel {
+        &__con-info {
+          color: #333333;
+          line-height: 28px;
+          font-size: 1rem;
+          @include breakpoint(mobileonly) {
+            font-size: 18px;
+          }
+          a {
+            color: #f15a5c;
+          }
+        }
+      }
+    }
+    p {
+      color: #333333;
+      font-size: 1rem;
+      margin-top: 0.75rem !important;
+      margin-bottom: 0.75rem !important;
+      font-weight: normal;
+      @include breakpoint(mobileonly) {
+        font-size: 22px;
+      }
+    }
+  }
+  
+  .Info-data {
+    &__wrapper {
+      margin-top: 50px;
+      &__context-text {
+        color: #42424f;
+        font-size: 1.5rem;
+        font-weight: 500;
+        padding-bottom: 1.5rem;
+      }
+    }
+  }
+  
+  .gridstyle {
+    margin-top: 10px;
+    &__field {
+      margin-bottom: 5px !important;
+    }
+  }
+  

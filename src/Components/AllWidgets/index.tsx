@@ -45,7 +45,8 @@ const AllWidgets = () => {
         setShowLoader(true)
         getAllProducts();
         if(!storeData.user.userDetails.isLoggedIn && !storeData.email.emailDetails.isEmailRedirect){
-            popup("login", true)
+            // popup("login", true)
+            popup("emailsent", true)
         }
         if(storeData.email.emailDetails.isEmailRedirect){
             verifyUserEmail(storeData.email.emailDetails.accessToken)
@@ -120,17 +121,20 @@ const AllWidgets = () => {
     const checkJWT = () => {
         const token = storeData.user.userDetails.accessToken;
         const { exp } = parseJwt(token);
+
+        let checktoken = parseJwt("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdhdXJhdiIsImlkIjoiNjMwMzQ0NjM4YWExNWUyYmViMzY2NDc4IiwiaWF0IjoxNjYxMTcwMTk4LCJleHAiOjE2NjExNzAyNTh9.ndfLPcorivvTno8epqjwamfUZ3KQVlzid2ax71b00no")
+
         if (Date.now() >= exp * 1000) {
-          console.log("jwt expired", exp * 1000, Date.now(), parseJwt(token))
+          console.log("jwt expired", exp * 1000, Date.now(), checktoken, (Date.now() - (exp * 1000)))
         }
         else{
-            console.log("jwt not expired")
+            console.log("jwt not expired", checktoken)
         }
     }
 
     return (
         <>
-            <button onClick={() => checkJWT()}>Click</button>
+            {/* <button onClick={() => isUserExist("gaurav")}>Click</button> */}
             <div className="toolcard">
                 <Toolbar className="toolcard__toolbar">
                     <Grid container spacing={4}>

@@ -186,7 +186,7 @@
   }
 
   .verify_success_icon{
-    height: 140px;
+    height: 170px;
     display: flex;
     justify-content: center;
     width: -webkit-fill-available;
@@ -204,4 +204,24 @@
 
   .verify_success_text > h2{
     margin-bottom: 20px;
+  }
+
+  .user_resendmail_loader{
+    display: flex;
+    justify-content: center;
+    min-height: 100px;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+
+  .mr-15{
+    margin-right: 15px;
+  }
+
+  .editbtn{
+    outline: 0;
+    border: none;
+    padding: 13px 20px !important;
+    font-size: 1rem !important;
+    margin: 0px 15px 15px 0px;
   }

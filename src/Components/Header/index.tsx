@@ -1,5 +1,5 @@
 import { AppBar, Avatar, Badge, FilledInput, FormControl, Grid, IconButton, InputAdornment, InputLabel, Popover, TextField, Toolbar, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import PersonIcon from '@mui/icons-material/Person';
@@ -57,7 +57,9 @@ const Header = () => {
         isEmailVerified: false,
         accessToken: "",
         purchasedWidgets: [],
-        cartWidgets: []
+        cartWidgets: [],
+        phoneNumber: 0,
+        organization: ""
     }
 
     const logout = () => {
@@ -65,6 +67,10 @@ const Header = () => {
         dispatch(setUserDetails(details));
         enqueueSnackbar(`User logged out !.`, { variant: "success" });
     }
+
+    useEffect(() => {
+        handleClose();
+    },[])
 
     return (
         <>
@@ -106,7 +112,7 @@ const Header = () => {
                             </div> */}
                             </div>
                             <div className="user_avtar" onClick={(e:any) => handleClick(e)}>
-                                <Avatar sx={{ bgcolor: "red" }}>{(JSON.parse(localUser)?.username[0])?.toUpperCase()}</Avatar>
+                                <Avatar sx={{ bgcolor: "red" }}>{(storeData?.user?.userDetails?.firstname?.[0])?.toUpperCase()}</Avatar>
                             </div>
                             <Popover 
                                 id={id}
